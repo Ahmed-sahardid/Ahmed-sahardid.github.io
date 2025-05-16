@@ -16,12 +16,22 @@
     h3                                { color: #ff6347!important; }
 
     /* ── 3D Flippy Nav (unchanged) ─────────────────────── */
-    .flippy-nav li:nth-child(odd)     { background: linear-gradient(135deg,#ff8c00,#ff6347)!important;
-                                        transform: perspective(500px) rotateY(45deg); }
-    .flippy-nav li:nth-child(even)    { background: linear-gradient(135deg,#ff6347,#ff8c00)!important;
-                                        transform: perspective(500px) rotateY(-45deg); }
-    .flippy-nav li:nth-child(odd):hover  { transform: perspective(200px) rotateY(45deg); padding-left:5%; }
-    .flippy-nav li:nth-child(even):hover { transform: perspective(200px) rotateY(-45deg); padding-right:5%; }
+    .flippy-nav li:nth-child(odd)     {
+      background: linear-gradient(135deg,#ff8c00,#ff6347)!important;
+      transform: perspective(500px) rotateY(45deg);
+    }
+    .flippy-nav li:nth-child(even)    {
+      background: linear-gradient(135deg,#ff6347,#ff8c00)!important;
+      transform: perspective(500px) rotateY(-45deg);
+    }
+    .flippy-nav li:nth-child(odd):hover  {
+      transform: perspective(200px) rotateY(45deg);
+      padding-left:5%;
+    }
+    .flippy-nav li:nth-child(even):hover {
+      transform: perspective(200px) rotateY(-45deg);
+      padding-right:5%;
+    }
 
     /* ── Cards Layout ──────────────────────────────────── */
     .container {
@@ -33,35 +43,46 @@
       margin: 2em auto;
       padding: 0 1em;
     }
+
     .card {
       background: #fff;
       border-radius: 15px;
-      box-shadow: 0 10px 20px rgba(0,0,0,0.5);
-      width: 400px;
-      
+      box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+      width: 300px;
+      overflow: hidden;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      cursor: pointer;
+    }
+    .card:hover {
+      transform: translateY(-10px) scale(1.03);
+      box-shadow: 0 20px 30px rgba(0,0,0,0.3);
     }
 
-    .card .image img {
-      display: block;
+    .card .image {
       width: 100%;
-      border-radius: 0;
+      display: block;
     }
+    .card .image img {
+      width: 100%;
+      display: block;
+    }
+
     .card .content {
-      padding: 10px;
+      padding: 1.5em;
     }
-    .card .content h1 {
+    .card .content h3 {
       margin: 0 0 0.5em;
       text-align: center;
-      font-size: 2rem;
+      font-size: 1.3rem;
     }
-    .card .content il {
+    .card .content ul {
       list-style: disc inside;
       color: #333;
-      font-size: 0. sans-serif;
-      line-height: 1.4;
+      font-size: 0.9rem;
+      line-height: 1.5;
     }
     .card .content ul li {
-      margin-bottom: 0em;
+      margin-bottom: 0.5em;
     }
 
     /* ── Push content over for sidebar ─────────────────── */
@@ -91,10 +112,13 @@
   <div class="page-content">
 
     <!-- SERVICES CARDS -->
-    <section id="services" class="main style4">
+    <section id="services" class="main style5">
       <div class="container">
         <!-- Digital Package -->
         <div class="card">
+          <div class="image">
+            
+          </div>
           <div class="content">
             <h3>DIGITAL PACKAGE</h3>
             <ul>
@@ -112,6 +136,7 @@
             </ul>
           </div>
         </div>
+
         <!-- Prints Package -->
         <div class="card">
           <div class="content">
