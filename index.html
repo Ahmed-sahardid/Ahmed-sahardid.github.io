@@ -4,8 +4,10 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Bright Photo Booth – Home</title>
+
+  <!-- Your existing CSS -->
   <link rel="stylesheet" href="assets/css/main.css" />
-  <!-- ★ add -->
+  <!-- Carousel‐box and video‐overlay support -->
   <link rel="stylesheet" href="assets/css/responsive.css" />
   <noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
 
@@ -13,17 +15,13 @@
   <style>
     /* Base background */
     body, .page-content { background: #FFF4D1 !important; }
-
     /* Sidebar matches page bg */
     .sidebar { background: #FFF4D1 !important; }
-
     /* Flippy‐nav gradients */
     .flippy-nav li:nth-child(odd)  { background: linear-gradient(135deg, #ff8c00, #ff6347) !important; }
     .flippy-nav li:nth-child(even) { background: linear-gradient(135deg, #ff6347, #ff8c00) !important; }
-
     /* White panels for content */
     #header, .main.style1, .container, #footer { background: #ffffff !important; }
-
     /* Accent buttons & links */
     .button, input.primary, .footer-button {
       background: linear-gradient(135deg, #ff8c00, #ff6347) !important;
@@ -33,16 +31,65 @@
     .button:hover, input.primary:hover, .footer-button:hover {
       background: linear-gradient(135deg, #ff6347, #ff8c00) !important;
     }
-
     /* Headings & links */
     h1, h2, h3, header.major h2 { color: #ff6347 !important; }
     .nav-links a, a { color: #ff8c00 !important; }
     .nav-links a:hover, a:hover { color: #ff6347 !important; }
   </style>
+
+  <!-- ─────── Carousel‐box & Trailer styling ─────── -->
+  <style>
+    :root {
+      --slider-width: 600px;
+      --slider-height: 400px;
+    }
+    @media (max-width: 768px) {
+      :root {
+        --slider-width: 300px;
+        --slider-height: 200px;
+      }
+    }
+
+    /* Hidden video section until Trailer clicked */
+    .video-section {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      margin: 4rem 0;
+    }
+    .video-section.active {
+      display: flex;
+    }
+
+    /* Box styling matching your image carousel */
+    .video-box {
+      width:  var(--slider-width);
+      height: var(--slider-height);
+      background: #ffffff;
+      border-radius: 12px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+      overflow: hidden;
+    }
+    .video-box video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .video-section .close-btn {
+      margin-bottom: 1rem;
+    }
+
+    /* Center the Trailer button under hero */
+    .trailer-wrapper {
+      display: flex;
+      justify-content: center;
+      margin-top: 2rem;
+    }
+  </style>
 </head>
 <body class="is-preload">
 
-  <!-- ★ toggle + overlay -->
+  <!-- menu toggle + overlay -->
   <button class="menu-toggle" aria-label="Toggle menu">☰</button>
   <div class="overlay"></div>
 
@@ -61,6 +108,7 @@
 
   <!-- PAGE CONTENT -->
   <div class="page-content">
+
     <!-- Hero -->
     <header id="header">
       <div class="inner">
@@ -70,8 +118,32 @@
           <li><a href="services.html" class="button scrolly">Our Services</a></li>
           <li><a href="book.html"     class="button scrolly">Book Now</a></li>
         </ul>
+
+        <!-- Trailer button -->
+        <div class="trailer-wrapper">
+          <button id="open-trailer" class="button scrolly">Trailer</button>
+        </div>
       </div>
     </header>
+
+    <!-- Centered Video Section (hidden by default) -->
+    <section id="video-section" class="video-section">
+      <button id="close-trailer" class="button scrolly close-btn">Close Trailer</button>
+      <div class="video-box">
+        <video
+          src="movie.mov"
+          type="video/quicktime"
+          controls
+          loop
+          muted
+          autoplay
+          playsinline>
+          Sorry, your browser doesn’t support this video.
+        </video>
+      </div>
+    </section>
+
+    <!-- (other sections: services, portfolio, contact, etc.) -->
 
     <!-- Footer -->
     <section id="footer">
@@ -86,14 +158,27 @@
         <li>Design: <a href="#">Ahmed-Sahardid</a></li>
       </ul>
     </section>
-  </div>
 
+  </div><!-- /.page-content -->
+
+  <!-- Your existing JS -->
   <script src="assets/js/jquery.min.js"></script>
   <script src="assets/js/browser.min.js"></script>
   <script src="assets/js/breakpoints.min.js"></script>
   <script src="assets/js/util.js"></script>
   <script src="assets/js/main.js"></script>
-  <!-- ★ add -->
-  <script src="assets/js/site.js"></script>
+
+  <!-- Trailer toggle script -->
+  <script>
+    document.getElementById('open-trailer')
+      .addEventListener('click', () => {
+        document.getElementById('video-section').classList.add('active');
+      });
+
+    document.getElementById('close-trailer')
+      .addEventListener('click', () => {
+        document.getElementById('video-section').classList.remove('active');
+      });
+  </script>
 </body>
 </html>
