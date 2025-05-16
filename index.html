@@ -11,45 +11,96 @@
   <noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
 
   <style>
-    /* strip out the big white blocks */
+    /* Remove all solid backgrounds */
     body, .page-content,
     .sidebar,
-    #header, .main.style1, .container, #footer {
+    #header, #footer,
+    .flippy-nav, .actions.special {
       background: transparent !important;
     }
 
-    /* tiny backdrop only behind text for legibility */
-    #header .inner,
-    #footer .inner,
-    .sidebar .flippy-nav {
-      background: rgba(255,255,255,0.15);
-      border-radius: 8px;
-      padding: 1rem;
+    /* Ensure text remains legible */
+    h1, h2, h3, p, .flippy-nav li, .button, .nav-links a {
+      color: #fff !important;
+      text-shadow: 0 0 5px rgba(0,0,0,0.8);
     }
 
-    /* brand accents unchanged */
-    .flippy-nav li:nth-child(odd)  { background: linear-gradient(135deg,#ff8c00,#ff6347) !important; }
-    .flippy-nav li:nth-child(even) { background: linear-gradient(135deg,#ff6347,#ff8c00) !important; }
+    /* Blue gradient accents */
+    .flippy-nav li:nth-child(odd)  {
+      background: linear-gradient(135deg,#0066ff,#3399ff) !important;
+    }
+    .flippy-nav li:nth-child(even) {
+      background: linear-gradient(135deg,#3399ff,#0066ff) !important;
+    }
     .button, input.primary, .footer-button {
-      background: linear-gradient(135deg,#ff8c00,#ff6347) !important;
-      color: #fff !important; border:none !important;
+      background: linear-gradient(135deg,#0066ff,#3399ff) !important;
+      color: #fff !important;
+      border: none !important;
+      text-shadow: none;
     }
     .button:hover, input.primary:hover, .footer-button:hover {
-      background: linear-gradient(135deg,#ff6347,#ff8c00) !important;
+      background: linear-gradient(135deg,#3399ff,#0066ff) !important;
     }
-    h1,h2,h3, header.major h2 { color: #ff6347 !important; }
-    .nav-links a,a { color: #ff8c00 !important; }
-    .nav-links a:hover,a:hover { color: #ff6347 !important; }
 
-    /* full-screen background video */
+    /* Full-screen background video */
     #bg-video {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      object-fit: cover;
-      z-index: -1;
-      opacity: 1;
-      pointer-events: none;
+      position: fixed; top:0; left:0;
+      width:100%; height:100%;
+      object-fit:cover; z-index:-1;
+      pointer-events:none;
+    }
+
+    /* Sidebar always visible on desktop */
+    @media (min-width: 981px) {
+      .sidebar {
+        position: relative !important;
+        left: 0 !important;
+        width: 200px;
+      }
+      .page-content { margin-left: 200px; }
+      .menu-toggle,
+      .sidebar-close,
+      .overlay {
+        display: none !important;
+      }
+    }
+    /* Off-canvas behavior on mobile */
+    @media (max-width: 980px) {
+      .sidebar {
+        position: fixed;
+        top: 0; left: -250px;
+        width: 250px; height: 100%;
+        z-index: 10000;
+        transition: left .3s ease;
+      }
+      body.sidebar-open .sidebar { left: 0; }
+      .overlay {
+        display: block;
+        position: fixed;
+        top:0; left:0;
+        width:100%; height:100%;
+        background: rgba(0,0,0,0.6);
+        z-index: 9999;
+      }
+      body.sidebar-open .overlay { display: block; }
+      .menu-toggle,
+      .sidebar-close {
+        display: block;
+        background: rgba(0,0,0,0.6);
+        color: #fff;
+        border: none;
+        font-size: 1.5rem;
+        z-index: 10001;
+      }
+    }
+
+    /* Sidebar items styling */
+    .flippy-nav li {
+      margin:.5rem 0; padding:.5rem 1rem;
+      border-radius:4px; color:#fff; cursor:pointer;
+    }
+    .flippy-nav li:hover {
+      opacity:.8;
     }
   </style>
 </head>
@@ -61,16 +112,13 @@
     Sorry, your browser doesn’t support background video.
   </video>
 
-  <!-- Menu toggle + overlay -->
+  <!-- Hamburger toggle (mobile only) + overlay -->
   <button class="menu-toggle" aria-label="Toggle menu">☰</button>
   <div class="overlay"></div>
 
-  <!-- SIDEBAR -->
+  <!-- SIDEBAR (logo removed) -->
   <aside class="sidebar">
     <button class="sidebar-close" aria-label="Close menu">×</button>
-    <a href="index.html" class="logo">
-      <img src="images/logo1.png" alt="Bright Photo Booth" />
-    </a>
     <ul class="flippy-nav">
       <li onclick="location.href='index.html'">Home</li>
       <li onclick="location.href='contact.html'">Contact Us</li>
@@ -81,8 +129,6 @@
 
   <!-- PAGE CONTENT -->
   <div class="page-content">
-
-    <!-- Hero -->
     <header id="header">
       <div class="inner">
         <h1>Bright Photo Booth</h1>
@@ -96,22 +142,15 @@
 
     <!-- (other sections…) -->
 
-    <!-- Footer -->
-    <section id="footer">
-      <div class="inner">
-        <ul class="icons">
-          <li><a href="#" class="icon brands alt fa-twitter"><span class="label">Twitter</span></a></li>
-          <li><a href="#" class="icon brands alt fa-facebook-f"><span class="label">Facebook</span></a></li>
-          <li><a href="#" class="icon brands alt fa-instagram"><span class="label">Instagram</span></a></li>
-          <li><a href="#" class="icon solid alt fa-envelope"><span class="label">Email</span></a></li>
-        </ul>
-        <ul class="copyright">
-          <li>&copy; 2025 Bright Photo Booth</li>
-          <li>Design: <a href="#">Ahmed-Sahardid</a></li>
-        </ul>
-      </div>
-    </section>
-
+    <footer id="footer">
+      <ul class="icons">
+        <li><a href="#" class="icon brands alt fa-twitter"><span class="label">Twitter</span></a></li>
+        <li><a href="#" class="icon brands alt fa-facebook-f"><span class="label">Facebook</span></a></li>
+        <li><a href="#" class="icon brands alt fa-instagram"><span class="label">Instagram</span></a></li>
+        <li><a href="#" class="icon solid alt fa-envelope"><span class="label">Email</span></a></li>
+      </ul>
+      <p>&copy; 2025 Bright Photo Booth — Design: Ahmed‐Sahardid</p>
+    </footer>
   </div><!-- /.page-content -->
 
   <!-- Core JS -->
