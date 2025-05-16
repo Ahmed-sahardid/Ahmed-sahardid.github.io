@@ -1,0 +1,75 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Bright Photo Booth – Book Now</title>
+  <link rel="stylesheet" href="assets/css/main.css" />
+  <noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+
+  <style>
+    body, .page-content { background: #FFF4D1 !important; }
+    .sidebar { background: #FFF4D1 !important; }
+    .flippy-nav li:nth-child(odd)  { background: linear-gradient(135deg, #ff8c00, #ff6347) !important; }
+    .flippy-nav li:nth-child(even) { background: linear-gradient(135deg, #ff6347, #ff8c00) !important; }
+    .main.style2.special, #footer { background: #fff !important; }
+    h2 { color: #ff6347 !important; }
+    input.primary, .button { background: linear-gradient(135deg, #ff8c00, #ff6347) !important; color:#fff !important; border:none !important;}
+    input.primary:hover, .button:hover { background: linear-gradient(135deg, #ff6347, #ff8c00) !important; }
+    a, .nav-links a { color: #ff8c00 !important; }
+    a:hover, .nav-links a:hover { color: #ff6347 !important; }
+  </style>
+</head>
+<body class="is-preload">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <a href="index.html" class="logo"><img src="images/logo1.png" alt="Bright Photo Booth"/></a>
+    <ul class="flippy-nav">
+      <li onclick="location.href='index.html'">Home</li>
+      <li onclick="location.href='services.html'">Services</li>
+      <li onclick="location.href='portfolio.html'">Portfolio</li>
+      <li onclick="location.href='book.html'">Book Now</li>
+    </ul>
+  </aside>
+
+  <!-- PAGE CONTENT -->
+  <div class="page-content">
+    <section id="contact" class="main style2 special">
+      <div class="container">
+        <header class="major"><h2>Request a Quote</h2></header>
+        <form method="post" action="https://formspree.io/f/your-form-id" class="contact-form">
+          <div class="row gtr-uniform gtr-50">
+            <div class="col-6 col-12-xsmall"><input type="text"    name="name"        placeholder="Name *" required /></div>
+            <div class="col-6 col-12-xsmall"><input type="email"   name="email"       placeholder="Email *" required /></div>
+            <div class="col-12">                <input type="text"    name="eventType"   placeholder="Event Type" /></div>
+            <div class="col-12">                <textarea name="message" placeholder="Message" rows="6"></textarea></div>
+            <div class="col-12">
+              <ul class="actions special">
+                <li><input type="submit" value="Send Message" class="primary" /></li>
+                <li><input type="reset"  value="Reset" /></li>
+              </ul>
+            </div>
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <section id="footer">
+      <ul class="icons">
+        <li><a href="#" class="icon brands alt fa-twitter"><span class="label">Twitter</span></a></li>
+        <li><a href="#" class="icon brands alt fa-facebook-f"><span class="label">Facebook</span></a></li>
+        <li><a href="#" class="icon brands alt fa-instagram"><span class="label">Instagram</span></a></li>
+        <li><a href="#" class="icon solid alt fa-envelope"><span class="label">Email</span></a></li>
+      </ul>
+      <ul class="copyright">
+        <li>&copy; 2025 Bright Photo Booth</li>
+        <li>Design: <a href="#">Ahmed-Sahardid</a></li>
+      </ul>
+    </section>
+  </div>
+
+  <script src="assets/js/jquery.min.js"></script>
+  <script src="assets/js/browser.min.js"></script>
+  <script src="assets/js/breakpoints.min.js
