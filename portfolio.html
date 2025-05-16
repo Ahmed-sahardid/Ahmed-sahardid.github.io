@@ -3,26 +3,76 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Bright Photo Booth – Portfolio</title>
+  <title>Bright Photo Booth – Gallery</title>
   <link rel="stylesheet" href="assets/css/main.css" />
   <noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
 
   <style>
+    :root {
+      --slider-width: 600px;
+      --slider-height: 400px;
+    }
+
     body, .page-content { background: #FFF4D1 !important; }
-    .sidebar { background: #FFF4D1 !important; }
-    .flippy-nav li:nth-child(odd)  { background: linear-gradient(135deg, #ff8c00, #ff6347) !important; }
-    .flippy-nav li:nth-child(even) { background: linear-gradient(135deg, #ff6347, #ff8c00) !important; }
-    .main.style2, #footer { background: #fff !important; }
-    h2 { color: #ff6347 !important; }
-    a, .nav-links a { color: #ff8c00 !important; }
-    a:hover, .nav-links a:hover { color: #ff6347 !important; }
+    .sidebar          { background: #FFF4D1 !important; }
+
+    /* 3D flippy nav (unchanged) */
+    .flippy-nav li:nth-child(odd) {
+      background: linear-gradient(135deg,#ff8c00,#ff6347)!important;
+      transform: perspective(500px) rotateY(45deg);
+    }
+    .flippy-nav li:nth-child(even) {
+      background: linear-gradient(135deg,#ff6347,#ff8c00)!important;
+      transform: perspective(500px) rotateY(-45deg);
+    }
+    .flippy-nav li:nth-child(odd):hover {
+      transform: perspective(200px) rotateY(45deg);
+      padding-left:5%;
+    }
+    .flippy-nav li:nth-child(even):hover {
+      transform: perspective(200px) rotateY(-45deg);
+      padding-right:5%;
+    }
+
+    /* center slider in page */
+    .carousel-wrapper {
+      display: flex;
+      justify-content: center;
+      padding: 4rem 0;
+    }
+
+    /* the slider itself */
+    #slider {
+      width:  var(--slider-width);
+      height: var(--slider-height);
+      background-size:  cover;
+      background-position: center;
+      border-radius: 12px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+      transition: background-image 0.5s ease-in-out, opacity 0.5s;
+    }
+
+    #slider.fade-out { opacity: 0; }
+    #slider.fade-in  { opacity: 1; }
+
+    /* responsive */
+    @media (max-width: 768px) {
+      :root {
+        --slider-width: 300px;
+        --slider-height: 200px;
+      }
+    }
+
+    .page-content { margin-left: 200px; } /* push aside sidebar */
   </style>
 </head>
 <body class="is-preload">
 
   <!-- SIDEBAR -->
   <aside class="sidebar">
-    <a href="index.html" class="logo"><img src="images/logo1.png" alt="Bright Photo Booth"/></a>
+    <a href="index.html" class="logo">
+      <img src="images/logo1.png" alt="Bright Photo Booth" />
+    </a>
     <ul class="flippy-nav">
       <li onclick="location.href='index.html'">Home</li>
       <li onclick="location.href='services.html'">Services</li>
@@ -31,20 +81,16 @@
     </ul>
   </aside>
 
-  <!-- PAGE CONTENT -->
+  <!-- MAIN CONTENT -->
   <div class="page-content">
-    <section id="gallery" class="main style2">
-      <div class="container">
-        <header class="major"><h2>Photo Gallery</h2></header>
-        <div class="row gtr-150">
-          <div class="col-4 col-12-medium"><span class="image fit"><img src="images/gallery1.jpg" alt="" /></span></div>
-          <div class="col-4 col-12-medium"><span class="image fit"><img src="images/gallery2.jpg" alt="" /></span></div>
-          <div class="col-4 col-12-medium"><span class="image fit"><img src="images/gallery3.jpg" alt="" /></span></div>
-        </div>
+
+    <section id="gallery" class="main style1">
+      <div class="carousel-wrapper">
+        <div id="slider" class="fade-in"></div>
       </div>
     </section>
 
-    <!-- Footer -->
+    <!-- FOOTER -->
     <section id="footer">
       <ul class="icons">
         <li><a href="#" class="icon brands alt fa-twitter"><span class="label">Twitter</span></a></li>
@@ -57,8 +103,57 @@
         <li>Design: <a href="#">Ahmed-Sahardid</a></li>
       </ul>
     </section>
-  </div>
 
+  </div><!-- /.page-content -->
+
+  <!-- SCRIPT to cycle through images -->
+  <script>
+    const images = [
+      'images/IMG_9166.JPG',
+      'images/IMG_9167.JPG',
+      'images/IMG_9168.JPG',
+      'images/IMG_9169.JPG',
+      'images/IMG_9170.JPG',
+      'images/IMG_9171.JPG',
+      'images/IMG_9172.JPG',
+      'images/IMG_9173.JPG',
+      'images/IMG_9174.JPG',
+      'images/IMG_9175.JPG',
+      'images/IMG_9176.JPG',
+      'images/IMG_9177.JPG',
+      'images/IMG_9178.JPG',
+      'images/IMG_9179.JPG',
+      'images/IMG_9180.JPG',
+      'images/IMG_9184.JPG',
+      'images/IMG_9185.JPG'
+      // …add or remove any filenames here
+    ];
+
+    let current = 0;
+    const slider = document.getElementById('slider');
+
+    function showNextImage() {
+      // fade out
+      slider.classList.replace('fade-in','fade-out');
+      setTimeout(()=>{
+        // change image
+        slider.style.backgroundImage = `url('${images[current]}')`;
+        // fade in
+        slider.classList.replace('fade-out','fade-in');
+        // prepare next index
+        current = (current + 1) % images.length;
+      }, 500);
+    }
+
+    // initialize
+    slider.style.backgroundImage = `url('${images[0]}')`;
+    current = 1;
+
+    // every 4 seconds cycle
+    setInterval(showNextImage, 4000);
+  </script>
+
+  <!-- existing scripts -->
   <script src="assets/js/jquery.min.js"></script>
   <script src="assets/js/browser.min.js"></script>
   <script src="assets/js/breakpoints.min.js"></script>
