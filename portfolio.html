@@ -1,0 +1,95 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Bright Photo Booth – Portfolio</title>
+  <link rel="stylesheet" href="assets/css/main.css" />
+  <style>
+    @import url('https://fonts.googleapis.com/css?family=Poppins:400,700');
+
+    * {
+      margin: 0; padding: 0; box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+      background-color: #43345d;
+      min-height: 100vh;
+      padding-top: 100px;
+      color: #fff;
+    }
+
+    /* Navbar */
+    #site-header .navbar {
+      position: fixed; top:0; left:0; right:0;
+      display:flex; justify-content:space-between; align-items:center;
+      padding:0.5em 2em; background:#fff; z-index:10;
+      box-shadow:0 2px 5px rgba(0,0,0,0.1);
+    }
+    #site-header .logo-img { height:50px; }
+    .nav-links { list-style:none; display:flex; gap:1.5em; }
+    .nav-links a {
+      text-decoration:none; color:#4EAFFA;
+      font-weight:700; transition:color 0.2s;
+    }
+    .nav-links a:hover { color:#0078D4; }
+
+    /* Gallery */
+    #gallery {
+      padding:2em 1em;
+      max-width:1000px;
+      margin:0 auto;
+    }
+    #gallery h2 {
+      text-align:center;
+      font-size:2rem;
+      color:#fff;
+      margin-bottom:1em;
+    }
+    .grid {
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+      gap:1.5em;
+    }
+    .grid img {
+      width:100%;
+      border-radius:8px;
+      box-shadow:0 2px 10px rgba(0,0,0,0.2);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <header id="site-header">
+    <div class="navbar">
+      <a href="index.html">
+        <img src="images/logo1.png" alt="Bright Photo Booth" class="logo-img" />
+      </a>
+      <nav>
+        <ul class="nav-links">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="services.html">Services</a></li>
+          <li><a href="portfolio.html">Portfolio</a></li>
+          <li><a href="book.html">Book Now</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Photo Gallery -->
+  <section id="gallery">
+    <h2>Photo Gallery</h2>
+    <div class="grid">
+      <img src="https://via.placeholder.com/400x300" alt="Gallery Image 1">
+      <img src="https://via.placeholder.com/400x300" alt="Gallery Image 2">
+      <img src="https://via.placeholder.com/400x300" alt="Gallery Image 3">
+      <img src="https://via.placeholder.com/400x300" alt="Gallery Image 4">
+    </div>
+  </section>
+
+  <script src="assets/js/jquery.min.js"></script>
+  <script src="assets/js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,216 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Bright Photo Booth – Services</title>
+  <link rel="stylesheet" href="assets/css/main.css" />
+  <style>
+    @import url('https://fonts.googleapis.com/css?family=Poppins:400,700');
+
+    * {
+      margin: 0; padding: 0; box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+      background-color: #43345d;
+      min-height: 100vh;
+      padding-top: 100px; /* for navbar */
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Navbar */
+    #site-header .navbar {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.5em 2em;
+      background: #fff;
+      z-index: 10;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    #site-header .logo-img { height: 50px; }
+    .nav-links {
+      list-style: none;
+      display: flex;
+      gap: 1.5em;
+    }
+    .nav-links a {
+      text-decoration: none;
+      color: #4EAFFA;
+      font-weight: 700;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: #0078D4; }
+
+    /* Cards wrapper */
+    .container {
+      flex: 1; /* push footer to bottom */
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 2em;
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 2em 1em;
+    }
+
+    /* Static cards */
+    .card {
+      position: relative;
+      width: 300px;
+      background: #fff;
+      border-radius: 15px;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.5);
+      overflow: visible;
+      cursor: default;
+      height: auto;
+    }
+
+    /* Lifted image */
+    .card .image {
+      position: relative;
+      width: 260px;
+      margin: -60px auto 0;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+      z-index: 2;
+      background: #fff;
+      border-radius: 8px;
+    }
+    .card .image img {
+      width: 100%;
+      border-radius: 8px;
+      display: block;
+    }
+
+    /* Content always visible */
+    .card .content {
+      padding: 1em;
+      margin-top: 1em;
+      visibility: visible;
+      opacity: 1;
+    }
+    .card .content h3 {
+      text-align: center;
+      color: #4EAFFA;
+      font-size: 1.1rem;
+      letter-spacing: 1px;
+      margin-bottom: 0.5em;
+    }
+    .card .content ul {
+      list-style: disc inside;
+      font-size: 0.85rem;
+      line-height: 1.4;
+      color: #333;
+    }
+    .card .content ul li {
+      margin-bottom: 0.4em;
+    }
+
+    /* FOOTER */
+    footer.site-footer {
+      background: #fff;
+      text-align: center;
+      padding: 2em 1em;
+      color: #333;
+      border-top-left-radius: 15px;
+      border-top-right-radius: 15px;
+      margin-top: 2em;
+    }
+    footer.site-footer p {
+      font-size: 1.2rem;
+      margin-bottom: 0.5em;
+    }
+    footer.site-footer .footer-button {
+      display: inline-block;
+      padding: 0.8em 2em;
+      background: #4EAFFA;
+      color: #fff;
+      text-decoration: none;
+      font-weight: 700;
+      border-radius: 4px;
+      transition: background 0.2s;
+    }
+    footer.site-footer .footer-button:hover {
+      background: #0078D4;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <header id="site-header">
+    <div class="navbar">
+      <a href="index.html">
+        <img src="images/logo1.png" alt="Bright Photo Booth" class="logo-img" />
+      </a>
+      <nav>
+        <ul class="nav-links">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="services.html">Services</a></li>
+          <li><a href="portfolio.html">Portfolio</a></li>
+          <li><a href="book.html">Book Now</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Packages Cards -->
+  <div class="container">
+    <!-- Digital Package -->
+    <div class="card">
+      <div class="content">
+        <h3>DIGITAL PACKAGE</h3>
+        <ul>
+          <li>Photos, Boomerangs, GIFs, Videos</li>
+          <li>On-site Digital Sharing</li>
+          <li>Customized "Tap to Start" Screen</li>
+          <li>Customized Print Strip Template</li>
+          <li>Custom LED Ring Light Colors</li>
+          <li>Backdrop</li>
+          <li>Extra Lighting</li>
+          <li>Set Up & Take Down</li>
+          <li>On-Site Attendant</li>
+          <li>Customized Web Gallery</li>
+          <li>GLAM filter</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Prints Package -->
+    <div class="card">
+      <div class="content">
+        <h3>PRINTS PACKAGE</h3>
+        <ul>
+          <li>Photos, Boomerangs, GIFs, Videos</li>
+          <li>On-site Digital Sharing</li>
+          <li>Customized "Tap to Start" Screen</li>
+          <li>Customized Print Strip Template</li>
+          <li>Custom LED Ring Light Colors</li>
+          <li>Backdrop</li>
+          <li>Extra Lighting</li>
+          <li>Set Up & Take Down</li>
+          <li>On-Site Attendant</li>
+          <li>Customized Web Gallery</li>
+          <li>GLAM filter</li>
+          <li><strong>Instant Unlimited Premium Prints (2" x 6" or 4" x 6")</strong></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <p>Book with us now</p>
+    <a href="book.html" class="footer-button">Book Now</a>
+  </footer>
+
+  <script src="assets/js/jquery.min.js"></script>
+  <script src="assets/js/main.js"></script>
+</body>
+</html>

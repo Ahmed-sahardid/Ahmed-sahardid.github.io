@@ -3510,3 +3510,82 @@ input, select, textarea {
 			}
 
 	}
+
+	/* ─────────────────────────────────────────────────────────────────────────
+   SIDEBAR + 3D FLIPPY NAV
+   ───────────────────────────────────────────────────────────────────────── */
+
+/* 1) Make the body a two-column flex container */
+body {
+	display: flex !important;
+	min-height: 100vh !important;
+    }
+    
+    /* 2) Sidebar styles */
+    .sidebar {
+	position: fixed;
+	top: 0; bottom: 0; left: 0;
+	width: 200px;
+	background: cornsilk;
+	padding: 2em 1em;
+	box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+	z-index: 1000;
+    }
+    
+    /* Logo above the nav */
+    .sidebar .logo {
+	display: block;
+	margin: 0 auto 2em;
+	width: 120px;
+    }
+    .sidebar .logo img {
+	width: 100%;
+	height: auto;
+    }
+    
+    /* 3) Flippy nav UL */
+    .flippy-nav {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+    }
+    .flippy-nav li {
+	box-sizing: border-box;
+	width: 100%;
+	height: 3em;
+	line-height: 3em;
+	margin: 0.5em 0;
+	padding: 0 10%;
+	color: #fff;
+	text-transform: capitalize;
+	cursor: pointer;
+	overflow: hidden;
+	transition: 0.3s;
+	/* 3D transform origin */
+	transform-style: preserve-3d;
+    }
+    /* 3D “flip” is here: */
+    .flippy-nav li:nth-child(odd) {
+	background: linear-gradient(to right, orange, tomato);
+	transform: perspective(500px) rotateY(45deg);
+    }
+    .flippy-nav li:nth-child(even) {
+	background: linear-gradient(to left, orange, tomato);
+	transform: perspective(500px) rotateY(-45deg);
+    }
+    .flippy-nav li:nth-child(odd):hover {
+	transform: perspective(200px) rotateY(45deg);
+	padding-left: 5%;
+    }
+    .flippy-nav li:nth-child(even):hover {
+	transform: perspective(200px) rotateY(-45deg);
+	padding-right: 5%;
+    }
+    
+    /* 4) Push Photon’s page content to the right of the sidebar */
+    .page-content {
+	margin-left: 200px;
+	flex: 1;
+	overflow: auto;
+    }
+    
