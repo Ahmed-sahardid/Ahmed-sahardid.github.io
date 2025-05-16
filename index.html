@@ -6,6 +6,37 @@
   <title>Bright Photo Booth – Home</title>
   <link rel="stylesheet" href="assets/css/main.css" />
   <noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+
+  <!-- ─────── CUSTOM BRAND COLORS ─────── -->
+  <style>
+    /* Base background */
+    body, .page-content { background: #FFF4D1 !important; }
+
+    /* Sidebar matches page bg */
+    .sidebar { background: #FFF4D1 !important; }
+
+    /* Flippy‐nav gradients */
+    .flippy-nav li:nth-child(odd)  { background: linear-gradient(135deg, #ff8c00, #ff6347) !important; }
+    .flippy-nav li:nth-child(even) { background: linear-gradient(135deg, #ff6347, #ff8c00) !important; }
+
+    /* White panels for content */
+    #header, .main.style1, .container, #footer { background: #ffffff !important; }
+
+    /* Accent buttons & links */
+    .button, input.primary, .footer-button {
+      background: linear-gradient(135deg, #ff8c00, #ff6347) !important;
+      color: #fff !important;
+      border: none !important;
+    }
+    .button:hover, input.primary:hover, .footer-button:hover {
+      background: linear-gradient(135deg, #ff6347, #ff8c00) !important;
+    }
+
+    /* Headings & links */
+    h1, h2, h3, header.major h2 { color: #ff6347 !important; }
+    .nav-links a, a { color: #ff8c00 !important; }
+    .nav-links a:hover, a:hover { color: #ff6347 !important; }
+  </style>
 </head>
 <body class="is-preload">
 
@@ -22,7 +53,7 @@
     </ul>
   </aside>
 
-  <!-- MAIN CONTENT -->
+  <!-- PAGE CONTENT -->
   <div class="page-content">
     <!-- Hero -->
     <header id="header">
@@ -31,12 +62,12 @@
         <p>Unforgettable photo booth experiences for weddings and events.</p>
         <ul class="actions special">
           <li><a href="services.html" class="button scrolly">Our Services</a></li>
-          <li><a href="book.html" class="button scrolly">Book Now</a></li>
+          <li><a href="book.html"     class="button scrolly">Book Now</a></li>
         </ul>
       </div>
     </header>
 
-    <!-- Footer (Photon’s original) -->
+    <!-- Footer -->
     <section id="footer">
       <ul class="icons">
         <li><a href="#" class="icon brands alt fa-twitter"><span class="label">Twitter</span></a></li>

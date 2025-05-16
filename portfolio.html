@@ -6,14 +6,23 @@
   <title>Bright Photo Booth – Portfolio</title>
   <link rel="stylesheet" href="assets/css/main.css" />
   <noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+
+  <style>
+    body, .page-content { background: #FFF4D1 !important; }
+    .sidebar { background: #FFF4D1 !important; }
+    .flippy-nav li:nth-child(odd)  { background: linear-gradient(135deg, #ff8c00, #ff6347) !important; }
+    .flippy-nav li:nth-child(even) { background: linear-gradient(135deg, #ff6347, #ff8c00) !important; }
+    .main.style2, #footer { background: #fff !important; }
+    h2 { color: #ff6347 !important; }
+    a, .nav-links a { color: #ff8c00 !important; }
+    a:hover, .nav-links a:hover { color: #ff6347 !important; }
+  </style>
 </head>
 <body class="is-preload">
 
   <!-- SIDEBAR -->
   <aside class="sidebar">
-    <a href="index.html" class="logo">
-      <img src="images/logo1.png" alt="Bright Photo Booth" />
-    </a>
+    <a href="index.html" class="logo"><img src="images/logo1.png" alt="Bright Photo Booth"/></a>
     <ul class="flippy-nav">
       <li onclick="location.href='index.html'">Home</li>
       <li onclick="location.href='services.html'">Services</li>
@@ -22,18 +31,15 @@
     </ul>
   </aside>
 
-  <!-- MAIN CONTENT -->
+  <!-- PAGE CONTENT -->
   <div class="page-content">
-    <!-- Photo Gallery -->
     <section id="gallery" class="main style2">
       <div class="container">
-        <header class="major">
-          <h2>Photo Gallery</h2>
-        </header>
+        <header class="major"><h2>Photo Gallery</h2></header>
         <div class="row gtr-150">
-          <div class="col-4 col-12-medium"><span class="image fit"><img src="images/gallery1.jpg" alt="Gallery 1" /></span></div>
-          <div class="col-4 col-12-medium"><span class="image fit"><img src="images/gallery2.jpg" alt="Gallery 2" /></span></div>
-          <div class="col-4 col-12-medium"><span class="image fit"><img src="images/gallery3.jpg" alt="Gallery 3" /></span></div>
+          <div class="col-4 col-12-medium"><span class="image fit"><img src="images/gallery1.jpg" alt="" /></span></div>
+          <div class="col-4 col-12-medium"><span class="image fit"><img src="images/gallery2.jpg" alt="" /></span></div>
+          <div class="col-4 col-12-medium"><span class="image fit"><img src="images/gallery3.jpg" alt="" /></span></div>
         </div>
       </div>
     </section>
