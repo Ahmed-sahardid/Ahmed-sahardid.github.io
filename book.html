@@ -4,33 +4,70 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Bright Photo Booth – Book Now</title>
+
+  <!-- existing CSS -->
   <link rel="stylesheet" href="assets/css/main.css" />
-  <!-- ★ add this: -->
   <link rel="stylesheet" href="assets/css/responsive.css" />
   <noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
 
+  <!-- ───── CUSTOM BRAND COLORS ───── -->
   <style>
     body, .page-content { background: #FFF4D1 !important; }
     .sidebar { background: #FFF4D1 !important; }
-    .flippy-nav li:nth-child(odd)  { background: linear-gradient(135deg, #ff8c00, #ff6347) !important; }
-    .flippy-nav li:nth-child(even) { background: linear-gradient(135deg, #ff6347, #ff8c00) !important; }
-    .main.style2.special, #footer { background: #fff !important; }
-    h2 { color: #ff6347 !important; }
-    input.primary, .button { background: linear-gradient(135deg, #ff8c00, #ff6347) !important; color:#fff !important; border:none !important;}
-    input.primary:hover, .button:hover { background: linear-gradient(135deg, #ff6347, #ff8c00) !important; }
-    a, .nav-links a { color: #ff8c00 !important; }
-    a:hover, .nav-links a:hover { color: #ff6347 !important; }
+    .flippy-nav li:nth-child(odd)  { background: linear-gradient(135deg,#ff8c00,#ff6347) !important; }
+    .flippy-nav li:nth-child(even) { background: linear-gradient(135deg,#ff6347,#ff8c00) !important; }
+    #header, .main.style1, .container, #footer { background: #ffffff !important; }
+    .button, input.primary, .footer-button {
+      background: linear-gradient(135deg,#ff8c00,#ff6347) !important;
+      color: #fff !important;
+      border: none !important;
+    }
+    .button:hover, input.primary:hover, .footer-button:hover {
+      background: linear-gradient(135deg,#ff6347,#ff8c00) !important;
+    }
+    h1,h2,h3,header.major h2 { color: #ff6347 !important; }
+    .nav-links a,a { color: #ff8c00 !important; }
+    .nav-links a:hover,a:hover { color: #ff6347 !important; }
+  </style>
+
+  <!-- ───── Booking Form Styles ───── -->
+  <style>
+    .booking-inner {
+      max-width: 600px;
+      margin: 3rem auto;
+      padding: 2rem;
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+    .booking-inner + .booking-inner {
+      margin-top: 2rem;
+    }
+    .booking-inner h2 {
+      margin-bottom: 1rem;
+      color: #ff6347;
+    }
+    .booking-inner p {
+      margin-bottom: 1.5rem;
+      font-size: 1.125rem;
+      color: #333;
+    }
+    .booking-inner .button {
+      padding: 12px 36px;
+      font-size: 1rem;
+    }
   </style>
 </head>
 <body class="is-preload">
 
-  <!-- ★ off-canvas toggle & overlay -->
+  <!-- toggle + overlay -->
   <button class="menu-toggle" aria-label="Toggle menu">☰</button>
   <div class="overlay"></div>
 
   <!-- SIDEBAR -->
   <aside class="sidebar">
-    <a href="index.html" class="logo"><img src="images/logo1.png" alt="Bright Photo Booth"/></a>
+    <a href="index.html" class="logo"><img src="images/logo1.png" alt="Bright Photo Booth" /></a>
     <ul class="flippy-nav">
       <li onclick="location.href='index.html'">Home</li>
       <li onclick="location.href='services.html'">Services</li>
@@ -41,24 +78,51 @@
 
   <!-- PAGE CONTENT -->
   <div class="page-content">
-    <section id="contact" class="main style2 special">
-      <div class="container">
-        <header class="major"><h2>Request a Quote</h2></header>
-        <form method="post" action="https://formspree.io/f/your-form-id" class="contact-form">
-          <div class="row gtr-uniform gtr-50">
-            <div class="col-6 col-12-xsmall"><input type="text"    name="name"        placeholder="Name *" required /></div>
-            <div class="col-6 col-12-xsmall"><input type="email"   name="email"       placeholder="Email *" required /></div>
-            <div class="col-12">                <input type="text"    name="eventType"   placeholder="Event Type" /></div>
-            <div class="col-12">                <textarea name="message" placeholder="Message" rows="6"></textarea></div>
-            <div class="col-12">
-              <ul class="actions special">
-                <li><input type="submit" value="Send Message" class="primary" /></li>
-                <li><input type="reset"  value="Reset" /></li>
-              </ul>
-            </div>
-          </div>
-        </form>
+
+    <!-- Header -->
+    <header id="header">
+      <div class="inner">
+        <h1>Reserve Your Photo Booth</h1>
+        <p>Choose the package that fits your event and complete your booking below.</p>
       </div>
+    </header>
+
+    <!-- Booking Options -->
+    <section class="main style1">
+
+      <!-- General Package -->
+      <div class="booking-inner">
+        <h2>General Package</h2>
+        <p>Flat rate: $399<br>Includes 2 hours, attendant, props & digital copies</p>
+        <a href="https://checkout.square.site/pay/YOUR_GENERAL_CHECKOUT_LINK"
+           class="button scrolly"
+           target="_blank">
+          Reserve General
+        </a>
+      </div>
+
+      <!-- Wedding Special -->
+      <div class="booking-inner">
+        <h2>Wedding Special</h2>
+        <p>Flat rate: $499<br>Includes 4 hours, attendant, premium props & digital copies</p>
+        <a href="https://checkout.square.site/pay/YOUR_WEDDING_CHECKOUT_LINK"
+           class="button scrolly"
+           target="_blank">
+          Reserve Wedding
+        </a>
+      </div>
+
+      <!-- Student & First-Time Discount -->
+      <div class="booking-inner">
+        <h2>Student &amp; First-Time Discount</h2>
+        <p>Flat rate: $299<br>Must provide valid student ID or be a first-time customer</p>
+        <a href="https://checkout.square.site/pay/YOUR_DISCOUNT_CHECKOUT_LINK"
+           class="button scrolly"
+           target="_blank">
+          Reserve Discounted
+        </a>
+      </div>
+
     </section>
 
     <!-- Footer -->
@@ -74,15 +138,15 @@
         <li>Design: <a href="#">Ahmed-Sahardid</a></li>
       </ul>
     </section>
-  </div>
 
-  <!-- core scripts (fixed) -->
+  </div><!-- /.page-content -->
+
+  <!-- Core scripts -->
   <script src="assets/js/jquery.min.js"></script>
   <script src="assets/js/browser.min.js"></script>
   <script src="assets/js/breakpoints.min.js"></script>
   <script src="assets/js/util.js"></script>
   <script src="assets/js/main.js"></script>
-  <!-- ★ add this last -->
   <script src="assets/js/site.js"></script>
 </body>
 </html>

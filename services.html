@@ -3,101 +3,111 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Bright Photo Booth – Services</title>
+  <title>Bright Photo Booth – Contact Us</title>
+
+  <!-- your existing CSS -->
   <link rel="stylesheet" href="assets/css/main.css" />
-  <!-- ★ add -->
   <link rel="stylesheet" href="assets/css/responsive.css" />
   <noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
 
+  <!-- ─────── CUSTOM BRAND COLORS ─────── -->
   <style>
-    /* ── Brand & Layout Overrides ───────────────────────── */
-    body, .page-content                { background: #FFF4D1 !important; }
-    .sidebar                          { background: #FFF4D1 !important; }
-    a, .nav-links a                   { color: #ff8c00!important; }
-    a:hover, .nav-links a:hover       { color: #ff6347!important; }
-    h3                                { color: #ff6347!important; }
+    body, .page-content { background: #FFF4D1 !important; }
+    .sidebar { background: #FFF4D1 !important; }
+    .flippy-nav li:nth-child(odd)  { background: linear-gradient(135deg,#ff8c00,#ff6347) !important; }
+    .flippy-nav li:nth-child(even) { background: linear-gradient(135deg,#ff6347,#ff8c00) !important; }
+    #header, .main.style1, .container, #footer { background: #ffffff !important; }
+    .button, input.primary, .footer-button {
+      background: linear-gradient(135deg,#ff8c00,#ff6347) !important;
+      color: #fff !important;
+      border: none !important;
+    }
+    .button:hover, input.primary:hover, .footer-button:hover {
+      background: linear-gradient(135deg,#ff6347,#ff8c00) !important;
+    }
+    h1,h2,h3,header.major h2 { color: #ff6347 !important; }
+    .nav-links a,a { color: #ff8c00 !important; }
+    .nav-links a:hover,a:hover { color: #ff6347 !important; }
+  </style>
 
-    /* ── 3D Flippy Nav (unchanged) ─────────────────────── */
-    .flippy-nav li:nth-child(odd)     {
-      background: linear-gradient(135deg,#ff8c00,#ff6347)!important;
-      transform: perspective(500px) rotateY(45deg);
-    }
-    .flippy-nav li:nth-child(even)    {
-      background: linear-gradient(135deg,#ff6347,#ff8c00)!important;
-      transform: perspective(500px) rotateY(-45deg);
-    }
-    .flippy-nav li:nth-child(odd):hover  {
-      transform: perspective(200px) rotateY(45deg);
-      padding-left:5%;
-    }
-    .flippy-nav li:nth-child(even):hover {
-      transform: perspective(200px) rotateY(-45deg);
-      padding-right:5%;
-    }
-
-    /* ── Cards Layout ──────────────────────────────────── */
-    .container {
+  <!-- ─────── CONTACT FORM & LETTER STYLES ─────── -->
+  <style>
+    .contact-container {
       display: flex;
       flex-wrap: wrap;
-      gap: 2em;
-      justify-content: center;
-      max-width: 1000px;
-      margin: 2em auto;
-      padding: 0 1em;
+      gap: 2rem;
+      max-width: 1200px;
+      margin: 2rem auto;
+      padding: 0 1rem;
     }
-
-    .card {
+    .form-panel {
+      flex: 1 1 350px;
       background: #fff;
-      border-radius: 15px;
-      box-shadow: 0 10px 20px rgba(0,0,0,0.2);
-      width: 300px;
+      padding: 2rem;
+      border-radius: 8px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+    }
+    .form-panel label {
+      display: block;
+      margin-top: 1rem;
+      font-weight: bold;
+    }
+    .form-panel input,
+    .form-panel select,
+    .form-panel textarea {
+      width: 100%;
+      padding: .5rem;
+      margin-top: .25rem;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      font-size: 1rem;
+    }
+    .form-panel textarea { height: 120px; resize: vertical; }
+    .form-panel .button {
+      margin-top: 1.5rem;
+      width: 100%;
+    }
+    .paper {
+      flex: 1 1 450px;
+      position: relative;
+      background: rgba(255,255,255,0.9);
+      box-shadow: 0 0 5px #888;
+      border-radius: 8px;
       overflow: hidden;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-      cursor: pointer;
+      height: 550px;
+      max-width: 100%;
     }
-    .card:hover {
-      transform: translateY(-10px) scale(1.03);
-      box-shadow: 0 20px 30px rgba(0,0,0,0.3);
+    .paper::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 45px;
+      width: 2px; height: 100%;
+      background: rgba(255,0,0,0.4);
     }
-
-    .card .image {
-      width: 100%;
-      display: block;
+    .lines {
+      position:absolute;
+      top: 40px; bottom: 0; left: 0; right: 0;
+      background-image: repeating-linear-gradient(
+        white 0px, white 24px,
+        steelblue 25px
+      );
     }
-    .card .image img {
-      width: 100%;
-      display: block;
-    }
-
-    .card .content {
-      padding: 1.5em;
-    }
-    .card .content h3 {
-      margin: 0 0 0.5em;
-      text-align: center;
-      font-size: 1.3rem;
-    }
-    .card .content ul {
-      list-style: disc inside;
-      color: #333;
-      font-size: 0.9rem;
-      line-height: 1.5;
-    }
-    .card .content ul li {
-      margin-bottom: 0.5em;
-    }
-
-    /* ── Push content over for sidebar ─────────────────── */
-    .page-content {
-      margin-left: 200px;
-      flex: 1;
-      overflow: auto;
+    #letter {
+      position: absolute;
+      top: 60px; left: 55px;
+      right: 15px; bottom: 60px;
+      border: none; outline: none;
+      background: transparent;
+      font-family: 'Bad Script', cursive;
+      font-size: 1.1rem; line-height: 1.5rem;
+      color: #333; overflow-y: auto;
+      white-space: pre-wrap;
     }
   </style>
 </head>
 <body class="is-preload">
 
-  <!-- ★ toggle + overlay -->
+  <!-- menu toggle & overlay -->
   <button class="menu-toggle" aria-label="Toggle menu">☰</button>
   <div class="overlay"></div>
 
@@ -108,65 +118,52 @@
     </a>
     <ul class="flippy-nav">
       <li onclick="location.href='index.html'">Home</li>
-      <li onclick="location.href='services.html'">Services</li>
+      <li onclick="location.href='contact.html'">Contact Us</li>
       <li onclick="location.href='portfolio.html'">Portfolio</li>
       <li onclick="location.href='book.html'">Book Now</li>
     </ul>
   </aside>
 
-  <!-- MAIN CONTENT -->
+  <!-- PAGE CONTENT -->
   <div class="page-content">
 
-    <!-- SERVICES CARDS -->
-    <section id="services" class="main style5">
-      <div class="container">
-        <!-- Digital Package -->
-        <div class="card">
-          <div class="image">
-            
-          </div>
-          <div class="content">
-            <h3>DIGITAL PACKAGE</h3>
-            <ul>
-              <li>Photos, Boomerangs, GIFs, Videos</li>
-              <li>On-site Digital Sharing</li>
-              <li>Customized "Tap to Start" Screen</li>
-              <li>Customized Print Strip Template</li>
-              <li>Custom LED Ring Light Colors</li>
-              <li>Backdrop</li>
-              <li>Extra Lighting</li>
-              <li>Set Up & Take Down</li>
-              <li>On-Site Attendant</li>
-              <li>Customized Web Gallery</li>
-              <li>GLAM filter</li>
-            </ul>
-          </div>
+    <header id="header">
+      <div class="inner">
+        <h1>Contact Us</h1>
+        <p>Start typing—and watch your letter write itself. When ready, click “Send Email.”</p>
+      </div>
+    </header>
+
+    <section class="main style1">
+      <div class="contact-container">
+
+        <!-- Form Panel -->
+        <div class="form-panel">
+          <label for="firstName">First Name:</label>
+          <input id="firstName" type="text">
+
+          <label for="lastName">Last Name:</label>
+          <input id="lastName" type="text">
+
+          <label for="email">Your Email:</label>
+          <input id="email" type="email">
+
+          <label for="message">Message:</label>
+          <textarea id="message"></textarea>
+
+          <button id="sendEmail" class="button">Send Email</button>
         </div>
 
-        <!-- Prints Package -->
-        <div class="card">
-          <div class="content">
-            <h3>PRINTS PACKAGE</h3>
-            <ul>
-              <li>Photos, Boomerangs, GIFs, Videos</li>
-              <li>On-site Digital Sharing</li>
-              <li>Customized "Tap to Start" Screen</li>
-              <li>Customized Print Strip Template</li>
-              <li>Custom LED Ring Light Colors</li>
-              <li>Backdrop</li>
-              <li>Extra Lighting</li>
-              <li>Set Up & Take Down</li>
-              <li>On-Site Attendant</li>
-              <li>Customized Web Gallery</li>
-              <li>GLAM filter</li>
-              <li><strong>Instant Unlimited Premium Prints (2" x 6" or 4" x 6")</strong></li>
-            </ul>
-          </div>
+        <!-- Letter Panel -->
+        <div class="paper">
+          <div class="lines"></div>
+          <div id="letter"></div>
         </div>
+
       </div>
     </section>
 
-    <!-- FOOTER -->
+    <!-- Footer -->
     <section id="footer">
       <ul class="icons">
         <li><a href="#" class="icon brands alt fa-twitter"><span class="label">Twitter</span></a></li>
@@ -179,15 +176,51 @@
         <li>Design: <a href="#">Ahmed-Sahardid</a></li>
       </ul>
     </section>
-  </div>
+  </div><!-- /.page-content -->
 
-  <!-- SCRIPTS -->
+  <!-- Core scripts -->
   <script src="assets/js/jquery.min.js"></script>
   <script src="assets/js/browser.min.js"></script>
   <script src="assets/js/breakpoints.min.js"></script>
   <script src="assets/js/util.js"></script>
   <script src="assets/js/main.js"></script>
-  <!-- ★ add -->
   <script src="assets/js/site.js"></script>
+
+  <!-- live‐update letter & mailto -->
+  <script>
+    function buildLetter() {
+      const first = document.getElementById('firstName').value.trim();
+      const last  = document.getElementById('lastName').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const msg   = document.getElementById('message').value.trim();
+
+      const lines = [
+        `Hello,`,
+        ``,
+        `My name is ${first} ${last}.`,
+        ``,
+        msg,
+        ``,
+        `Thanks and regards,`,
+        `${first} ${last}`,
+        `Email: ${email}`
+      ];
+      document.getElementById('letter').textContent = lines.join('\n');
+    }
+
+    // live update on every keystroke
+    ['firstName','lastName','email','message'].forEach(id => {
+      document.getElementById(id)
+        .addEventListener('input', buildLetter);
+    });
+    buildLetter(); // initialize
+
+    // Send email via mailto:
+    document.getElementById('sendEmail').addEventListener('click', () => {
+      const letter = encodeURIComponent(document.getElementById('letter').textContent);
+      const subj   = encodeURIComponent('Contact from ' + document.getElementById('firstName').value);
+      window.location.href = `mailto:?subject=${subj}&body=${letter}`;
+    });
+  </script>
 </body>
 </html>

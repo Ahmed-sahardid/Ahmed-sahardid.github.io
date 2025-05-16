@@ -14,20 +14,20 @@
   <style>
     body, .page-content { background: #FFF4D1 !important; }
     .sidebar { background: #FFF4D1 !important; }
-    .flippy-nav li:nth-child(odd)  { background: linear-gradient(135deg, #ff8c00, #ff6347) !important; }
-    .flippy-nav li:nth-child(even) { background: linear-gradient(135deg, #ff6347, #ff8c00) !important; }
+    .flippy-nav li:nth-child(odd)  { background: linear-gradient(135deg,#ff8c00,#ff6347) !important; }
+    .flippy-nav li:nth-child(even) { background: linear-gradient(135deg,#ff6347,#ff8c00) !important; }
     #header, .main.style1, .container, #footer { background: #ffffff !important; }
     .button, input.primary, .footer-button {
-      background: linear-gradient(135deg, #ff8c00, #ff6347) !important;
+      background: linear-gradient(135deg,#ff8c00,#ff6347) !important;
       color: #fff !important;
       border: none !important;
     }
     .button:hover, input.primary:hover, .footer-button:hover {
-      background: linear-gradient(135deg, #ff6347, #ff8c00) !important;
+      background: linear-gradient(135deg,#ff6347,#ff8c00) !important;
     }
-    h1, h2, h3, header.major h2 { color: #ff6347 !important; }
-    .nav-links a, a { color: #ff8c00 !important; }
-    .nav-links a:hover, a:hover { color: #ff6347 !important; }
+    h1,h2,h3,header.major h2 { color: #ff6347 !important; }
+    .nav-links a,a { color: #ff8c00 !important; }
+    .nav-links a:hover,a:hover { color: #ff6347 !important; }
   </style>
 
   <!-- ─────── Carousel‐box & Trailer styling ─────── -->
@@ -61,9 +61,7 @@
         z-index: 10000;
         transition: left .3s ease;
       }
-      body.sidebar-open .sidebar {
-        left: 0;
-      }
+      body.sidebar-open .sidebar { left: 0; }
       .overlay {
         display: none;
         position: fixed;
@@ -72,9 +70,7 @@
         background: rgba(0,0,0,0.5);
         z-index: 9999;
       }
-      body.sidebar-open .overlay {
-        display: block;
-      }
+      body.sidebar-open .overlay { display: block; }
     }
   </style>
 </head>
@@ -107,7 +103,7 @@
         <p>Unforgettable photo booth experiences for weddings and events.</p>
         <ul class="actions special">
           <li><a href="services.html" class="button scrolly">Our Services</a></li>
-          <li><a href="book.html" class="button scrolly">Book Now</a></li>
+          <li><a href="book.html"     class="button scrolly">Book Now</a></li>
         </ul>
         <div class="trailer-wrapper">
           <button id="open-trailer" class="button scrolly">Trailer</button>
@@ -116,7 +112,7 @@
     </header>
 
     <!-- Centered Video Section (hidden) -->
-    <section id="video-section" class="video-section">
+    <section id="video-section" class="videoSection video-section">
       <button id="close-trailer" class="button scrolly close-btn">Close Trailer</button>
       <div class="video-box">
         <video
@@ -153,22 +149,7 @@
   <script src="assets/js/util.js"></script>
   <script src="assets/js/main.js"></script>
 
-  <!-- Toggle Sidebar & Trailer -->
-  <script>
-    // hamburger → sidebar
-    document.querySelector('.menu-toggle').addEventListener('click', () => {
-      document.body.classList.toggle('sidebar-open');
-    });
-    document.querySelector('.overlay').addEventListener('click', () => {
-      document.body.classList.remove('sidebar-open');
-    });
-    // trailer → video-section
-    document.getElementById('open-trailer').addEventListener('click', () => {
-      document.getElementById('video-section').classList.add('active');
-    });
-    document.getElementById('close-trailer').addEventListener('click', () => {
-      document.getElementById('video-section').classList.remove('active');
-    });
-  </script>
+  <!-- one unified custom script for hamburger + trailer -->
+  <script src="assets/js/site.js"></script>
 </body>
 </html>
