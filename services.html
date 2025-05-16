@@ -8,27 +8,80 @@
   <noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
 
   <style>
-    body, .page-content { background: #FFF4D1 !important; }
-    .sidebar { background: #FFF4D1 !important; }
-    .flippy-nav li:nth-child(odd)  { background: linear-gradient(135deg, #ff8c00, #ff6347) !important; }
-    .flippy-nav li:nth-child(even) { background: linear-gradient(135deg, #ff6347, #ff8c00) !important; }
-    #footer, .container { background: #fff !important; }
-    .button, input.primary, .footer-button {
-      background: linear-gradient(135deg, #ff8c00, #ff6347) !important; color:#fff !important; border:none !important;
+    /* ── Brand & Layout Overrides ───────────────────────── */
+    body, .page-content                { background: #FFF4D1 !important; }
+    .sidebar                          { background: #FFF4D1 !important; }
+    a, .nav-links a                   { color: #ff8c00!important; }
+    a:hover, .nav-links a:hover       { color: #ff6347!important; }
+    h3                                { color: #ff6347!important; }
+
+    /* ── 3D Flippy Nav (unchanged) ─────────────────────── */
+    .flippy-nav li:nth-child(odd)     { background: linear-gradient(135deg,#ff8c00,#ff6347)!important;
+                                        transform: perspective(500px) rotateY(45deg); }
+    .flippy-nav li:nth-child(even)    { background: linear-gradient(135deg,#ff6347,#ff8c00)!important;
+                                        transform: perspective(500px) rotateY(-45deg); }
+    .flippy-nav li:nth-child(odd):hover  { transform: perspective(200px) rotateY(45deg); padding-left:5%; }
+    .flippy-nav li:nth-child(even):hover { transform: perspective(200px) rotateY(-45deg); padding-right:5%; }
+
+    /* ── Cards Layout ──────────────────────────────────── */
+    .container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2em;
+      justify-content: center;
+      max-width: 1000px;
+      margin: 2em auto;
+      padding: 0 1em;
     }
-    .button:hover, input.primary:hover, .footer-button:hover {
-      background: linear-gradient(135deg, #ff6347, #ff8c00) !important;
+    .card {
+      background: #fff;
+      border-radius: 15px;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.5);
+      width: 300px;
+      overflow: hidden;
     }
-    h3 { color: #ff6347 !important; }
-    a, .nav-links a { color: #ff8c00 !important; }
-    a:hover, .nav-links a:hover { color: #ff6347 !important; }
+    .card .image {
+      width: 100%;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+    }
+    .card .image img {
+      display: block;
+      width: 100%;
+      border-radius: 0;
+    }
+    .card .content {
+      padding: 1.5em;
+    }
+    .card .content h3 {
+      margin: 0 0 0.5em;
+      text-align: center;
+      font-size: 1.2rem;
+    }
+    .card .content ul {
+      list-style: disc inside;
+      color: #333;
+      font-size: 0. Nineem;
+      line-height: 1.4;
+    }
+    .card .content ul li {
+      margin-bottom: 0.5em;
+    }
+
+    /* ── Push content over for sidebar ─────────────────── */
+    .page-content {
+      margin-left: 200px;
+      flex: 1;
+      overflow: auto;
+    }
   </style>
 </head>
 <body class="is-preload">
 
   <!-- SIDEBAR -->
   <aside class="sidebar">
-    <a href="index.html" class="logo"><img src="images/logo1.png" alt="Bright Photo Booth"/></a>
+    <a href="index.html" class="logo">
+      <img src="images/logo1.png" alt="Bright Photo Booth" />
+    </a>
     <ul class="flippy-nav">
       <li onclick="location.href='index.html'">Home</li>
       <li onclick="location.href='services.html'">Services</li>
@@ -37,57 +90,55 @@
     </ul>
   </aside>
 
-  <!-- PAGE CONTENT -->
+  <!-- MAIN CONTENT -->
   <div class="page-content">
-    <div class="container">
-      <!-- Digital -->
-      <div class="card">
-        <div class="image">
-          <img src="https://via.placeholder.com/260x260?text=Digital" alt="Digital Package">
-        </div>
-        <div class="content">
-          <h3>DIGITAL PACKAGE</h3>
-          <ul>
-            <li>Photos, Boomerangs, GIFs, Videos</li>
-            <li>On-site Digital Sharing</li>
-            <li>Customized "Tap to Start" Screen</li>
-            <li>Customized Print Strip Template</li>
-            <li>Custom LED Ring Light Colors</li>
-            <li>Backdrop</li>
-            <li>Extra Lighting</li>
-            <li>Set Up &amp; Take Down</li>
-            <li>On-Site Attendant</li>
-            <li>Customized Web Gallery</li>
-            <li>GLAM filter</li>
-          </ul>
-        </div>
-      </div>
-      <!-- Prints -->
-      <div class="card">
-        <div class="image">
-          <img src="https://via.placeholder.com/260x260?text=Prints" alt="Prints Package">
-        </div>
-        <div class="content">
-          <h3>PRINTS PACKAGE</h3>
-          <ul>
-            <li>Photos, Boomerangs, GIFs, Videos</li>
-            <li>On-site Digital Sharing</li>
-            <li>Customized "Tap to Start" Screen</li>
-            <li>Customized Print Strip Template</li>
-            <li>Custom LED Ring Light Colors</li>
-            <li>Backdrop</li>
-            <li>Extra Lighting</li>
-            <li>Set Up &amp; Take Down</li>
-            <li>On-Site Attendant</li>
-            <li>Customized Web Gallery</li>
-            <li>GLAM filter</li>
-            <li><strong>Instant Unlimited Premium Prints (2" x 6" or 4" x 6")</strong></li>
-          </ul>
-        </div>
-      </div>
-    </div>
 
-    <!-- Footer -->
+    <!-- SERVICES CARDS -->
+    <section id="services" class="main style1">
+      <div class="container">
+        <!-- Digital Package -->
+        <div class="card">
+          <div class="content">
+            <h3>DIGITAL PACKAGE</h3>
+            <ul>
+              <li>Photos, Boomerangs, GIFs, Videos</li>
+              <li>On-site Digital Sharing</li>
+              <li>Customized "Tap to Start" Screen</li>
+              <li>Customized Print Strip Template</li>
+              <li>Custom LED Ring Light Colors</li>
+              <li>Backdrop</li>
+              <li>Extra Lighting</li>
+              <li>Set Up & Take Down</li>
+              <li>On-Site Attendant</li>
+              <li>Customized Web Gallery</li>
+              <li>GLAM filter</li>
+            </ul>
+          </div>
+        </div>
+        <!-- Prints Package -->
+        <div class="card">
+          <div class="content">
+            <h3>PRINTS PACKAGE</h3>
+            <ul>
+              <li>Photos, Boomerangs, GIFs, Videos</li>
+              <li>On-site Digital Sharing</li>
+              <li>Customized "Tap to Start" Screen</li>
+              <li>Customized Print Strip Template</li>
+              <li>Custom LED Ring Light Colors</li>
+              <li>Backdrop</li>
+              <li>Extra Lighting</li>
+              <li>Set Up & Take Down</li>
+              <li>On-Site Attendant</li>
+              <li>Customized Web Gallery</li>
+              <li>GLAM filter</li>
+              <li><strong>Instant Unlimited Premium Prints (2" x 6" or 4" x 6")</strong></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
     <section id="footer">
       <ul class="icons">
         <li><a href="#" class="icon brands alt fa-twitter"><span class="label">Twitter</span></a></li>
@@ -102,6 +153,7 @@
     </section>
   </div>
 
+  <!-- SCRIPTS -->
   <script src="assets/js/jquery.min.js"></script>
   <script src="assets/js/browser.min.js"></script>
   <script src="assets/js/breakpoints.min.js"></script>
