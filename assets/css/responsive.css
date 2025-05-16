@@ -1,0 +1,56 @@
+/* ── OFF-CANVAS SIDEBAR ─────────────────────────────────── */
+@media (max-width: 768px) {
+      body:not(.sidebar-open) .sidebar {
+        left: -200px;
+      }
+      body .sidebar {
+        position: fixed;
+        top: 0; left: 0;
+        width: 200px; height: 100%;
+        background: #FFF4D1 !important;
+        transition: left .3s ease;
+        z-index: 1000;
+      }
+      body .page-content {
+        margin-left: 0 !important;
+      }
+      .menu-toggle {
+        display: block;
+        position: fixed;
+        top: 1rem; left: 1rem;
+        z-index: 1100;
+        background: linear-gradient(135deg,#ff8c00,#ff6347);
+        border: none;
+        padding: .5rem 1rem;
+        color: #fff;
+        font-size: 1.25rem;
+        cursor: pointer;
+      }
+      .overlay {
+        display: none;
+        position: fixed;
+        top: 0; left: 0; right: 0; bottom: 0;
+        background: rgba(0,0,0,.5);
+        z-index: 900;
+      }
+      body.sidebar-open .overlay {
+        display: block;
+      }
+    }
+    
+    /* ── RESPONSIVE CAROUSEL ───────────────────────────────── */
+    :root {
+      --slider-max-width: 600px;
+      --slider-aspect: calc(600 / 400);
+    }
+    
+    #slider {
+      width: 100%;
+      max-width: var(--slider-max-width);
+      aspect-ratio: var(--slider-aspect);
+      background-size: cover;
+      background-position: center;
+      border-radius: 12px;
+      transition: background-image .5s ease, opacity .5s;
+    }
+    
