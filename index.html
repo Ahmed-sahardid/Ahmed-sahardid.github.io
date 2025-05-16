@@ -5,89 +5,75 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Bright Photo Booth – Home</title>
 
-  <!-- your existing CSS -->
+  <!-- Core CSS -->
   <link rel="stylesheet" href="assets/css/main.css" />
   <link rel="stylesheet" href="assets/css/responsive.css" />
   <noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
 
-  <!-- ─────── CUSTOM BRAND COLORS ─────── -->
   <style>
-    body, .page-content { background: #FFF4D1 !important; }
-    .sidebar { background: #FFF4D1 !important; }
+    /* strip out the big white blocks */
+    body, .page-content,
+    .sidebar,
+    #header, .main.style1, .container, #footer {
+      background: transparent !important;
+    }
+
+    /* tiny backdrop only behind text for legibility */
+    #header .inner,
+    #footer .inner,
+    .sidebar .flippy-nav {
+      background: rgba(255,255,255,0.15);
+      border-radius: 8px;
+      padding: 1rem;
+    }
+
+    /* brand accents unchanged */
     .flippy-nav li:nth-child(odd)  { background: linear-gradient(135deg,#ff8c00,#ff6347) !important; }
     .flippy-nav li:nth-child(even) { background: linear-gradient(135deg,#ff6347,#ff8c00) !important; }
-    #header, .main.style1, .container, #footer { background: #ffffff !important; }
     .button, input.primary, .footer-button {
       background: linear-gradient(135deg,#ff8c00,#ff6347) !important;
-      color: #fff !important;
-      border: none !important;
+      color: #fff !important; border:none !important;
     }
     .button:hover, input.primary:hover, .footer-button:hover {
       background: linear-gradient(135deg,#ff6347,#ff8c00) !important;
     }
-    h1,h2,h3,header.major h2 { color: #ff6347 !important; }
+    h1,h2,h3, header.major h2 { color: #ff6347 !important; }
     .nav-links a,a { color: #ff8c00 !important; }
     .nav-links a:hover,a:hover { color: #ff6347 !important; }
-  </style>
 
-  <!-- ─────── Carousel‐box & Trailer styling ─────── -->
-  <style>
-    :root { --slider-width: 600px; --slider-height: 400px; }
-    @media (max-width: 768px) {
-      :root { --slider-width: 300px; --slider-height: 200px; }
-    }
-    .video-section { display: none; flex-direction: column; align-items: center; margin: 4rem 0; }
-    .video-section.active { display: flex; }
-    .video-box {
-      width: var(--slider-width);
-      height: var(--slider-height);
-      background: #ffffff;
-      border-radius: 12px;
-      box-shadow: 0 8px 24px rgba(0,0,0,0.2);
-      overflow: hidden;
-    }
-    .video-box video { width:100%; height:100%; object-fit:cover; }
-    .video-section .close-btn { margin-bottom:1rem; }
-    .trailer-wrapper { display:flex; justify-content:center; margin-top:2rem; }
-  </style>
-
-  <!-- ─────── Hamburger / Sidebar Responsive ─────── -->
-  <style>
-    @media screen and (max-width: 980px) {
-      .sidebar {
-        position: fixed;
-        top: 0; left: -250px;
-        width: 250px; height: 100%;
-        z-index: 10000;
-        transition: left .3s ease;
-      }
-      body.sidebar-open .sidebar { left: 0; }
-      .overlay {
-        display: none;
-        position: fixed;
-        top:0; left:0;
-        width:100%; height:100%;
-        background: rgba(0,0,0,0.5);
-        z-index: 9999;
-      }
-      body.sidebar-open .overlay { display: block; }
+    /* full-screen background video */
+    #bg-video {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      z-index: -1;
+      opacity: 1;
+      pointer-events: none;
     }
   </style>
 </head>
 <body class="is-preload">
 
-  <!-- menu toggle + overlay -->
+  <!-- Background video -->
+  <video id="bg-video" autoplay muted loop playsinline>
+    <source src="assets/videos/movie.mp4" type="video/mp4" />
+    Sorry, your browser doesn’t support background video.
+  </video>
+
+  <!-- Menu toggle + overlay -->
   <button class="menu-toggle" aria-label="Toggle menu">☰</button>
   <div class="overlay"></div>
 
   <!-- SIDEBAR -->
   <aside class="sidebar">
+    <button class="sidebar-close" aria-label="Close menu">×</button>
     <a href="index.html" class="logo">
       <img src="images/logo1.png" alt="Bright Photo Booth" />
     </a>
     <ul class="flippy-nav">
       <li onclick="location.href='index.html'">Home</li>
-      <li onclick="location.href='services.html'">Contact Us</li>
+      <li onclick="location.href='contact.html'">Contact Us</li>
       <li onclick="location.href='portfolio.html'">Portfolio</li>
       <li onclick="location.href='book.html'">Book Now</li>
     </ul>
@@ -102,60 +88,38 @@
         <h1>Bright Photo Booth</h1>
         <p>Unforgettable photo booth experiences for weddings and events.</p>
         <ul class="actions special">
-          <li><a href="services.html" class="button scrolly">Contact Us</a></li>
+          <li><a href="contact.html" class="button scrolly">Contact Us</a></li>
           <li><a href="book.html"     class="button scrolly">Book Now</a></li>
         </ul>
-        <div class="trailer-wrapper">
-          <button id="open-trailer" class="button scrolly">Trailer</button>
-        </div>
       </div>
     </header>
 
-    <!-- Centered Video Section (hidden) -->
-    <section id="video-section" class="videoSection video-section">
-      <button id="close-trailer" class="button scrolly close-btn">Close Trailer</button>
-      <div class="video-box">
-        <video
-        src="assets/videos/movie.mp4"
-        type="video/mp4"
-        controls
-        loop
-        muted
-        autoplay
-        playsinline
->
-        Sorry, your browser doesn’t support this video.
-        </video>
-
-      </div>
-    </section>
-
-    <!-- (other sections...) -->
+    <!-- (other sections…) -->
 
     <!-- Footer -->
     <section id="footer">
-      <ul class="icons">
-        <li><a href="#" class="icon brands alt fa-twitter"><span class="label">Twitter</span></a></li>
-        <li><a href="#" class="icon brands alt fa-facebook-f"><span class="label">Facebook</span></a></li>
-        <li><a href="#" class="icon brands alt fa-instagram"><span class="label">Instagram</span></a></li>
-        <li><a href="#" class="icon solid alt fa-envelope"><span class="label">Email</span></a></li>
-      </ul>
-      <ul class="copyright">
-        <li>&copy; 2025 Bright Photo Booth</li>
-        <li>Design: <a href="#">Ahmed-Sahardid</a></li>
-      </ul>
+      <div class="inner">
+        <ul class="icons">
+          <li><a href="#" class="icon brands alt fa-twitter"><span class="label">Twitter</span></a></li>
+          <li><a href="#" class="icon brands alt fa-facebook-f"><span class="label">Facebook</span></a></li>
+          <li><a href="#" class="icon brands alt fa-instagram"><span class="label">Instagram</span></a></li>
+          <li><a href="#" class="icon solid alt fa-envelope"><span class="label">Email</span></a></li>
+        </ul>
+        <ul class="copyright">
+          <li>&copy; 2025 Bright Photo Booth</li>
+          <li>Design: <a href="#">Ahmed-Sahardid</a></li>
+        </ul>
+      </div>
     </section>
 
   </div><!-- /.page-content -->
 
-  <!-- existing JS -->
+  <!-- Core JS -->
   <script src="assets/js/jquery.min.js"></script>
   <script src="assets/js/browser.min.js"></script>
   <script src="assets/js/breakpoints.min.js"></script>
   <script src="assets/js/util.js"></script>
   <script src="assets/js/main.js"></script>
-
-  <!-- one unified custom script for hamburger + trailer -->
   <script src="assets/js/site.js"></script>
 </body>
 </html>
