@@ -5,90 +5,56 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Bright Photo Booth – Home</title>
   <link rel="stylesheet" href="assets/css/main.css" />
-  <style>
-    @import url('https://fonts.googleapis.com/css?family=Poppins:400,700');
-
-    * {
-      margin: 0; padding: 0; box-sizing: border-box;
-      font-family: 'Poppins', sans-serif;
-    }
-
-    body {
-      background-color: #43345d;
-      color: #fff;
-      min-height: 100vh;
-    }
-
-    /* Navbar */
-    #site-header .navbar {
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 0.5em 2em;
-      background: #fff;
-      z-index: 10;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-    }
-    #site-header .logo-img {
-      height: 50px;
-    }
-    .nav-links {
-      list-style: none;
-      display: flex;
-      gap: 1.5em;
-    }
-    .nav-links a {
-      text-decoration: none;
-      color: #4EAFFA;
-      font-weight: 700;
-      transition: color 0.2s;
-    }
-    .nav-links a:hover {
-      color: #0078D4;
-    }
-
-    /* Hero section */
-    #header {
-      padding: 8em 1em 4em; /* pad for fixed navbar */
-      text-align: center;
-    }
-    #header h1 {
-      font-size: 3rem;
-      margin-bottom: 0.5em;
-    }
-    #header p {
-      font-size: 1.25rem;
-    }
-  </style>
+  <noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
 </head>
-<body>
+<body class="is-preload">
 
-  <!-- Navbar -->
-  <header id="site-header">
-    <div class="navbar">
-      <a href="index.html">
-        <img src="images/logo1.png" alt="Bright Photo Booth" class="logo-img" />
-      </a>
-      <nav>
-        <ul class="nav-links">
-          <li><a href="index.html">Home</a></li>
-          <li><a href="services.html">Services</a></li>
-          <li><a href="portfolio.html">Portfolio</a></li>
-          <li><a href="book.html">Book Now</a></li>
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <a href="index.html" class="logo">
+      <img src="images/logo1.png" alt="Bright Photo Booth" />
+    </a>
+    <ul class="flippy-nav">
+      <li onclick="location.href='index.html'">Home</li>
+      <li onclick="location.href='services.html'">Services</li>
+      <li onclick="location.href='portfolio.html'">Portfolio</li>
+      <li onclick="location.href='book.html'">Book Now</li>
+    </ul>
+  </aside>
+
+  <!-- MAIN CONTENT -->
+  <div class="page-content">
+    <!-- Hero -->
+    <header id="header">
+      <div class="inner">
+        <h1>Bright Photo Booth</h1>
+        <p>Unforgettable photo booth experiences for weddings and events.</p>
+        <ul class="actions special">
+          <li><a href="services.html" class="button scrolly">Our Services</a></li>
+          <li><a href="book.html" class="button scrolly">Book Now</a></li>
         </ul>
-      </nav>
-    </div>
-  </header>
+      </div>
+    </header>
 
-  <!-- Hero -->
-  <section id="header">
-    <h1>Bright Photo Booth</h1>
-    <p>Unforgettable photo booth experiences for weddings and events.</p>
-  </section>
+    <!-- Footer (Photon’s original) -->
+    <section id="footer">
+      <ul class="icons">
+        <li><a href="#" class="icon brands alt fa-twitter"><span class="label">Twitter</span></a></li>
+        <li><a href="#" class="icon brands alt fa-facebook-f"><span class="label">Facebook</span></a></li>
+        <li><a href="#" class="icon brands alt fa-instagram"><span class="label">Instagram</span></a></li>
+        <li><a href="#" class="icon solid alt fa-envelope"><span class="label">Email</span></a></li>
+      </ul>
+      <ul class="copyright">
+        <li>&copy; 2025 Bright Photo Booth</li>
+        <li>Design: <a href="#">Ahmed-Sahardid</a></li>
+      </ul>
+    </section>
+  </div>
 
   <script src="assets/js/jquery.min.js"></script>
+  <script src="assets/js/browser.min.js"></script>
+  <script src="assets/js/breakpoints.min.js"></script>
+  <script src="assets/js/util.js"></script>
   <script src="assets/js/main.js"></script>
 </body>
 </html>
