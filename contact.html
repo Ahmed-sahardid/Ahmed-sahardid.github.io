@@ -3,119 +3,194 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Bright Photo Booth – Contact Us</title>
-
-  <!-- your existing CSS -->
+  <title>Bright Photo Booth – Forum</title>
   <link rel="stylesheet" href="assets/css/main.css" />
   <link rel="stylesheet" href="assets/css/responsive.css" />
   <noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
-
-  <!-- ─────── CUSTOM BRAND COLORS ─────── -->
   <style>
-    body, .page-content { background: #FFF4D1 !important; }
-    .sidebar { background: #FFF4D1 !important; }
-    .flippy-nav li:nth-child(odd)  { background: linear-gradient(135deg,#ff8c00,#ff6347) !important; }
-    .flippy-nav li:nth-child(even) { background: linear-gradient(135deg,#ff6347,#ff8c00) !important; }
-    #header, .main.style1, .container, #footer { background: #ffffff !important; }
-    .button, input.primary, .footer-button {
-      background: linear-gradient(135deg,#ff8c00,#ff6347) !important;
-      color: #fff !important;
-      border: none !important;
+    body, html {
+      background: #FFF4D1 !important;
+      min-height: 100vh;
+      margin: 0;
+      padding: 0;
+      font-family: 'Poppins', Arial, sans-serif;
     }
-    .button:hover, input.primary:hover, .footer-button:hover {
-      background: linear-gradient(135deg,#ff6347,#ff8c00) !important;
+    .sidebar {
+      width: 200px;
+      background: #FFF4D1 !important;
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100vh;
+      z-index: 100;
+      box-shadow: 2px 0 8px rgba(0,0,0,0.03);
     }
-    h1,h2,h3,header.major h2 { color: #ff6347 !important; }
-    .nav-links a,a { color: #ff8c00 !important; }
-    .nav-links a:hover,a:hover { color: #ff6347 !important; }
-  </style>
-
-  <!-- ─────── CONTACT FORM & LETTER STYLES ─────── -->
-  <style>
-    .contact-container {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 2rem;
-      max-width: 1200px;
-      margin: 2rem auto;
-      padding: 0 1rem;
+    .flippy-nav {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      margin-top: 2rem;
     }
-    .form-panel {
-      flex: 1 1 350px;
-      background: #fff;
-      padding: 2rem;
+    .flippy-nav li {
+      margin: .7rem 1rem;
+      padding: 1rem;
       border-radius: 8px;
-      box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+      color: #fff !important;
+      font-weight: 600;
+      font-size: 1.12rem;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.2s;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.02);
     }
-    .form-panel label {
+    .flippy-nav li:nth-child(odd) {
+      background: linear-gradient(135deg,#ff8c00,#ff6347)!important;
+      transform: perspective(500px) rotateY(45deg);
+    }
+    .flippy-nav li:nth-child(even) {
+      background: linear-gradient(135deg,#ff6347,#ff8c00)!important;
+      transform: perspective(500px) rotateY(-45deg);
+    }
+    .flippy-nav li:hover {
+      opacity: .85;
+      transform: scale(1.05) !important;
+    }
+
+    /* Content pushed right for sidebar */
+    .page-content {
+      margin-left: 220px;
+      padding: 2.5rem 1rem 1rem 1rem;
+      min-height: 100vh;
+      background: transparent;
+    }
+    .forum-container {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 2rem 1rem 5rem 1rem;
+      background: #fff;
+      border-radius: 16px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+    }
+    .forum-header {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+    .forum-header img {
+      width: 90px;
+      margin-bottom: 1rem;
+    }
+    .forum-header h1 {
+      color: #ff6347;
+      font-size: 2rem;
+      margin-bottom: .3rem;
+      letter-spacing: 0.5px;
+    }
+    .forum-header p {
+      color: #ff8c00;
+      font-size: 1.08rem;
+      margin: 0;
+    }
+    .forum-form {
+      margin-bottom: 2rem;
+      background: #FFF4D1;
+      padding: 1.2rem 1rem 1rem 1rem;
+      border-radius: 8px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    }
+    .forum-form label {
+      font-weight: 500;
+      color: #ff6347;
       display: block;
       margin-top: 1rem;
-      font-weight: bold;
+      margin-bottom: 0.2rem;
     }
-    .form-panel input,
-    .form-panel select,
-    .form-panel textarea {
+    .forum-form input, .forum-form textarea {
       width: 100%;
-      padding: .5rem;
-      margin-top: .25rem;
-      border: 1px solid #ccc;
+      padding: .6rem;
+      margin-bottom: .6rem;
+      border: 1px solid #ff8c00;
       border-radius: 4px;
       font-size: 1rem;
+      background: #fff;
+      font-family: inherit;
+      resize: none;
     }
-    .form-panel textarea { height: 120px; resize: vertical; }
-    .form-panel .button {
-      margin-top: 1.5rem;
-      width: 100%;
+    .forum-form button {
+      background: linear-gradient(135deg,#ff8c00,#ff6347);
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      padding: .7rem 2rem;
+      font-size: 1.06rem;
+      cursor: pointer;
+      margin-top: .6rem;
+      font-family: inherit;
+      font-weight: 600;
+      letter-spacing: .5px;
     }
-    .paper {
-      flex: 1 1 450px;
-      position: relative;
-      background: rgba(255,255,255,0.9);
-      box-shadow: 0 0 5px #888;
+    .forum-form button:hover {
+      background: linear-gradient(135deg,#ff6347,#ff8c00);
+    }
+    .forum-list {
+      margin-top: 2rem;
+    }
+    .forum-q {
+      background: #FFF8E6;
+      border: 1px solid #FFD3A3;
       border-radius: 8px;
-      overflow: hidden;
-      height: 550px;
-      max-width: 100%;
+      margin-bottom: 1.2rem;
+      padding: 1rem 1.2rem;
     }
-    .paper::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 45px;
-      width: 2px; height: 100%;
-      background: rgba(255,0,0,0.4);
+    .forum-q .meta {
+      font-size: 0.96rem;
+      color: #888;
+      margin-bottom: .4rem;
     }
-    .lines {
-      position:absolute;
-      top: 40px; bottom: 0; left: 0; right: 0;
-      background-image: repeating-linear-gradient(
-        white 0px, white 24px,
-        steelblue 25px
-      );
+    .forum-q .question {
+      font-size: 1.09rem;
+      color: #333;
+      margin-bottom: .3rem;
     }
-    #letter {
-      position: absolute;
-      top: 60px; left: 55px;
-      right: 15px; bottom: 60px;
-      border: none; outline: none;
-      background: transparent;
-      font-family: 'Bad Script', cursive;
-      font-size: 1.1rem; line-height: 1.5rem;
-      color: #333; overflow-y: auto;
-      white-space: pre-wrap;
+    .forum-q .answer {
+      margin-top: .3rem;
+      font-size: 1rem;
+      color: #1a6d0a;
+      border-left: 3px solid #ff6347;
+      padding-left: .7rem;
+    }
+    @media (max-width: 900px) {
+      .sidebar {
+        position: static;
+        width: 100vw;
+        height: auto;
+        box-shadow: none;
+      }
+      .page-content {
+        margin-left: 0;
+        padding-top: 1rem;
+      }
+    }
+    @media (max-width: 650px) {
+      .forum-container {
+        padding: 1rem 0.2rem 3rem 0.2rem;
+      }
+      .forum-header h1 {
+        font-size: 1.3rem;
+      }
+      .forum-form button {
+        width: 100%;
+      }
+      .sidebar {
+        font-size: .98rem;
+      }
+      .flippy-nav li {
+        padding: 0.6rem;
+      }
     }
   </style>
 </head>
-<body class="is-preload">
-
-  <!-- menu toggle & overlay -->
-  <button class="menu-toggle" aria-label="Toggle menu">☰</button>
-  <div class="overlay"></div>
-
-  <!-- SIDEBAR -->
+<body>
+  <!-- Sidebar nav -->
   <aside class="sidebar">
-    <a href="index.html" class="logo">
-      <img src="images/logo1.png" alt="Bright Photo Booth" />
-    </a>
     <ul class="flippy-nav">
       <li onclick="location.href='index.html'">Home</li>
       <li onclick="location.href='contact.html'">Contact Us</li>
@@ -124,103 +199,77 @@
     </ul>
   </aside>
 
-  <!-- PAGE CONTENT -->
+  <!-- Main Content -->
   <div class="page-content">
-
-    <header id="header">
-      <div class="inner">
-        <h1>Contact Us</h1>
-        <p>Start typing—and watch your letter write itself. When ready, click “Send Email.”</p>
+    <div class="forum-container">
+      <div class="forum-header">
+        <img src="images/logo1.png" alt="Bright Photo Booth" />
+        <h1>Bright Photo Booth Q&amp;A Forum</h1>
+        <p>Ask a question below! See answers to past questions—or use the live chat for instant help.</p>
       </div>
-    </header>
-
-    <section class="main style1">
-      <div class="contact-container">
-
-        <!-- Form Panel -->
-        <div class="form-panel">
-          <label for="firstName">First Name:</label>
-          <input id="firstName" type="text">
-
-          <label for="lastName">Last Name:</label>
-          <input id="lastName" type="text">
-
-          <label for="email">Your Email:</label>
-          <input id="email" type="email">
-
-          <label for="message">Message:</label>
-          <textarea id="message"></textarea>
-
-          <button id="sendEmail" class="button">Send Email</button>
-        </div>
-
-        <!-- Letter Panel -->
-        <div class="paper">
-          <div class="lines"></div>
-          <div id="letter"></div>
-        </div>
-
-      </div>
-    </section>
-
-    <!-- Footer -->
-    <section id="footer">
-      <ul class="icons">
-        <li><a href="#" class="icon brands alt fa-twitter"><span class="label">Twitter</span></a></li>
-        <li><a href="#" class="icon brands alt fa-facebook-f"><span class="label">Facebook</span></a></li>
-        <li><a href="#" class="icon brands alt fa-instagram"><span class="label">Instagram</span></a></li>
-        <li><a href="#" class="icon solid alt fa-envelope"><span class="label">Email</span></a></li>
-      </ul>
-      <ul class="copyright">
-        <li>&copy; 2025 Bright Photo Booth</li>
-        <li>Design: <a href="#">Ahmed-Sahardid</a></li>
-      </ul>
-    </section>
-  </div><!-- /.page-content -->
-
-  <!-- Core scripts -->
-  <script src="assets/js/jquery.min.js"></script>
-  <script src="assets/js/browser.min.js"></script>
-  <script src="assets/js/breakpoints.min.js"></script>
-  <script src="assets/js/util.js"></script>
-  <script src="assets/js/main.js"></script>
-  <script src="assets/js/site.js"></script>
-
-  <!-- live‐update letter & mailto -->
+      <form class="forum-form" id="forumForm">
+        <label for="forumName">Your Name:</label>
+        <input type="text" id="forumName" name="name" required maxlength="32" autocomplete="name">
+        <label for="forumEmail">Your Email (private):</label>
+        <input type="email" id="forumEmail" name="email" required maxlength="64" autocomplete="email">
+        <label for="forumQuestion">Your Question:</label>
+        <textarea id="forumQuestion" name="question" rows="3" required maxlength="250"></textarea>
+        <button type="submit">Submit Question</button>
+      </form>
+      <div class="forum-list" id="forumList"></div>
+    </div>
+  </div>
+  <!-- Forum script: localStorage version -->
   <script>
-    function buildLetter() {
-      const first = document.getElementById('firstName').value.trim();
-      const last  = document.getElementById('lastName').value.trim();
-      const email = document.getElementById('email').value.trim();
-      const msg   = document.getElementById('message').value.trim();
-
-      const lines = [
-        `Hello,`,
-        ``,
-        `My name is ${first} ${last}.`,
-        ``,
-        msg,
-        ``,
-        `Thanks and regards,`,
-        `${first} ${last}`,
-        `Email: ${email}`
-      ];
-      document.getElementById('letter').textContent = lines.join('\n');
+    // Utility: get Qs from storage
+    function getForumQs() {
+      return JSON.parse(localStorage.getItem('bpbooth-forum') || '[]');
     }
-
-    // live update on every keystroke
-    ['firstName','lastName','email','message'].forEach(id => {
-      document.getElementById(id)
-        .addEventListener('input', buildLetter);
+    // Utility: save Qs to storage
+    function saveForumQs(qs) {
+      localStorage.setItem('bpbooth-forum', JSON.stringify(qs));
+    }
+    // Render all forum questions/answers
+    function renderForum() {
+      const list = document.getElementById('forumList');
+      const qs = getForumQs().reverse(); // newest first
+      list.innerHTML = qs.length ? qs.map(q =>
+        `<div class="forum-q">
+          <div class="meta">${q.name} &lt;${q.email.replace(/(.{2}).*@/, '$1***@')} &mdash; <span>${new Date(q.time).toLocaleString()}</span></div>
+          <div class="question">${q.question}</div>
+          ${q.answer ? `<div class="answer"><strong>Bright Photo Booth:</strong> ${q.answer}</div>` : ''}
+        </div>`
+      ).join('') : '<p style="color:#888;text-align:center;">No questions yet. Be the first to ask!</p>';
+    }
+    // On form submit, add question
+    document.getElementById('forumForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const name = document.getElementById('forumName').value.trim();
+      const email = document.getElementById('forumEmail').value.trim();
+      const question = document.getElementById('forumQuestion').value.trim();
+      if (!name || !email || !question) return;
+      const qs = getForumQs();
+      qs.push({ name, email, question, answer: '', time: Date.now() });
+      saveForumQs(qs);
+      renderForum();
+      this.reset();
+      alert('Thank you! Your question has been submitted. We’ll respond here soon.');
     });
-    buildLetter(); // initialize
+    // Initial render
+    renderForum();
+  </script>
 
-    // Send email via mailto:
-    document.getElementById('sendEmail').addEventListener('click', () => {
-      const letter = encodeURIComponent(document.getElementById('letter').textContent);
-      const subj   = encodeURIComponent('Contact from ' + document.getElementById('firstName').value);
-      window.location.href = `mailto:?subject=${subj}&body=${letter}`;
-    });
+  <!-- Tawk.to Script (chat widget) -->
+  <script type="text/javascript">
+    var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+    (function(){
+      var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+      s1.async=true;
+      s1.src='https://embed.tawk.to/68282483e9a0a8190cd246be/1irect89k';
+      s1.charset='UTF-8';
+      s1.setAttribute('crossorigin','*');
+      s0.parentNode.insertBefore(s1,s0);
+    })();
   </script>
 </body>
 </html>
