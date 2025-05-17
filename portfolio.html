@@ -1,3 +1,4 @@
+<!-- portfolio.html -->
 <!DOCTYPE HTML>
 <html lang="en">
 <head>
@@ -90,15 +91,108 @@
       }
     }
   </style>
-</head>
 
+  <!-- ───── NAVBAR / SIDEBAR RESPONSIVE STYLES ───── -->
+  <style>
+    .menu-toggle,
+    .overlay {
+      display: none;
+    }
+
+    /* Desktop sidebar */
+    .sidebar {
+      position: fixed;
+      top: 0; left: 0;
+      width: 200px;
+      height: 100vh;
+      background: #FFF4D1;
+      transform: none;
+      transition: transform .3s ease;
+      z-index: 1001;
+    }
+    .page-content {
+      margin-left: 200px;
+      transition: margin-left .3s ease;
+    }
+
+    /* Mobile ≤980px */
+@media (max-width: 980px) {
+  /* slide sidebar off screen */
+  .sidebar {
+    transform: translateX(-100%);
+    transition: transform .3s ease;
+    z-index: 1001;
+  }
+  /* bring it back when open */
+  body.sidebar-open .sidebar {
+    transform: translateX(0);
+  }
+
+  /* hamburger button */
+  .menu-toggle {
+    display: block;
+    position: fixed;
+    top: 1.2rem;
+    left: 1.2rem;
+    z-index: 1002;
+    background: linear-gradient(135deg,#ff8c00,#ff6347);
+    border: none;
+    padding: .55rem 1.2rem;
+    color: #fff;
+    font-size: 1.5rem;
+    border-radius: 6px;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.10);
+  }
+
+  /* overlay hidden by default, then fade in */
+  .overlay {
+    position: fixed;
+    top:0; left:0; right:0; bottom:0;
+    background: rgba(0,0,0,.52);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity .3s ease, visibility .3s ease;
+    z-index: 1000;
+  }
+  body.sidebar-open .overlay {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  /* content pushes back under overlay */
+  .page-content {
+    margin-left: 0 !important;
+  }
+}
+
+    /* Legibility overrides */
+    body, .page-content,
+    .sidebar, #header, #footer,
+    .flippy-nav, .actions.special {
+      background: transparent !important;
+    }
+    h1, h2, h3, p,
+    .flippy-nav li,
+    .button, .nav-links a {
+      color: #fff !important;
+      text-shadow: 0 0 5px rgba(0,0,0,0.8);
+    }
+    .flippy-nav li:nth-child(odd)  {
+      background: linear-gradient(135deg,#0066ff,#3399ff) !important;
+    }
+    .flippy-nav li:nth-child(even) {
+      background: linear-gradient(135deg,#3399ff,#0066ff) !important;
+    }
+  </style>
+</head>
 <body class="is-preload">
 
-  <!-- off-canvas toggle & overlay -->
+  <!-- Hamburger toggle + overlay -->
   <button class="menu-toggle" aria-label="Toggle menu">☰</button>
   <div class="overlay"></div>
 
-  <!-- SIDEBAR -->
+  <!-- Sidebar nav -->
   <aside class="sidebar">
     <ul class="flippy-nav">
       <li onclick="location.href='index.html'">Home</li>
@@ -108,14 +202,14 @@
     </ul>
   </aside>
 
+  <!-- Page content -->
   <div class="page-content">
-
     <!-- TICKER SECTION -->
     <section id="ticker-section">
       <div class="ticker-container">
         <div class="monitor-wrapper">
           <div class="monitor">
-            <p>Welcome to the Gallery</p> 
+            <p>Welcome to the Gallery</p>
           </div>
         </div>
       </div>
@@ -141,7 +235,6 @@
         <li>Design: <a href="#">Ahmed-Sahardid</a></li>
       </ul>
     </section>
-
   </div><!-- /.page-content -->
 
   <!-- Image carousel script -->
@@ -156,7 +249,7 @@
     const slider = document.getElementById('slider');
     function showNextImage() {
       slider.classList.replace('fade-in','fade-out');
-      setTimeout(()=>{
+      setTimeout(() => {
         slider.style.backgroundImage = `url('${images[current]}')`;
         slider.classList.replace('fade-out','fade-in');
         current = (current + 1) % images.length;
@@ -167,7 +260,7 @@
     setInterval(showNextImage, 2000);
   </script>
 
-  <!-- core scripts -->
+  <!-- Core scripts -->
   <script src="assets/js/jquery.min.js"></script>
   <script src="assets/js/browser.min.js"></script>
   <script src="assets/js/breakpoints.min.js"></script>

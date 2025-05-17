@@ -3,192 +3,105 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Bright Photo Booth – Forum</title>
+  <title>Bright Photo Booth – Reviews</title>
   <link rel="stylesheet" href="assets/css/main.css" />
   <link rel="stylesheet" href="assets/css/responsive.css" />
   <noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+
+  <!-- NAVBAR / SIDEBAR RESPONSIVE STYLES -->
   <style>
-    body, html {
-      background: #FFF4D1 !important;
-      min-height: 100vh;
-      margin: 0;
-      padding: 0;
-      font-family: 'Poppins', Arial, sans-serif;
-    }
+    /* hide toggle & overlay by default */
+    .menu-toggle, .overlay { display: none; }
+
+    /* desktop sidebar */
     .sidebar {
-      width: 200px;
-      background: #FFF4D1 !important;
-      position: fixed;
-      top: 0;
-      left: 0;
-      height: 100vh;
-      z-index: 100;
-      box-shadow: 2px 0 8px rgba(0,0,0,0.03);
+      position: fixed; top:0; left:0;
+      width:200px; height:100vh;
+      background:#FFF4D1;
+      transform:none;
+      transition:transform .3s ease;
+      z-index:1001;
     }
-    .flippy-nav {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-      margin-top: 2rem;
+    .page-content { margin-left:200px; transition:margin-left .3s ease; }
+
+@media (max-width: 980px) {
+  /* slide sidebar off screen */
+  .sidebar {
+    transform: translateX(-100%);
+    transition: transform .3s ease;
+    z-index: 1001;
+  }
+  /* bring it back when open */
+  body.sidebar-open .sidebar {
+    transform: translateX(0);
+  }
+
+  /* hamburger button */
+  .menu-toggle {
+    display: block;
+    position: fixed;
+    top: 1.2rem;
+    left: 1.2rem;
+    z-index: 1002;
+    background: linear-gradient(135deg,#ff8c00,#ff6347);
+    border: none;
+    padding: .55rem 1.2rem;
+    color: #fff;
+    font-size: 1.5rem;
+    border-radius: 6px;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.10);
+  }
+
+  /* overlay hidden by default, then fade in */
+  .overlay {
+    position: fixed;
+    top:0; left:0; right:0; bottom:0;
+    background: rgba(0,0,0,.52);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity .3s ease, visibility .3s ease;
+    z-index: 1000;
+  }
+  body.sidebar-open .overlay {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  /* content pushes back under overlay */
+  .page-content {
+    margin-left: 0 !important;
+  }
+}
+
+    /* keep your existing legibility overrides */
+    body, .page-content,
+    .sidebar, #header, #footer,
+    .flippy-nav, .actions.special {
+      background: transparent !important;
     }
-    .flippy-nav li {
-      margin: .7rem 1rem;
-      padding: 1rem;
-      border-radius: 8px;
+    h1,h2,h3,p,
+    .flippy-nav li,
+    .button, .nav-links a {
       color: #fff !important;
-      font-weight: 600;
-      font-size: 1.12rem;
-      cursor: pointer;
-      transition: background 0.2s, transform 0.2s;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+      text-shadow:0 0 5px rgba(0,0,0,0.8);
     }
-    .flippy-nav li:nth-child(odd) {
-      background: linear-gradient(135deg,#ff8c00,#ff6347)!important;
-      transform: perspective(500px) rotateY(45deg);
+    .flippy-nav li:nth-child(odd)  {
+      background:linear-gradient(135deg,#0066ff,#3399ff)!important;
     }
     .flippy-nav li:nth-child(even) {
-      background: linear-gradient(135deg,#ff6347,#ff8c00)!important;
-      transform: perspective(500px) rotateY(-45deg);
-    }
-    .flippy-nav li:hover {
-      opacity: .85;
-      transform: scale(1.05) !important;
-    }
-
-    /* Content pushed right for sidebar */
-    .page-content {
-      margin-left: 220px;
-      padding: 2.5rem 1rem 1rem 1rem;
-      min-height: 100vh;
-      background: transparent;
-    }
-    .forum-container {
-      max-width: 720px;
-      margin: 0 auto;
-      padding: 2rem 1rem 5rem 1rem;
-      background: #fff;
-      border-radius: 16px;
-      box-shadow: 0 8px 24px rgba(0,0,0,0.12);
-    }
-    .forum-header {
-      text-align: center;
-      margin-bottom: 2rem;
-    }
-    .forum-header img {
-      width: 90px;
-      margin-bottom: 1rem;
-    }
-    .forum-header h1 {
-      color: #ff6347;
-      font-size: 2rem;
-      margin-bottom: .3rem;
-      letter-spacing: 0.5px;
-    }
-    .forum-header p {
-      color: #ff8c00;
-      font-size: 1.08rem;
-      margin: 0;
-    }
-    .forum-form {
-      margin-bottom: 2rem;
-      background: #FFF4D1;
-      padding: 1.2rem 1rem 1rem 1rem;
-      border-radius: 8px;
-      box-shadow: 0 2px 12px rgba(0,0,0,0.06);
-    }
-    .forum-form label {
-      font-weight: 500;
-      color: #ff6347;
-      display: block;
-      margin-top: 1rem;
-      margin-bottom: 0.2rem;
-    }
-    .forum-form input, .forum-form textarea {
-      width: 100%;
-      padding: .6rem;
-      margin-bottom: .6rem;
-      border: 1px solid #ff8c00;
-      border-radius: 4px;
-      font-size: 1rem;
-      background: #fff;
-      font-family: inherit;
-      resize: none;
-    }
-    .forum-form button {
-      background: linear-gradient(135deg,#ff8c00,#ff6347);
-      color: #fff;
-      border: none;
-      border-radius: 4px;
-      padding: .7rem 2rem;
-      font-size: 1.06rem;
-      cursor: pointer;
-      margin-top: .6rem;
-      font-family: inherit;
-      font-weight: 600;
-      letter-spacing: .5px;
-    }
-    .forum-form button:hover {
-      background: linear-gradient(135deg,#ff6347,#ff8c00);
-    }
-    .forum-list {
-      margin-top: 2rem;
-    }
-    .forum-q {
-      background: #FFF8E6;
-      border: 1px solid #FFD3A3;
-      border-radius: 8px;
-      margin-bottom: 1.2rem;
-      padding: 1rem 1.2rem;
-    }
-    .forum-q .meta {
-      font-size: 0.96rem;
-      color: #888;
-      margin-bottom: .4rem;
-    }
-    .forum-q .question {
-      font-size: 1.09rem;
-      color: #333;
-      margin-bottom: .3rem;
-    }
-    .forum-q .answer {
-      margin-top: .3rem;
-      font-size: 1rem;
-      color: #1a6d0a;
-      border-left: 3px solid #ff6347;
-      padding-left: .7rem;
-    }
-    @media (max-width: 900px) {
-      .sidebar {
-        position: static;
-        width: 100vw;
-        height: auto;
-        box-shadow: none;
-      }
-      .page-content {
-        margin-left: 0;
-        padding-top: 1rem;
-      }
-    }
-    @media (max-width: 650px) {
-      .forum-container {
-        padding: 1rem 0.2rem 3rem 0.2rem;
-      }
-      .forum-header h1 {
-        font-size: 1.3rem;
-      }
-      .forum-form button {
-        width: 100%;
-      }
-      .sidebar {
-        font-size: .98rem;
-      }
-      .flippy-nav li {
-        padding: 0.6rem;
-      }
+      background:linear-gradient(135deg,#3399ff,#0066ff)!important;
     }
   </style>
+
+  <!-- Elfsight Reviews widget -->
+  <script src="https://static.elfsight.com/platform/platform.js" async></script>
 </head>
 <body>
+  <!-- Hamburger toggle + overlay -->
+  <button class="menu-toggle" aria-label="Toggle menu">☰</button>
+  <div class="overlay"></div>
+
   <!-- Sidebar nav -->
   <aside class="sidebar">
     <ul class="flippy-nav">
@@ -199,77 +112,34 @@
     </ul>
   </aside>
 
-  <!-- Main Content -->
+  <!-- Page content -->
   <div class="page-content">
-    <div class="forum-container">
-      <div class="forum-header">
-        <img src="images/logo1.png" alt="Bright Photo Booth" />
-        <h1>Bright Photo Booth Q&amp;A Forum</h1>
-        <p>Ask a question below! See answers to past questions—or use the live chat for instant help.</p>
+    <section class="reviews-section">
+      <h1>What People Are Saying</h1>
+      <div
+        class="elfsight-app-88b4433c-25b1-48b1-a7f7-ea1e035af24c"
+        data-elfsight-app-lazy>
       </div>
-      <form class="forum-form" id="forumForm">
-        <label for="forumName">Your Name:</label>
-        <input type="text" id="forumName" name="name" required maxlength="32" autocomplete="name">
-        <label for="forumEmail">Your Email (private):</label>
-        <input type="email" id="forumEmail" name="email" required maxlength="64" autocomplete="email">
-        <label for="forumQuestion">Your Question:</label>
-        <textarea id="forumQuestion" name="question" rows="3" required maxlength="250"></textarea>
-        <button type="submit">Submit Question</button>
-      </form>
-      <div class="forum-list" id="forumList"></div>
-    </div>
+    </section>
   </div>
-  <!-- Forum script: localStorage version -->
-  <script>
-    // Utility: get Qs from storage
-    function getForumQs() {
-      return JSON.parse(localStorage.getItem('bpbooth-forum') || '[]');
-    }
-    // Utility: save Qs to storage
-    function saveForumQs(qs) {
-      localStorage.setItem('bpbooth-forum', JSON.stringify(qs));
-    }
-    // Render all forum questions/answers
-    function renderForum() {
-      const list = document.getElementById('forumList');
-      const qs = getForumQs().reverse(); // newest first
-      list.innerHTML = qs.length ? qs.map(q =>
-        `<div class="forum-q">
-          <div class="meta">${q.name} &lt;${q.email.replace(/(.{2}).*@/, '$1***@')} &mdash; <span>${new Date(q.time).toLocaleString()}</span></div>
-          <div class="question">${q.question}</div>
-          ${q.answer ? `<div class="answer"><strong>Bright Photo Booth:</strong> ${q.answer}</div>` : ''}
-        </div>`
-      ).join('') : '<p style="color:#888;text-align:center;">No questions yet. Be the first to ask!</p>';
-    }
-    // On form submit, add question
-    document.getElementById('forumForm').addEventListener('submit', function(e) {
-      e.preventDefault();
-      const name = document.getElementById('forumName').value.trim();
-      const email = document.getElementById('forumEmail').value.trim();
-      const question = document.getElementById('forumQuestion').value.trim();
-      if (!name || !email || !question) return;
-      const qs = getForumQs();
-      qs.push({ name, email, question, answer: '', time: Date.now() });
-      saveForumQs(qs);
-      renderForum();
-      this.reset();
-      alert('Thank you! Your question has been submitted. We’ll respond here soon.');
-    });
-    // Initial render
-    renderForum();
-  </script>
 
-  <!-- Tawk.to Script (chat widget) -->
-  <script type="text/javascript">
+  <!-- Tawk.to chat -->
+  <script>
     var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
     (function(){
       var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
-      s1.async=true;
-      s1.src='https://embed.tawk.to/68282483e9a0a8190cd246be/1irect89k';
-      s1.charset='UTF-8';
-      s1.setAttribute('crossorigin','*');
+      s1.async=true; s1.src='https://embed.tawk.to/68282483e9a0a8190cd246be/1irect89k';
+      s1.charset='UTF-8'; s1.setAttribute('crossorigin','*');
       s0.parentNode.insertBefore(s1,s0);
     })();
   </script>
+
+  <!-- Core JS + sidebar toggle -->
+  <script src="assets/js/jquery.min.js"></script>
+  <script src="assets/js/browser.min.js"></script>
+  <script src="assets/js/breakpoints.min.js"></script>
+  <script src="assets/js/util.js"></script>
+  <script src="assets/js/main.js"></script>
+  <script src="assets/js/site.js"></script>
 </body>
 </html>

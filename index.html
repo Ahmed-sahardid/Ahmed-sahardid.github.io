@@ -9,7 +9,6 @@
   <link rel="stylesheet" href="assets/css/main.css" />
   <link rel="stylesheet" href="assets/css/responsive.css" />
   <noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
-
   <style>
     /* Remove all solid backgrounds */
     body, .page-content,
@@ -50,58 +49,104 @@
       pointer-events:none;
     }
 
-    /* Sidebar always visible on desktop */
-    @media (min-width: 981px) {
-      .sidebar {
-        position: relative !important;
-        left: 0 !important;
-        width: 200px;
-      }
-      .page-content { margin-left: 200px; }
-      .menu-toggle,
-      .sidebar-close,
-      .overlay {
-        display: none !important;
-      }
+    /* Sidebar base style */
+    .sidebar {
+      width: 200px;
+      background: #FFF4D1 !important;
+      position: fixed;
+      left: 0;
+      top: 0;
+      height: 100vh;
+      z-index: 1000;
+      box-shadow: 2px 0 8px rgba(0,0,0,0.03);
+      transition: left .3s cubic-bezier(.77,0,.175,1);
     }
-    /* Off-canvas behavior on mobile */
-    @media (max-width: 980px) {
-      .sidebar {
-        position: fixed;
-        top: 0; left: -250px;
-        width: 250px; height: 100%;
-        z-index: 10000;
-        transition: left .3s ease;
-      }
-      body.sidebar-open .sidebar { left: 0; }
-      .overlay {
-        display: block;
-        position: fixed;
-        top:0; left:0;
-        width:100%; height:100%;
-        background: rgba(0,0,0,0.6);
-        z-index: 9999;
-      }
-      body.sidebar-open .overlay { display: block; }
-      .menu-toggle,
-      .sidebar-close {
-        display: block;
-        background: rgba(0,0,0,0.6);
-        color: #fff;
-        border: none;
-        font-size: 1.5rem;
-        z-index: 10001;
-      }
+    .flippy-nav {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      margin-top: 2rem;
     }
-
-    /* Sidebar items styling */
     .flippy-nav li {
-      margin:.5rem 0; padding:.5rem 1rem;
-      border-radius:4px; color:#fff; cursor:pointer;
+      margin:.5rem 1rem; padding:.8rem 1.1rem;
+      border-radius:7px; color:#fff; font-weight:600;
+      font-size:1.12rem; cursor:pointer;
+      transition: background .2s, transform .2s;
     }
     .flippy-nav li:hover {
-      opacity:.8;
+      opacity: .88;
+      transform: scale(1.05) !important;
     }
+
+    /* Content area */
+    .page-content {
+      margin-left: 200px;
+      padding: 2.5rem 1rem 1rem 1rem;
+      min-height: 100vh;
+      background: transparent;
+      transition: margin-left .3s cubic-bezier(.77,0,.175,1);
+    }
+
+    /* Hamburger button hidden on desktop */
+    .menu-toggle {
+      display: none;
+    }
+    .overlay {
+      display: none;
+    }
+
+    /* Responsive styles */
+@media (max-width: 980px) {
+  /* slide sidebar off screen */
+  .sidebar {
+    transform: translateX(-100%);
+    transition: transform .3s ease;
+    z-index: 1001;
+  }
+  /* bring it back when open */
+  body.sidebar-open .sidebar {
+    transform: translateX(0);
+  }
+
+  /* hamburger button */
+  .menu-toggle {
+    display: block;
+    position: fixed;
+    top: 1.2rem;
+    left: 1.2rem;
+    z-index: 1002;
+    background: linear-gradient(135deg,#ff8c00,#ff6347);
+    border: none;
+    padding: .55rem 1.2rem;
+    color: #fff;
+    font-size: 1.5rem;
+    border-radius: 6px;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.10);
+  }
+
+  /* overlay hidden by default, then fade in */
+  .overlay {
+    position: fixed;
+    top:0; left:0; right:0; bottom:0;
+    background: rgba(0,0,0,.52);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity .3s ease, visibility .3s ease;
+    z-index: 1000;
+  }
+  body.sidebar-open .overlay {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  /* content pushes back under overlay */
+  .page-content {
+    margin-left: 0 !important;
+  }
+}
+
+
   </style>
 </head>
 <body class="is-preload">
@@ -116,7 +161,7 @@
   <button class="menu-toggle" aria-label="Toggle menu">☰</button>
   <div class="overlay"></div>
 
-  <!-- SIDEBAR (logo removed) -->
+  <!-- SIDEBAR -->
   <aside class="sidebar">
     <ul class="flippy-nav">
       <li onclick="location.href='index.html'">Home</li>
@@ -138,9 +183,7 @@
         </ul>
       </div>
     </header>
-
     <!-- (other sections…) -->
-
     <footer id="footer">
       <ul class="icons">
         <li><a href="#" class="icon brands alt fa-twitter"><span class="label">Twitter</span></a></li>
@@ -151,6 +194,54 @@
       <p>&copy; 2025 Bright Photo Booth — Design: Ahmed‐Sahardid</p>
     </footer>
   </div><!-- /.page-content -->
+
+  <!-- Hamburger/Sidebar JS -->
+  <script>
+    const menuBtn = document.querySelector('.menu-toggle');
+    const overlay = document.querySelector('.overlay');
+    const body = document.body;
+
+    function openSidebar() {
+      body.classList.add('sidebar-open');
+    }
+    function closeSidebar() {
+      body.classList.remove('sidebar-open');
+    }
+    menuBtn.addEventListener('click', openSidebar);
+    overlay.addEventListener('click', closeSidebar);
+    // Optional: close on link click
+    document.querySelectorAll('.flippy-nav li').forEach(li => {
+      li.addEventListener('click', () => {
+        if(window.innerWidth < 981) closeSidebar();
+      });
+    });
+  </script>
+
+
+  <script>
+document.addEventListener('DOMContentLoaded', () => {
+  const btn     = document.querySelector('.menu-toggle');
+  const overlay = document.querySelector('.overlay');
+  const body    = document.body;
+
+  btn.addEventListener('click', () => {
+    body.classList.toggle('sidebar-open');
+  });
+
+  overlay.addEventListener('click', () => {
+    body.classList.remove('sidebar-open');
+  });
+
+  // auto-close when a link is clicked (mobile)
+  document.querySelectorAll('.flippy-nav li').forEach(li => {
+    li.addEventListener('click', () => {
+      if (window.innerWidth <= 980) {
+        body.classList.remove('sidebar-open');
+      }
+    });
+  });
+});
+</script>
 
   <!-- Core JS -->
   <script src="assets/js/jquery.min.js"></script>

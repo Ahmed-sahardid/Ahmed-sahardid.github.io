@@ -1,3 +1,4 @@
+<!-- book.html -->
 <!DOCTYPE HTML>
 <html lang="en">
 <head>
@@ -31,9 +32,7 @@
       box-shadow: 0 8px 24px rgba(0,0,0,0.1);
       text-align: center;
     }
-    .booking-inner + .booking-inner {
-      margin-top: 2rem;
-    }
+    .booking-inner + .booking-inner { margin-top: 2rem; }
     .booking-inner h2 {
       margin-bottom: 1rem;
       color: #ff6347;
@@ -77,14 +76,101 @@
       background: linear-gradient(135deg,#ff6347,#ff8c00);
     }
   </style>
+
+  <!-- ───── NAVBAR / SIDEBAR RESPONSIVE STYLES ───── -->
+  <style>
+    .menu-toggle,
+    .overlay {
+      display: none;
+    }
+    .sidebar {
+      position: fixed;
+      top: 0; left: 0;
+      width: 200px; height: 100vh;
+      background: #FFF4D1;
+      transform: none;
+      transition: transform .3s ease;
+      z-index: 1001;
+    }
+    .page-content {
+      margin-left: 200px;
+      transition: margin-left .3s ease;
+    }
+@media (max-width: 980px) {
+  /* slide sidebar off screen */
+  .sidebar {
+    transform: translateX(-100%);
+    transition: transform .3s ease;
+    z-index: 1001;
+  }
+  /* bring it back when open */
+  body.sidebar-open .sidebar {
+    transform: translateX(0);
+  }
+
+  /* hamburger button */
+  .menu-toggle {
+    display: block;
+    position: fixed;
+    top: 1.2rem;
+    left: 1.2rem;
+    z-index: 1002;
+    background: linear-gradient(135deg,#ff8c00,#ff6347);
+    border: none;
+    padding: .55rem 1.2rem;
+    color: #fff;
+    font-size: 1.5rem;
+    border-radius: 6px;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.10);
+  }
+
+  /* overlay hidden by default, then fade in */
+  .overlay {
+    position: fixed;
+    top:0; left:0; right:0; bottom:0;
+    background: rgba(0,0,0,.52);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity .3s ease, visibility .3s ease;
+    z-index: 1000;
+  }
+  body.sidebar-open .overlay {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  /* content pushes back under overlay */
+  .page-content {
+    margin-left: 0 !important;
+  }
+}
+    body, .page-content,
+    .sidebar, #header, #footer,
+    .flippy-nav, .actions.special {
+      background: transparent !important;
+    }
+    h1,h2,h3,p,
+    .flippy-nav li,
+    .button, .nav-links a {
+      color: #fff !important;
+      text-shadow: 0 0 5px rgba(0,0,0,0.8);
+    }
+    .flippy-nav li:nth-child(odd)  {
+      background: linear-gradient(135deg,#0066ff,#3399ff) !important;
+    }
+    .flippy-nav li:nth-child(even) {
+      background: linear-gradient(135deg,#3399ff,#0066ff) !important;
+    }
+  </style>
 </head>
 <body class="is-preload">
 
-  <!-- toggle + overlay -->
+  <!-- Hamburger toggle + overlay -->
   <button class="menu-toggle" aria-label="Toggle menu">☰</button>
   <div class="overlay"></div>
 
-  <!-- SIDEBAR -->
+  <!-- Sidebar nav -->
   <aside class="sidebar">
     <ul class="flippy-nav">
       <li onclick="location.href='index.html'">Home</li>
@@ -96,7 +182,6 @@
 
   <!-- PAGE CONTENT -->
   <div class="page-content">
-
     <!-- Header -->
     <header id="header">
       <div class="inner">
@@ -115,19 +200,14 @@
         <form action="https://formspree.io/f/xpwdbjgl" method="POST">
           <input type="hidden" name="service" value="General Package">
           <input type="hidden" name="_subject" value="Invoice Request: General Package">
-
           <label for="name-gen">Your Name:</label>
           <input id="name-gen" type="text" name="name" placeholder="John Doe" required>
-
           <label for="email-gen">Your Email:</label>
           <input id="email-gen" type="email" name="_replyto" placeholder="you@example.com" required>
-
           <label for="phone-gen">Phone Number:</label>
           <input id="phone-gen" type="tel" name="phone" placeholder="(123) 456-7890">
-
           <label for="location-gen">Event Location:</label>
           <input id="location-gen" type="text" name="location" placeholder="Venue or address">
-
           <button type="submit">Request Invoice</button>
         </form>
       </div>
@@ -139,19 +219,14 @@
         <form action="https://formspree.io/f/xpwdbjgl" method="POST">
           <input type="hidden" name="service" value="Wedding Special">
           <input type="hidden" name="_subject" value="Invoice Request: Wedding Special">
-
           <label for="name-wed">Your Name:</label>
           <input id="name-wed" type="text" name="name" placeholder="John Doe" required>
-
           <label for="email-wed">Your Email:</label>
           <input id="email-wed" type="email" name="_replyto" placeholder="you@example.com" required>
-
           <label for="phone-wed">Phone Number:</label>
           <input id="phone-wed" type="tel" name="phone" placeholder="(123) 456-7890">
-
           <label for="location-wed">Event Location:</label>
           <input id="location-wed" type="text" name="location" placeholder="Venue or address">
-
           <button type="submit">Request Invoice</button>
         </form>
       </div>
@@ -163,19 +238,14 @@
         <form action="https://formspree.io/f/xpwdbjgl" method="POST">
           <input type="hidden" name="service" value="Student/First-Time Discount">
           <input type="hidden" name="_subject" value="Invoice Request: Student Discount">
-
           <label for="name-disc">Your Name:</label>
           <input id="name-disc" type="text" name="name" placeholder="John Doe" required>
-
           <label for="email-disc">Your Email:</label>
           <input id="email-disc" type="email" name="_replyto" placeholder="you@example.com" required>
-
           <label for="phone-disc">Phone Number:</label>
           <input id="phone-disc" type="tel" name="phone" placeholder="(123) 456-7890">
-
           <label for="location-disc">Event Location:</label>
           <input id="location-disc" type="text" name="location" placeholder="Venue or address">
-
           <button type="submit">Request Invoice</button>
         </form>
       </div>
@@ -195,7 +265,6 @@
         <li>Design: <a href="#">Ahmed-Sahardid</a></li>
       </ul>
     </section>
-
   </div><!-- /.page-content -->
 
   <!-- Core scripts -->
