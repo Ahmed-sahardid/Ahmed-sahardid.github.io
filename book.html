@@ -16,18 +16,8 @@
     .sidebar { background: #FFF4D1 !important; }
     .flippy-nav li:nth-child(odd)  { background: linear-gradient(135deg,#ff8c00,#ff6347) !important; }
     .flippy-nav li:nth-child(even) { background: linear-gradient(135deg,#ff6347,#ff8c00) !important; }
-    #header, .main.style1, .container, #footer { background: #ffffff !important; }
-    .button, input.primary, .footer-button {
-      background: linear-gradient(135deg,#ff8c00,#ff6347) !important;
-      color: #fff !important;
-      border: none !important;
-    }
-    .button:hover, input.primary:hover, .footer-button:hover {
-      background: linear-gradient(135deg,#ff6347,#ff8c00) !important;
-    }
-    h1,h2,h3,header.major h2 { color: #ff6347 !important; }
-    .nav-links a,a { color: #ff8c00 !important; }
-    .nav-links a:hover,a:hover { color: #ff6347 !important; }
+    #header, .main.style1, #footer { background: #ffffff !important; }
+    h1,h2 { color: #ff6347 !important; }
   </style>
 
   <!-- ───── Booking Form Styles ───── -->
@@ -53,9 +43,38 @@
       font-size: 1.125rem;
       color: #333;
     }
-    .booking-inner .button {
+    .booking-inner form {
+      display: inline-block;
+      text-align: left;
+      width: 100%;
+      max-width: 400px;
+    }
+    .booking-inner label {
+      display: block;
+      margin-bottom: .5rem;
+      font-weight: bold;
+    }
+    .booking-inner input {
+      width: 100%;
+      padding: .5rem;
+      margin-bottom: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      font-size: 1rem;
+    }
+    .booking-inner button {
+      display: block;
+      width: 100%;
       padding: 12px 36px;
       font-size: 1rem;
+      background: linear-gradient(135deg,#ff8c00,#ff6347);
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    .booking-inner button:hover {
+      background: linear-gradient(135deg,#ff6347,#ff8c00);
     }
   </style>
 </head>
@@ -67,7 +86,6 @@
 
   <!-- SIDEBAR -->
   <aside class="sidebar">
-    <a href="index.html" class="logo"><img src="images/logo1.png" alt="Bright Photo Booth" /></a>
     <ul class="flippy-nav">
       <li onclick="location.href='index.html'">Home</li>
       <li onclick="location.href='contact.html'">Contact Us</li>
@@ -83,7 +101,7 @@
     <header id="header">
       <div class="inner">
         <h1>Reserve Your Photo Booth</h1>
-        <p>Choose the package that fits your event and complete your booking below.</p>
+        <p>Fill out your details and request an invoice. We’ll email it to you—then you can call us to finalize!</p>
       </div>
     </header>
 
@@ -93,34 +111,73 @@
       <!-- General Package -->
       <div class="booking-inner">
         <h2>General Package</h2>
-        <p>Flat rate: $399<br>Includes 2 hours, attendant, props & digital copies</p>
-        <a href="https://checkout.square.site/pay/YOUR_GENERAL_CHECKOUT_LINK"
-           class="button scrolly"
-           target="_blank">
-          Reserve General
-        </a>
+        <p>Flat rate: $399<br>Includes 2 hours, attendant, props &amp; digital copies</p>
+        <form action="https://formspree.io/f/xpwdbjgl" method="POST">
+          <input type="hidden" name="service" value="General Package">
+          <input type="hidden" name="_subject" value="Invoice Request: General Package">
+
+          <label for="name-gen">Your Name:</label>
+          <input id="name-gen" type="text" name="name" placeholder="John Doe" required>
+
+          <label for="email-gen">Your Email:</label>
+          <input id="email-gen" type="email" name="_replyto" placeholder="you@example.com" required>
+
+          <label for="phone-gen">Phone Number:</label>
+          <input id="phone-gen" type="tel" name="phone" placeholder="(123) 456-7890">
+
+          <label for="location-gen">Event Location:</label>
+          <input id="location-gen" type="text" name="location" placeholder="Venue or address">
+
+          <button type="submit">Request Invoice</button>
+        </form>
       </div>
 
       <!-- Wedding Special -->
       <div class="booking-inner">
         <h2>Wedding Special</h2>
-        <p>Flat rate: $499<br>Includes 4 hours, attendant, premium props & digital copies</p>
-        <a href="https://checkout.square.site/pay/YOUR_WEDDING_CHECKOUT_LINK"
-           class="button scrolly"
-           target="_blank">
-          Reserve Wedding
-        </a>
+        <p>Flat rate: $499<br>Includes 4 hours, attendant, premium props &amp; digital copies</p>
+        <form action="https://formspree.io/f/xpwdbjgl" method="POST">
+          <input type="hidden" name="service" value="Wedding Special">
+          <input type="hidden" name="_subject" value="Invoice Request: Wedding Special">
+
+          <label for="name-wed">Your Name:</label>
+          <input id="name-wed" type="text" name="name" placeholder="John Doe" required>
+
+          <label for="email-wed">Your Email:</label>
+          <input id="email-wed" type="email" name="_replyto" placeholder="you@example.com" required>
+
+          <label for="phone-wed">Phone Number:</label>
+          <input id="phone-wed" type="tel" name="phone" placeholder="(123) 456-7890">
+
+          <label for="location-wed">Event Location:</label>
+          <input id="location-wed" type="text" name="location" placeholder="Venue or address">
+
+          <button type="submit">Request Invoice</button>
+        </form>
       </div>
 
       <!-- Student & First-Time Discount -->
       <div class="booking-inner">
         <h2>Student &amp; First-Time Discount</h2>
         <p>Flat rate: $299<br>Must provide valid student ID or be a first-time customer</p>
-        <a href="https://checkout.square.site/pay/YOUR_DISCOUNT_CHECKOUT_LINK"
-           class="button scrolly"
-           target="_blank">
-          Reserve Discounted
-        </a>
+        <form action="https://formspree.io/f/xpwdbjgl" method="POST">
+          <input type="hidden" name="service" value="Student/First-Time Discount">
+          <input type="hidden" name="_subject" value="Invoice Request: Student Discount">
+
+          <label for="name-disc">Your Name:</label>
+          <input id="name-disc" type="text" name="name" placeholder="John Doe" required>
+
+          <label for="email-disc">Your Email:</label>
+          <input id="email-disc" type="email" name="_replyto" placeholder="you@example.com" required>
+
+          <label for="phone-disc">Phone Number:</label>
+          <input id="phone-disc" type="tel" name="phone" placeholder="(123) 456-7890">
+
+          <label for="location-disc">Event Location:</label>
+          <input id="location-disc" type="text" name="location" placeholder="Venue or address">
+
+          <button type="submit">Request Invoice</button>
+        </form>
       </div>
 
     </section>

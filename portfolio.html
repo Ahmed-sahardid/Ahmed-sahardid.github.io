@@ -5,46 +5,74 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Bright Photo Booth – Gallery</title>
   <link rel="stylesheet" href="assets/css/main.css" />
-  <!-- ★ add this: -->
   <link rel="stylesheet" href="assets/css/responsive.css" />
   <noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
 
+  <!-- ───── TICKER SECTION CSS ───── -->
+  <style>
+    /* Now matches page-content background */
+    #ticker-section {
+      background: #FFF4D1;
+      padding: 4rem 0;
+    }
+    #ticker-section .ticker-container {
+      width: 790px;
+      height: 150px;
+      background-color: #d4e5ff;
+      margin: 0 auto;
+      position: relative;
+    }
+    #ticker-section .monitor-wrapper {
+      background: #050321;
+      width: 770px;
+      height: 130px;
+      margin: 0 auto;
+      box-shadow: 0px 2px 2px 2px rgba(0,0,0,0.30);
+      overflow: hidden;
+      position: relative;
+      top: 10px;
+    }
+    #ticker-section .monitor {
+      width: 700px;
+      height: 100px;
+      background-color: #344151;
+      overflow: hidden;
+      white-space: nowrap;
+      margin: 0 auto;
+      box-shadow: inset 0px 5px 10px 2px rgba(0,0,0,0.3);
+      position: relative;
+    }
+    #ticker-section .monitor p {
+      font-family: 'VT323', monospace;
+      font-size: 100px;
+      position: absolute;
+      top: 0;
+      left: 100%;
+      animation: ticker-move 20s infinite linear;
+      color: #EBB55F;
+      line-height: 100px;
+    }
+    @keyframes ticker-move {
+      from { left: 100%; }
+      to   { left: -400%; }
+    }
+  </style>
+
+  <!-- ───── CAROUSEL SECTION CSS ───── -->
   <style>
     :root {
       --slider-width: 600px;
       --slider-height: 400px;
     }
-
-    body, .page-content { background: #FFF4D1 !important; }
-    .sidebar          { background: #FFF4D1 !important; }
-
-    /* 3D flippy nav (unchanged) */
-    .flippy-nav li:nth-child(odd) {
-      background: linear-gradient(135deg,#ff8c00,#ff6347)!important;
-      transform: perspective(500px) rotateY(45deg);
+    #gallery-section {
+      padding: 4rem 0;
+      background: #FFF4D1;
     }
-    .flippy-nav li:nth-child(even) {
-      background: linear-gradient(135deg,#ff6347,#ff8c00)!important;
-      transform: perspective(500px) rotateY(-45deg);
-    }
-    .flippy-nav li:nth-child(odd):hover {
-      transform: perspective(200px) rotateY(45deg);
-      padding-left:5%;
-    }
-    .flippy-nav li:nth-child(even):hover {
-      transform: perspective(200px) rotateY(-45deg);
-      padding-right:5%;
-    }
-
-    /* center slider in page */
-    .carousel-wrapper {
+    #gallery-section .carousel-wrapper {
       display: flex;
       justify-content: center;
-      padding: 4rem 0;
     }
-
-    /* the slider itself */
-    #slider {
+    #gallery-section #slider {
       width:  var(--slider-width);
       height: var(--slider-height);
       background-size:  cover;
@@ -53,32 +81,25 @@
       box-shadow: 0 8px 24px rgba(0,0,0,0.2);
       transition: background-image 0.5s ease-in-out, opacity 0.5s;
     }
-
-    #slider.fade-out { opacity: 0; }
-    #slider.fade-in  { opacity: 1; }
-
-    /* responsive */
+    #gallery-section #slider.fade-out { opacity: 0; }
+    #gallery-section #slider.fade-in  { opacity: 1; }
     @media (max-width: 768px) {
       :root {
         --slider-width: 300px;
         --slider-height: 200px;
       }
     }
-
-    .page-content { margin-left: 200px; } /* push aside sidebar */
   </style>
 </head>
+
 <body class="is-preload">
 
-  <!-- ★ off-canvas toggle & overlay -->
+  <!-- off-canvas toggle & overlay -->
   <button class="menu-toggle" aria-label="Toggle menu">☰</button>
   <div class="overlay"></div>
 
   <!-- SIDEBAR -->
   <aside class="sidebar">
-    <a href="index.html" class="logo">
-      <img src="images/logo1.png" alt="Bright Photo Booth" />
-    </a>
     <ul class="flippy-nav">
       <li onclick="location.href='index.html'">Home</li>
       <li onclick="location.href='contact.html'">Contact Us</li>
@@ -87,10 +108,21 @@
     </ul>
   </aside>
 
-  <!-- MAIN CONTENT -->
   <div class="page-content">
 
-    <section id="gallery" class="main style1">
+    <!-- TICKER SECTION -->
+    <section id="ticker-section">
+      <div class="ticker-container">
+        <div class="monitor-wrapper">
+          <div class="monitor">
+            <p>Welcome to the Gallery</p> 
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CAROUSEL SECTION -->
+    <section id="gallery-section">
       <div class="carousel-wrapper">
         <div id="slider" class="fade-in"></div>
       </div>
@@ -112,24 +144,13 @@
 
   </div><!-- /.page-content -->
 
-  <!-- your existing gallery script -->
+  <!-- Image carousel script -->
   <script>
     const images = [
-      'images/IMG_9166.JPG',
-      'images/IMG_9167.JPG',
-      'images/IMG_9168.JPG',
-      'images/IMG_9169.JPG',
-      'images/IMG_9170.JPG',
-      'images/IMG_9171.JPG',
-      'images/IMG_9172.JPG',
-      'images/IMG_9173.JPG',
-      'images/IMG_9174.JPG',
-      'images/IMG_9175.JPG',
-      'images/IMG_9176.JPG',
-      'images/IMG_9177.JPG',
-      'images/IMG_9178.JPG',
-      'images/IMG_9179.JPG',
-      'images/IMG_9180.JPG',
+      'images/IMG_9166.JPG','images/IMG_9167.JPG','images/IMG_9168.JPG','images/IMG_9169.JPG',
+      'images/IMG_9170.JPG','images/IMG_9171.JPG','images/IMG_9172.JPG','images/IMG_9173.JPG',
+      'images/IMG_9174.JPG','images/IMG_9175.JPG','images/IMG_9176.JPG','images/IMG_9177.JPG',
+      'images/IMG_9178.JPG','images/IMG_9179.JPG','images/IMG_9180.JPG'
     ];
     let current = 0;
     const slider = document.getElementById('slider');
@@ -146,13 +167,12 @@
     setInterval(showNextImage, 2000);
   </script>
 
-  <!-- core scripts (fixed breakpoints include) -->
+  <!-- core scripts -->
   <script src="assets/js/jquery.min.js"></script>
   <script src="assets/js/browser.min.js"></script>
   <script src="assets/js/breakpoints.min.js"></script>
   <script src="assets/js/util.js"></script>
   <script src="assets/js/main.js"></script>
-  <!-- ★ add this last -->
   <script src="assets/js/site.js"></script>
 </body>
 </html>
