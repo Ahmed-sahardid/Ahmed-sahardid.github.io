@@ -57,6 +57,7 @@
       to   { left: -400%; }
     }
   </style>
+  
 
   <!-- ───── CAROUSEL SECTION CSS ───── -->
   <style>
@@ -91,10 +92,137 @@
     }
   </style>
 </head>
+  <style>
+    /* Remove all solid backgrounds */
+    body, .page-content,
+    .sidebar,
+    #header, #footer,
+    .flippy-nav, .actions.special {
+      background: transparent !important;
+    }
+
+    /* Ensure text remains legible */
+    h1, h2, h3, p, .flippy-nav li, .button, .nav-links a {
+      color: #fff !important;
+      text-shadow: 0 0 5px rgba(0,0,0,0.8);
+    }
+
+    /* Blue gradient accents */
+    .flippy-nav li:nth-child(odd)  {
+      background: linear-gradient(135deg,#0066ff,#3399ff) !important;
+    }
+    .flippy-nav li:nth-child(even) {
+      background: linear-gradient(135deg,#3399ff,#0066ff) !important;
+    }
+    .button, input.primary, .footer-button {
+      background: linear-gradient(135deg,#0066ff,#3399ff) !important;
+      color: #fff !important;
+      border: none !important;
+      text-shadow: none;
+    }
+    .button:hover, input.primary:hover, .footer-button:hover {
+      background: linear-gradient(135deg,#3399ff,#0066ff) !important;
+    }
+
+    /* Full-screen background video */
+    #bg-video {
+      position: fixed; top:0; left:0;
+      width:100%; height:100%;
+      object-fit:cover; z-index:-1;
+      pointer-events:none;
+    }
+
+    /* Sidebar base style */
+    .sidebar {
+      width: 200px;
+      background: #FFF4D1 !important;
+      position: fixed;
+      left: 0;
+      top: 0;
+      height: 100vh;
+      z-index: 1000;
+      box-shadow: 2px 0 8px rgba(0,0,0,0.03);
+      transition: left .3s cubic-bezier(.77,0,.175,1);
+    }
+    .flippy-nav {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      margin-top: 2rem;
+    }
+    .flippy-nav li {
+      margin:.5rem 1rem; padding:.8rem 1.1rem;
+      border-radius:7px; color:#fff; font-weight:600;
+      font-size:1.12rem; cursor:pointer;
+      transition: background .2s, transform .2s;
+    }
+    .flippy-nav li:hover {
+      opacity: .88;
+      transform: scale(1.05) !important;
+    }
+
+    /* Content area */
+    .page-content {
+      margin-left: 200px;
+      padding: 2.5rem 1rem 1rem 1rem;
+      min-height: 100vh;
+      background: transparent;
+      transition: margin-left .3s cubic-bezier(.77,0,.175,1);
+    }
+
+    /* Hamburger button hidden on desktop */
+    .menu-toggle {
+      display: none;
+    }
+    .overlay {
+      display: none;
+    }
+
+    /* Responsive styles */
+    @media (max-width: 980px) {
+      .sidebar {
+        left: -250px !important;
+        width: 250px;
+        box-shadow: 2px 0 12px rgba(0,0,0,.08);
+      }
+      body.sidebar-open .sidebar {
+        left: 0 !important;
+      }
+      .menu-toggle {
+        display: block;
+        position: fixed;
+        top: 1.2rem;
+        left: 1.2rem;
+        z-index: 11001;
+        background: linear-gradient(135deg,#ff8c00,#ff6347);
+        border: none;
+        padding: .55rem 1.2rem;
+        color: #fff;
+        font-size: 1.5rem;
+        border-radius: 6px;
+        cursor: pointer;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.10);
+      }
+      .overlay {
+        display: none;
+        position: fixed;
+        top: 0; left: 0; right: 0; bottom: 0;
+        background: rgba(0,0,0,.52);
+        z-index: 11000;
+      }
+      body.sidebar-open .overlay {
+        display: block;
+      }
+      .page-content {
+        margin-left: 0 !important;
+      }
+    }
+  </style>
+
 
 <body class="is-preload">
 
-  <!-- off-canvas toggle & overlay -->
+  <!-- Hamburger toggle (mobile only) + overlay -->
   <button class="menu-toggle" aria-label="Toggle menu">☰</button>
   <div class="overlay"></div>
 
