@@ -1,4 +1,3 @@
-<!-- portfolio.html -->
 <!DOCTYPE HTML>
 <html lang="en">
 <head>
@@ -9,190 +8,148 @@
   <link rel="stylesheet" href="assets/css/responsive.css" />
   <noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
 
-  <!-- ───── TICKER SECTION CSS ───── -->
+  <!-- ───── COLOR VARIABLES ───── -->
   <style>
-    /* Now matches page-content background */
+    :root {
+      --bg-color: #F5E5CC; /* unified unique background */
+      --flag-blue: #59b2e6;
+      --white-star: #fff;
+    }
+    body, html { margin: 0; padding: 0; height: 100%; background: var(--bg-color); }
+  </style>
+
+  <!-- ───── TICKER SECTION (SOMALI STYLE) ───── -->
+  <style>
     #ticker-section {
-      background: #FFF4D1;
-      padding: 4rem 0;
+      background: var(--bg-color);
+      padding: 1rem 0;
     }
     #ticker-section .ticker-container {
-      width: 790px;
-      height: 150px;
-      background-color: #d4e5ff;
+      width: 250px;
+      height: 50px;
       margin: 0 auto;
       position: relative;
     }
     #ticker-section .monitor-wrapper {
-      background: #050321;
-      width: 770px;
-      height: 130px;
+      background: var(--white-star);
+      width: 230px;
+      height: 40px;
       margin: 0 auto;
-      box-shadow: 0px 2px 2px 2px rgba(0,0,0,0.30);
+      box-shadow: 0 2px 4px rgba(0,0,0,0.2);
       overflow: hidden;
       position: relative;
-      top: 10px;
+      top: 5px;
+      border-radius: 4px;
     }
     #ticker-section .monitor {
-      width: 700px;
-      height: 100px;
-      background-color: #344151;
+      width: 210px;
+      height: 30px;
+      background: var(--flag-blue);
       overflow: hidden;
       white-space: nowrap;
       margin: 0 auto;
-      box-shadow: inset 0px 5px 10px 2px rgba(0,0,0,0.3);
       position: relative;
     }
     #ticker-section .monitor p {
       font-family: 'VT323', monospace;
-      font-size: 100px;
+      font-size: 30px;
       position: absolute;
       top: 0;
       left: 100%;
-      animation: ticker-move 20s infinite linear;
-      color: #EBB55F;
-      line-height: 100px;
+      animation: ticker-move 12s infinite linear;
+      color: var(--white-star);
+      line-height: 30px;
     }
     @keyframes ticker-move {
       from { left: 100%; }
-      to   { left: -400%; }
+      to   { left: -200%; }
     }
   </style>
 
-  <!-- ───── CAROUSEL SECTION CSS ───── -->
+  <!-- ───── GALLERY GRID CSS ───── -->
   <style>
-    :root {
-      --slider-width: 600px;
-      --slider-height: 400px;
-    }
     #gallery-section {
-      padding: 4rem 0;
-      background: #FFF4D1;
+      background: var(--bg-color);
+      padding: 2rem;
     }
-    #gallery-section .carousel-wrapper {
-      display: flex;
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .gallery-item {
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+      border-radius: 8px;
+    }
+    .gallery-item img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+    .gallery-item:hover img {
+      transform: scale(1.1) rotate(1deg);
+    }
+    .gallery-item::after {
+      content: '\2605';
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      font-size: 1.5rem;
+      color: rgba(255,255,255,0.8);
+      text-shadow: 0 0 5px rgba(0,0,0,0.5);
+    }
+    /* Lightbox overlay */
+    #lightbox {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.8);
+      display: none;
       justify-content: center;
+      align-items: center;
+      z-index: 2000;
     }
-    #gallery-section #slider {
-      width:  var(--slider-width);
-      height: var(--slider-height);
-      background-size:  cover;
-      background-position: center;
-      border-radius: 12px;
-      box-shadow: 0 8px 24px rgba(0,0,0,0.2);
-      transition: background-image 0.5s ease-in-out, opacity 0.5s;
-    }
-    #gallery-section #slider.fade-out { opacity: 0; }
-    #gallery-section #slider.fade-in  { opacity: 1; }
-    @media (max-width: 768px) {
-      :root {
-        --slider-width: 300px;
-        --slider-height: 200px;
-      }
+    #lightbox img {
+      max-width: 90%;
+      max-height: 90%;
+      border: 4px solid var(--white-star);
+      border-radius: 4px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.5);
     }
   </style>
 
-  <!-- ───── NAVBAR / SIDEBAR RESPONSIVE STYLES ───── -->
+  <!-- ───── STICKY FOOTER ───── -->
   <style>
-    .menu-toggle,
-    .overlay {
-      display: none;
+    .page-content { min-height: calc(100% - 60px); position: relative; padding-bottom: 60px; }
+    #footer {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      padding: 0.5rem 0;
+      background: var(--bg-color);
     }
-
-    /* Desktop sidebar */
-    .sidebar {
-      position: fixed;
-      top: 0; left: 0;
-      width: 200px;
-      height: 100vh;
-      background: #FFF4D1;
-      transform: none;
-      transition: transform .3s ease;
-      z-index: 1001;
-    }
-    .page-content {
-      margin-left: 200px;
-      transition: margin-left .3s ease;
-    }
-
-    /* Mobile ≤980px */
-@media (max-width: 980px) {
-  /* slide sidebar off screen */
-  .sidebar {
-    transform: translateX(-100%);
-    transition: transform .3s ease;
-    z-index: 1001;
-  }
-  /* bring it back when open */
-  body.sidebar-open .sidebar {
-    transform: translateX(0);
-  }
-
-  /* hamburger button */
-  .menu-toggle {
-    display: block;
-    position: fixed;
-    top: 1.2rem;
-    left: 1.2rem;
-    z-index: 1002;
-    background: linear-gradient(135deg,#ff8c00,#ff6347);
-    border: none;
-    padding: .55rem 1.2rem;
-    color: #fff;
-    font-size: 1.5rem;
-    border-radius: 6px;
-    cursor: pointer;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.10);
-  }
-
-  /* overlay hidden by default, then fade in */
-  .overlay {
-    position: fixed;
-    top:0; left:0; right:0; bottom:0;
-    background: rgba(0,0,0,.52);
-    opacity: 0;
-    visibility: hidden;
-    transition: opacity .3s ease, visibility .3s ease;
-    z-index: 1000;
-  }
-  body.sidebar-open .overlay {
-    opacity: 1;
-    visibility: visible;
-  }
-
-  /* content pushes back under overlay */
-  .page-content {
-    margin-left: 0 !important;
-  }
-}
-
-    /* Legibility overrides */
-    body, .page-content,
-    .sidebar, #header, #footer,
-    .flippy-nav, .actions.special {
-      background: transparent !important;
-    }
-    h1, h2, h3, p,
-    .flippy-nav li,
-    .button, .nav-links a {
-      color: #fff !important;
-      text-shadow: 0 0 5px rgba(0,0,0,0.8);
-    }
-    .flippy-nav li:nth-child(odd)  {
-      background: linear-gradient(135deg,#0066ff,#3399ff) !important;
-    }
-    .flippy-nav li:nth-child(even) {
-      background: linear-gradient(135deg,#3399ff,#0066ff) !important;
-    }
+    #footer .icons { margin-bottom: 0.25rem; }
+    #footer .icons li { display: inline-block; margin: 0 0.5rem; }
+    #footer .icons li a .label { display: none; }
+    #footer .copyright { font-size: 0.75rem; text-align: center; }
   </style>
 </head>
 <body class="is-preload">
 
-  <!-- Hamburger toggle + overlay -->
+  <!-- Hamburger + overlay -->
   <button class="menu-toggle" aria-label="Toggle menu">☰</button>
   <div class="overlay"></div>
 
-  <!-- Sidebar nav -->
+  <!-- Sidebar nav (unchanged) -->
   <aside class="sidebar">
     <ul class="flippy-nav">
       <li onclick="location.href='index.html'">Home</li>
@@ -204,23 +161,43 @@
 
   <!-- Page content -->
   <div class="page-content">
-    <!-- TICKER SECTION -->
+
+    <!-- TICKER -->
     <section id="ticker-section">
       <div class="ticker-container">
         <div class="monitor-wrapper">
           <div class="monitor">
-            <p>Welcome to the Gallery</p>
+            <p>Soo Dhawoow Gallery</p>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- CAROUSEL SECTION -->
+    <!-- GALLERY GRID -->
     <section id="gallery-section">
-      <div class="carousel-wrapper">
-        <div id="slider" class="fade-in"></div>
+      <div class="gallery-grid">
+        <div class="gallery-item"><img src="images/IMG_9166.JPG" alt="Photo"></div>
+        <div class="gallery-item"><img src="images/IMG_9167.JPG" alt="Photo"></div>
+        <div class="gallery-item"><img src="images/IMG_9168.JPG" alt="Photo"></div>
+        <div class="gallery-item"><img src="images/IMG_9169.JPG" alt="Photo"></div>
+        <div class="gallery-item"><img src="images/IMG_9170.JPG" alt="Photo"></div>
+        <div class="gallery-item"><img src="images/IMG_9171.JPG" alt="Photo"></div>
+        <div class="gallery-item"><img src="images/IMG_9172.JPG" alt="Photo"></div>
+        <div class="gallery-item"><img src="images/IMG_9173.JPG" alt="Photo"></div>
+        <div class="gallery-item"><img src="images/IMG_9174.JPG" alt="Photo"></div>
+        <div class="gallery-item"><img src="images/IMG_9175.JPG" alt="Photo"></div>
+        <div class="gallery-item"><img src="images/IMG_9176.JPG" alt="Photo"></div>
+        <div class="gallery-item"><img src="images/IMG_9177.JPG" alt="Photo"></div>
+        <div class="gallery-item"><img src="images/IMG_9178.JPG" alt="Photo"></div>
+        <div class="gallery-item"><img src="images/IMG_9179.JPG" alt="Photo"></div>
+        <div class="gallery-item"><img src="images/IMG_9180.JPG" alt="Photo"></div>
       </div>
     </section>
+
+    <!-- Lightbox -->
+    <div id="lightbox" onclick="this.style.display='none'">
+      <img src="" alt="Expanded photo" id="lightbox-img">
+    </div>
 
     <!-- FOOTER -->
     <section id="footer">
@@ -235,29 +212,18 @@
         <li>Design: <a href="#">Ahmed-Sahardid</a></li>
       </ul>
     </section>
-  </div><!-- /.page-content -->
+  </div>
 
-  <!-- Image carousel script -->
+  <!-- Gallery lightbox script -->
   <script>
-    const images = [
-      'images/IMG_9166.JPG','images/IMG_9167.JPG','images/IMG_9168.JPG','images/IMG_9169.JPG',
-      'images/IMG_9170.JPG','images/IMG_9171.JPG','images/IMG_9172.JPG','images/IMG_9173.JPG',
-      'images/IMG_9174.JPG','images/IMG_9175.JPG','images/IMG_9176.JPG','images/IMG_9177.JPG',
-      'images/IMG_9178.JPG','images/IMG_9179.JPG','images/IMG_9180.JPG'
-    ];
-    let current = 0;
-    const slider = document.getElementById('slider');
-    function showNextImage() {
-      slider.classList.replace('fade-in','fade-out');
-      setTimeout(() => {
-        slider.style.backgroundImage = `url('${images[current]}')`;
-        slider.classList.replace('fade-out','fade-in');
-        current = (current + 1) % images.length;
-      }, 500);
-    }
-    slider.style.backgroundImage = `url('${images[0]}')`;
-    current = 1;
-    setInterval(showNextImage, 2000);
+    document.querySelectorAll('.gallery-item img').forEach(img => {
+      img.addEventListener('click', () => {
+        const lightbox = document.getElementById('lightbox');
+        const lbImg = document.getElementById('lightbox-img');
+        lbImg.src = img.src;
+        lightbox.style.display = 'flex';
+      });
+    });
   </script>
 
   <!-- Core scripts -->

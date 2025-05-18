@@ -1,176 +1,68 @@
-<!-- book.html -->
 <!DOCTYPE HTML>
 <html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Bright Photo Booth – Book Now</title>
-
-  <!-- existing CSS -->
   <link rel="stylesheet" href="assets/css/main.css" />
   <link rel="stylesheet" href="assets/css/responsive.css" />
   <noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
 
-  <!-- ───── CUSTOM BRAND COLORS ───── -->
+  <!-- ───── COLOR VARIABLES ───── -->
   <style>
-    body, .page-content { background: #FFF4D1 !important; }
-    .sidebar { background: #FFF4D1 !important; }
-    .flippy-nav li:nth-child(odd)  { background: linear-gradient(135deg,#ff8c00,#ff6347) !important; }
-    .flippy-nav li:nth-child(even) { background: linear-gradient(135deg,#ff6347,#ff8c00) !important; }
-    #header, .main.style1, #footer { background: #ffffff !important; }
-    h1,h2 { color: #ff6347 !important; }
+    :root {
+      --bg-color: #F5E5CC;
+      --primary-gradient: linear-gradient(135deg,#ff8c00,#ff6347);
+      --txt-color: #333;
+      --accent: #ff6347;
+    }
+    body, html { margin:0; padding:0; background: var(--bg-color); color: var(--txt-color); }
+    .page-content { margin-left: 200px; padding-bottom: 60px; min-height: calc(100vh - 60px); position: relative; }
+    header#header { background: #fff; padding: 2rem; text-align: center; }
+    header#header h1 { margin:0 0 0.5rem; color: var(--accent); }
+    header#header p { margin:0; font-size:1.1rem; }
   </style>
 
   <!-- ───── Booking Form Styles ───── -->
   <style>
     .booking-inner {
-      max-width: 600px;
-      margin: 3rem auto;
-      padding: 2rem;
-      background: #fff;
-      border-radius: 12px;
-      box-shadow: 0 8px 24px rgba(0,0,0,0.1);
-      text-align: center;
+      max-width: 600px; margin: 2rem auto; padding: 2rem; background: #fff;
+      border-radius: 8px; box-shadow:0 4px 12px rgba(0,0,0,0.1);
     }
-    .booking-inner + .booking-inner { margin-top: 2rem; }
-    .booking-inner h2 {
-      margin-bottom: 1rem;
-      color: #ff6347;
-    }
-    .booking-inner p {
-      margin-bottom: 1.5rem;
-      font-size: 1.125rem;
-      color: #333;
-    }
-    .booking-inner form {
-      display: inline-block;
-      text-align: left;
-      width: 100%;
-      max-width: 400px;
-    }
-    .booking-inner label {
-      display: block;
-      margin-bottom: .5rem;
-      font-weight: bold;
-    }
-    .booking-inner input {
-      width: 100%;
-      padding: .5rem;
-      margin-bottom: 1rem;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-      font-size: 1rem;
-    }
+    .booking-inner h2 { color: var(--accent); margin-bottom:1rem; }
+    .booking-inner p { margin-bottom:1.5rem; font-size:1rem; }
+    .booking-inner form { display:flex; flex-direction:column; }
+    .booking-inner label { font-weight:bold; margin-bottom:0.25rem; }
+    .booking-inner input { padding:0.5rem; margin-bottom:1rem; border:1px solid #ccc; border-radius:4px; }
     .booking-inner button {
-      display: block;
-      width: 100%;
-      padding: 12px 36px;
-      font-size: 1rem;
-      background: linear-gradient(135deg,#ff8c00,#ff6347);
-      color: #fff;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
+      padding:0.75rem; font-size:1rem; background: var(--primary-gradient); color:#fff;
+      border:none; border-radius:4px; cursor:pointer;
     }
-    .booking-inner button:hover {
-      background: linear-gradient(135deg,#ff6347,#ff8c00);
-    }
+    .booking-inner button:hover { background: linear-gradient(135deg,#ff6347,#ff8c00); }
   </style>
 
-  <!-- ───── NAVBAR / SIDEBAR RESPONSIVE STYLES ───── -->
+  <!-- ───── NAVBAR / SIDEBAR ───── -->
   <style>
-    .menu-toggle,
-    .overlay {
-      display: none;
-    }
-    .sidebar {
-      position: fixed;
-      top: 0; left: 0;
-      width: 200px; height: 100vh;
-      background: #FFF4D1;
-      transform: none;
-      transition: transform .3s ease;
-      z-index: 1001;
-    }
-    .page-content {
-      margin-left: 200px;
-      transition: margin-left .3s ease;
-    }
-@media (max-width: 980px) {
-  /* slide sidebar off screen */
-  .sidebar {
-    transform: translateX(-100%);
-    transition: transform .3s ease;
-    z-index: 1001;
-  }
-  /* bring it back when open */
-  body.sidebar-open .sidebar {
-    transform: translateX(0);
-  }
+    .sidebar { position: fixed; top:0; left:0; width:200px; height:100vh; background: var(--bg-color); }
+    .menu-toggle, .overlay { display:none; }
+    .flippy-nav li:nth-child(odd)  { background: var(--primary-gradient)!important; }
+    .flippy-nav li:nth-child(even) { background: linear-gradient(135deg,#ff6347,#ff8c00)!important; }
+    @media(max-width:980px){ .sidebar{transform:translateX(-100%); transition:.3s;} body.sidebar-open .sidebar{transform:translateX(0);} .menu-toggle{display:block;position:fixed;top:1rem;left:1rem;padding:.5rem 1rem;background:var(--primary-gradient);color:#fff;border:none;border-radius:4px;z-index:1002;} .overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.5);opacity:0;visibility:hidden;transition:.3s;} body.sidebar-open .overlay{opacity:1;visibility:visible;} .page-content{margin-left:0;} }
+  </style>
 
-  /* hamburger button */
-  .menu-toggle {
-    display: block;
-    position: fixed;
-    top: 1.2rem;
-    left: 1.2rem;
-    z-index: 1002;
-    background: linear-gradient(135deg,#ff8c00,#ff6347);
-    border: none;
-    padding: .55rem 1.2rem;
-    color: #fff;
-    font-size: 1.5rem;
-    border-radius: 6px;
-    cursor: pointer;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.10);
-  }
-
-  /* overlay hidden by default, then fade in */
-  .overlay {
-    position: fixed;
-    top:0; left:0; right:0; bottom:0;
-    background: rgba(0,0,0,.52);
-    opacity: 0;
-    visibility: hidden;
-    transition: opacity .3s ease, visibility .3s ease;
-    z-index: 1000;
-  }
-  body.sidebar-open .overlay {
-    opacity: 1;
-    visibility: visible;
-  }
-
-  /* content pushes back under overlay */
-  .page-content {
-    margin-left: 0 !important;
-  }
-}
-    body, .page-content,
-    .sidebar, #header, #footer,
-    .flippy-nav, .actions.special {
-      background: transparent !important;
-    }
-    h1,h2,h3,p,
-    .flippy-nav li,
-    .button, .nav-links a {
-      color: #fff !important;
-      text-shadow: 0 0 5px rgba(0,0,0,0.8);
-    }
-    .flippy-nav li:nth-child(odd)  {
-      background: linear-gradient(135deg,#0066ff,#3399ff) !important;
-    }
-    .flippy-nav li:nth-child(even) {
-      background: linear-gradient(135deg,#3399ff,#0066ff) !important;
-    }
+  <!-- ───── STICKY FOOTER ───── -->
+  <style>
+    #footer { position:absolute; bottom:0; left:0; width:100%; padding:0.5rem 0; background: var(--bg-color); }
+    #footer .icons li { display:inline-block; margin:0 0.5rem; }
+    #footer .icons li a .label { display:none; }
+    #footer .copyright{ font-size:0.75rem; text-align:center; margin:0; }
   </style>
 </head>
 <body class="is-preload">
 
-  <!-- Hamburger toggle + overlay -->
   <button class="menu-toggle" aria-label="Toggle menu">☰</button>
   <div class="overlay"></div>
 
-  <!-- Sidebar nav -->
   <aside class="sidebar">
     <ul class="flippy-nav">
       <li onclick="location.href='index.html'">Home</li>
@@ -180,79 +72,57 @@
     </ul>
   </aside>
 
-  <!-- PAGE CONTENT -->
   <div class="page-content">
-    <!-- Header -->
     <header id="header">
-      <div class="inner">
-        <h1>Reserve Your Photo Booth</h1>
-        <p>Fill out your details and request an invoice. We’ll email it to you—then you can call us to finalize!</p>
-      </div>
+      <h1>Reserve Your Photo Booth</h1>
+      <p>Fill out your details—request your invoice via email, then give us a call!</p>
     </header>
 
-    <!-- Booking Options -->
     <section class="main style1">
-
-      <!-- General Package -->
+      <!-- Packages -->
       <div class="booking-inner">
         <h2>General Package</h2>
-        <p>Flat rate: $399<br>Includes 2 hours, attendant, props &amp; digital copies</p>
+        <p>Flat rate: $399<br>Includes 2 hours, attendant, props & digital copies</p>
         <form action="https://formspree.io/f/xpwdbjgl" method="POST">
           <input type="hidden" name="service" value="General Package">
           <input type="hidden" name="_subject" value="Invoice Request: General Package">
-          <label for="name-gen">Your Name:</label>
-          <input id="name-gen" type="text" name="name" placeholder="John Doe" required>
-          <label for="email-gen">Your Email:</label>
-          <input id="email-gen" type="email" name="_replyto" placeholder="you@example.com" required>
-          <label for="phone-gen">Phone Number:</label>
-          <input id="phone-gen" type="tel" name="phone" placeholder="(123) 456-7890">
-          <label for="location-gen">Event Location:</label>
-          <input id="location-gen" type="text" name="location" placeholder="Venue or address">
+          <label>Name</label><input type="text" name="name" required>
+          <label>Email</label><input type="email" name="_replyto" required>
+          <label>Phone</label><input type="tel" name="phone">
+          <label>Location</label><input type="text" name="location">
           <button type="submit">Request Invoice</button>
         </form>
       </div>
 
-      <!-- Wedding Special -->
       <div class="booking-inner">
         <h2>Wedding Special</h2>
-        <p>Flat rate: $499<br>Includes 4 hours, attendant, premium props &amp; digital copies</p>
+        <p>Flat rate: $499<br>Includes 4 hours, attendant, premium props & digital copies</p>
         <form action="https://formspree.io/f/xpwdbjgl" method="POST">
           <input type="hidden" name="service" value="Wedding Special">
           <input type="hidden" name="_subject" value="Invoice Request: Wedding Special">
-          <label for="name-wed">Your Name:</label>
-          <input id="name-wed" type="text" name="name" placeholder="John Doe" required>
-          <label for="email-wed">Your Email:</label>
-          <input id="email-wed" type="email" name="_replyto" placeholder="you@example.com" required>
-          <label for="phone-wed">Phone Number:</label>
-          <input id="phone-wed" type="tel" name="phone" placeholder="(123) 456-7890">
-          <label for="location-wed">Event Location:</label>
-          <input id="location-wed" type="text" name="location" placeholder="Venue or address">
+          <label>Name</label><input type="text" name="name" required>
+          <label>Email</label><input type="email" name="_replyto" required>
+          <label>Phone</label><input type="tel" name="phone">
+          <label>Location</label><input type="text" name="location">
           <button type="submit">Request Invoice</button>
         </form>
       </div>
 
-      <!-- Student & First-Time Discount -->
       <div class="booking-inner">
-        <h2>Student &amp; First-Time Discount</h2>
-        <p>Flat rate: $299<br>Must provide valid student ID or be a first-time customer</p>
+        <h2>Student & First-Time Discount</h2>
+        <p>Flat rate: $299<br>Valid student ID or first-time customer</p>
         <form action="https://formspree.io/f/xpwdbjgl" method="POST">
           <input type="hidden" name="service" value="Student/First-Time Discount">
           <input type="hidden" name="_subject" value="Invoice Request: Student Discount">
-          <label for="name-disc">Your Name:</label>
-          <input id="name-disc" type="text" name="name" placeholder="John Doe" required>
-          <label for="email-disc">Your Email:</label>
-          <input id="email-disc" type="email" name="_replyto" placeholder="you@example.com" required>
-          <label for="phone-disc">Phone Number:</label>
-          <input id="phone-disc" type="tel" name="phone" placeholder="(123) 456-7890">
-          <label for="location-disc">Event Location:</label>
-          <input id="location-disc" type="text" name="location" placeholder="Venue or address">
+          <label>Name</label><input type="text" name="name" required>
+          <label>Email</label><input type="email" name="_replyto" required>
+          <label>Phone</label><input type="tel" name="phone">
+          <label>Location</label><input type="text" name="location">
           <button type="submit">Request Invoice</button>
         </form>
       </div>
-
     </section>
 
-    <!-- Footer -->
     <section id="footer">
       <ul class="icons">
         <li><a href="#" class="icon brands alt fa-twitter"><span class="label">Twitter</span></a></li>
@@ -265,9 +135,8 @@
         <li>Design: <a href="#">Ahmed-Sahardid</a></li>
       </ul>
     </section>
-  </div><!-- /.page-content -->
+  </div>
 
-  <!-- Core scripts -->
   <script src="assets/js/jquery.min.js"></script>
   <script src="assets/js/browser.min.js"></script>
   <script src="assets/js/breakpoints.min.js"></script>

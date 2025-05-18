@@ -8,96 +8,39 @@
   <link rel="stylesheet" href="assets/css/responsive.css" />
   <noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
 
-  <!-- NAVBAR / SIDEBAR RESPONSIVE STYLES -->
+  <!-- ───── COLOR VARIABLES ───── -->
   <style>
-    /* hide toggle & overlay by default */
+    :root {
+      --bg-color: #F5E5CC;
+      --primary-gradient: linear-gradient(135deg,#ff8c00,#ff6347);
+      --secondary-gradient: linear-gradient(135deg,#ff6347,#ff8c00);
+      --txt-color: #333;
+      --accent: #ff6347;
+    }
+    body, html { margin:0; padding:0; background: var(--bg-color); color: var(--txt-color); font-family: sans-serif; }
+    .page-content { margin-left:200px; padding:2rem; min-height:100vh; }
+    .sidebar { position: fixed; top:0; left:0; width:200px; height:100vh; background: var(--bg-color); }
     .menu-toggle, .overlay { display: none; }
-
-    /* desktop sidebar */
-    .sidebar {
-      position: fixed; top:0; left:0;
-      width:200px; height:100vh;
-      background:#FFF4D1;
-      transform:none;
-      transition:transform .3s ease;
-      z-index:1001;
+    .flippy-nav li:nth-child(odd)  { background: var(--primary-gradient)!important; }
+    .flippy-nav li:nth-child(even) { background: var(--secondary-gradient)!important; }
+    @media(max-width:980px) {
+      .sidebar { transform: translateX(-100%); transition: transform .3s ease; }
+      body.sidebar-open .sidebar { transform: translateX(0); }
+      .menu-toggle { display:block; position:fixed; top:1rem; left:1rem; padding:.5rem 1rem; background:var(--primary-gradient); color:#fff; border:none; border-radius:4px; z-index:1002; }
+      .overlay { position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.5); opacity:0; visibility:hidden; transition:.3s; }
+      body.sidebar-open .overlay { opacity:1; visibility:visible; }
+      .page-content { margin-left:0 !important; }
     }
-    .page-content { margin-left:200px; transition:margin-left .3s ease; }
-
-@media (max-width: 980px) {
-  /* slide sidebar off screen */
-  .sidebar {
-    transform: translateX(-100%);
-    transition: transform .3s ease;
-    z-index: 1001;
-  }
-  /* bring it back when open */
-  body.sidebar-open .sidebar {
-    transform: translateX(0);
-  }
-
-  /* hamburger button */
-  .menu-toggle {
-    display: block;
-    position: fixed;
-    top: 1.2rem;
-    left: 1.2rem;
-    z-index: 1002;
-    background: linear-gradient(135deg,#ff8c00,#ff6347);
-    border: none;
-    padding: .55rem 1.2rem;
-    color: #fff;
-    font-size: 1.5rem;
-    border-radius: 6px;
-    cursor: pointer;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.10);
-  }
-
-  /* overlay hidden by default, then fade in */
-  .overlay {
-    position: fixed;
-    top:0; left:0; right:0; bottom:0;
-    background: rgba(0,0,0,.52);
-    opacity: 0;
-    visibility: hidden;
-    transition: opacity .3s ease, visibility .3s ease;
-    z-index: 1000;
-  }
-  body.sidebar-open .overlay {
-    opacity: 1;
-    visibility: visible;
-  }
-
-  /* content pushes back under overlay */
-  .page-content {
-    margin-left: 0 !important;
-  }
-}
-
-    /* keep your existing legibility overrides */
-    body, .page-content,
-    .sidebar, #header, #footer,
-    .flippy-nav, .actions.special {
-      background: transparent !important;
-    }
-    h1,h2,h3,p,
-    .flippy-nav li,
-    .button, .nav-links a {
-      color: #fff !important;
-      text-shadow:0 0 5px rgba(0,0,0,0.8);
-    }
-    .flippy-nav li:nth-child(odd)  {
-      background:linear-gradient(135deg,#0066ff,#3399ff)!important;
-    }
-    .flippy-nav li:nth-child(even) {
-      background:linear-gradient(135deg,#3399ff,#0066ff)!important;
-    }
+    /* Reviews section styling */
+    .reviews-section { max-width:800px; margin:0 auto; padding:2rem; background:#fff; border-radius:8px; box-shadow:0 4px 12px rgba(0,0,0,0.1); text-align:center; }
+    .reviews-section h1 { color: var(--accent); margin-bottom:1rem; font-size:2rem; }
   </style>
 
   <!-- Elfsight Reviews widget -->
   <script src="https://static.elfsight.com/platform/platform.js" async></script>
 </head>
-<body>
+<body class="is-preload">
+
   <!-- Hamburger toggle + overlay -->
   <button class="menu-toggle" aria-label="Toggle menu">☰</button>
   <div class="overlay"></div>
@@ -116,10 +59,7 @@
   <div class="page-content">
     <section class="reviews-section">
       <h1>What People Are Saying</h1>
-      <div
-        class="elfsight-app-88b4433c-25b1-48b1-a7f7-ea1e035af24c"
-        data-elfsight-app-lazy>
-      </div>
+      <div class="elfsight-app-88b4433c-25b1-48b1-a7f7-ea1e035af24c" data-elfsight-app-lazy></div>
     </section>
   </div>
 
