@@ -1,155 +1,73 @@
 <!DOCTYPE HTML>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Bright Photo Booth – Gallery</title>
-  <link rel="stylesheet" href="assets/css/main.css" />
-  <link rel="stylesheet" href="assets/css/responsive.css" />
-  <noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
-
-  <!-- ───── COLOR VARIABLES ───── -->
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Bright Photo Booth – Photo Gallery</title>
+  <link rel="stylesheet" href="assets/css/main.css"/>
+  <link rel="stylesheet" href="assets/css/responsive.css"/>
+  <noscript><link rel="stylesheet" href="assets/css/noscript.css"/></noscript>
   <style>
     :root {
-      --bg-color: #F5E5CC; /* unified unique background */
-      --flag-blue: #59b2e6;
-      --white-star: #fff;
+      --bg: #f5e5cc;
+      --wood: #d2a679;
+      --accent: #0066ff;
+      --text: #333;
     }
-    body, html { margin: 0; padding: 0; height: 100%; background: var(--bg-color); }
-  </style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body, html { height: 100%; background: var(--bg); font-family: 'Helvetica Neue', sans-serif; color: var(--text); }
+    .page-content { margin-left: 200px; padding: 2rem; }
 
-  <!-- ───── TICKER SECTION (SOMALI STYLE) ───── -->
-  <style>
-    #ticker-section {
-      background: var(--bg-color);
-      padding: 1rem 0;
+    /* sidebar/nav */
+    .sidebar { width: 200px; background: #FFF4D1!important; position: fixed; top: 0; left: 0; height: 100vh; z-index: 1000; box-shadow: 2px 0 8px rgba(0,0,0,0.03); transition: left .3s; }
+    .flippy-nav { list-style: none; margin-top: 2rem; padding: 0; }
+    .flippy-nav li { margin: .5rem 1rem; padding: .8rem 1.1rem; border-radius: 7px; color: #fff; font-weight: 600; font-size: 1.12rem; cursor: pointer; background: var(--accent); transition: opacity .2s; }
+    .flippy-nav li:hover { opacity: .8; }
+    .menu-toggle { display: none; }
+    .overlay { display: none; }
+    @media(max-width:980px) {
+      .sidebar { transform: translateX(-100%); }
+      body.sidebar-open .sidebar { transform: translateX(0); }
+      .menu-toggle { display: block; position: fixed; top: 1rem; left: 1rem; background: var(--accent); color: #fff; border: none; padding: .5rem; font-size: 1.5rem; z-index: 1001; border-radius: 4px; cursor: pointer; }
+      .overlay { display: block; position: fixed; inset: 0; background: rgba(0,0,0,.5); opacity: 0; visibility: hidden; transition: opacity .3s; }
+      body.sidebar-open .overlay { opacity: 1; visibility: visible; }
+      .page-content { margin-left: 0; }
     }
-    #ticker-section .ticker-container {
-      width: 250px;
-      height: 50px;
-      margin: 0 auto;
-      position: relative;
-    }
-    #ticker-section .monitor-wrapper {
-      background: var(--white-star);
-      width: 230px;
-      height: 40px;
-      margin: 0 auto;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.2);
-      overflow: hidden;
-      position: relative;
-      top: 5px;
-      border-radius: 4px;
-    }
-    #ticker-section .monitor {
-      width: 210px;
-      height: 30px;
-      background: var(--flag-blue);
-      overflow: hidden;
-      white-space: nowrap;
-      margin: 0 auto;
-      position: relative;
-    }
-    #ticker-section .monitor p {
-      font-family: 'VT323', monospace;
-      font-size: 30px;
-      position: absolute;
-      top: 0;
-      left: 100%;
-      animation: ticker-move 12s infinite linear;
-      color: var(--white-star);
-      line-height: 30px;
-    }
-    @keyframes ticker-move {
-      from { left: 100%; }
-      to   { left: -200%; }
-    }
-  </style>
 
-  <!-- ───── GALLERY GRID CSS ───── -->
-  <style>
-    #gallery-section {
-      background: var(--bg-color);
-      padding: 2rem;
-    }
-    .gallery-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 1rem;
-      max-width: 1200px;
-      margin: 0 auto;
-    }
-    .gallery-item {
-      position: relative;
-      overflow: hidden;
-      cursor: pointer;
-      border-radius: 8px;
-    }
-    .gallery-item img {
-      display: block;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      transition: transform 0.5s ease;
-    }
-    .gallery-item:hover img {
-      transform: scale(1.1) rotate(1deg);
-    }
-    .gallery-item::after {
-      content: '\2605';
-      position: absolute;
-      top: 8px;
-      right: 8px;
-      font-size: 1.5rem;
-      color: rgba(255,255,255,0.8);
-      text-shadow: 0 0 5px rgba(0,0,0,0.5);
-    }
-    /* Lightbox overlay */
-    #lightbox {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0,0,0,0.8);
-      display: none;
-      justify-content: center;
-      align-items: center;
-      z-index: 2000;
-    }
-    #lightbox img {
-      max-width: 90%;
-      max-height: 90%;
-      border: 4px solid var(--white-star);
-      border-radius: 4px;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.5);
-    }
-  </style>
+    /* title */
+    h1.gallery-title { text-align: center; margin-bottom: 1.5rem; font-size: 2rem; letter-spacing: .05rem; }
 
-  <!-- ───── STICKY FOOTER ───── -->
-  <style>
-    .page-content { min-height: calc(100% - 60px); position: relative; padding-bottom: 60px; }
-    #footer {
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      width: 100%;
-      padding: 0.5rem 0;
-      background: var(--bg-color);
+    /* main gallery layout */
+    .gallery-container { display: flex; justify-content: center; align-items: center; gap: 1rem; }
+    .vertical-thumbs { width: 100px; height: 400px; overflow-y: auto; position: relative; display: flex; flex-direction: column; gap: .5rem; }
+    .vertical-thumbs img { width: 100%; border-radius: 4px; opacity: .6; cursor: pointer; transition: opacity .2s; }
+    .vertical-thumbs img.active, .vertical-thumbs img:hover { opacity: 1; }
+    .vertical-thumbs .arrow-btn { position: absolute; left: 50%; transform: translateX(-50%); background: rgba(0,0,0,.5); color: #fff; border: none; font-size: 1.5rem; padding: .25rem .5rem; cursor: pointer; border-radius: 4px; }
+    .vertical-thumbs .up { top: 5px; }
+    .vertical-thumbs .down { bottom: 5px; }
+
+    .main-view { flex: 1; max-width: 800px; position: relative; }
+    .main-view img { width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+
+    /* bottom carousel */
+    .thumb-carousel { margin-top: 1.5rem; display: flex; justify-content: center; gap: .5rem; overflow-x: auto; padding-bottom: 1rem; }
+    .thumb-carousel img { width: 80px; height: 50px; object-fit: cover; border: 2px solid transparent; border-radius: 4px; cursor: pointer; opacity: .7; transition: opacity .2s, border-color .2s; }
+    .thumb-carousel img.active, .thumb-carousel img:hover { opacity: 1; border-color: var(--accent); }
+
+    /* **RESPONSIVE** */
+    @media (max-width: 768px) {
+      .gallery-container { flex-direction: column; }
+      .vertical-thumbs { display: none; }
+      .page-content { padding: 1rem; margin-left: 0; }
+      .main-view img { max-height: 50vh; }
+      .thumb-carousel { margin-top: 1rem; }
+      .thumb-carousel img { width: 60px; height: 40px; }
     }
-    #footer .icons { margin-bottom: 0.25rem; }
-    #footer .icons li { display: inline-block; margin: 0 0.5rem; }
-    #footer .icons li a .label { display: none; }
-    #footer .copyright { font-size: 0.75rem; text-align: center; }
   </style>
 </head>
-<body class="is-preload">
-
-  <!-- Hamburger + overlay -->
+<body>
   <button class="menu-toggle" aria-label="Toggle menu">☰</button>
   <div class="overlay"></div>
-
-  <!-- Sidebar nav (unchanged) -->
   <aside class="sidebar">
     <ul class="flippy-nav">
       <li onclick="location.href='index.html'">Home</li>
@@ -158,80 +76,76 @@
       <li onclick="location.href='book.html'">Book Now</li>
     </ul>
   </aside>
-
-  <!-- Page content -->
   <div class="page-content">
-
-    <!-- TICKER -->
-    <section id="ticker-section">
-      <div class="ticker-container">
-        <div class="monitor-wrapper">
-          <div class="monitor">
-            <p>Soo Dhawoow Gallery</p>
-          </div>
-        </div>
+    <h1 class="gallery-title">PHOTO GALLERY</h1>
+    <div class="gallery-container">
+      <div class="vertical-thumbs" id="left-thumbs">
+        <button class="arrow-btn up" onclick="scrollThumbs('up','left')">‹</button>
       </div>
-    </section>
-
-    <!-- GALLERY GRID -->
-    <section id="gallery-section">
-      <div class="gallery-grid">
-        <div class="gallery-item"><img src="images/IMG_9166.JPG" alt="Photo"></div>
-        <div class="gallery-item"><img src="images/IMG_9167.JPG" alt="Photo"></div>
-        <div class="gallery-item"><img src="images/IMG_9168.JPG" alt="Photo"></div>
-        <div class="gallery-item"><img src="images/IMG_9169.JPG" alt="Photo"></div>
-        <div class="gallery-item"><img src="images/IMG_9170.JPG" alt="Photo"></div>
-        <div class="gallery-item"><img src="images/IMG_9171.JPG" alt="Photo"></div>
-        <div class="gallery-item"><img src="images/IMG_9172.JPG" alt="Photo"></div>
-        <div class="gallery-item"><img src="images/IMG_9173.JPG" alt="Photo"></div>
-        <div class="gallery-item"><img src="images/IMG_9174.JPG" alt="Photo"></div>
-        <div class="gallery-item"><img src="images/IMG_9175.JPG" alt="Photo"></div>
-        <div class="gallery-item"><img src="images/IMG_9176.JPG" alt="Photo"></div>
-        <div class="gallery-item"><img src="images/IMG_9177.JPG" alt="Photo"></div>
-        <div class="gallery-item"><img src="images/IMG_9178.JPG" alt="Photo"></div>
-        <div class="gallery-item"><img src="images/IMG_9179.JPG" alt="Photo"></div>
-        <div class="gallery-item"><img src="images/IMG_9180.JPG" alt="Photo"></div>
+      <div class="main-view">
+        <img id="active-image" src="images/IMG_9166.JPG" alt="Active Photo"/>
       </div>
-    </section>
-
-    <!-- Lightbox -->
-    <div id="lightbox" onclick="this.style.display='none'">
-      <img src="" alt="Expanded photo" id="lightbox-img">
+      <div class="vertical-thumbs" id="right-thumbs">
+        <button class="arrow-btn down" onclick="scrollThumbs('down','right')">›</button>
+      </div>
     </div>
-
-    <!-- FOOTER -->
-    <section id="footer">
-      <ul class="icons">
-        <li><a href="#" class="icon brands alt fa-twitter"><span class="label">Twitter</span></a></li>
-        <li><a href="#" class="icon brands alt fa-facebook-f"><span class="label">Facebook</span></a></li>
-        <li><a href="#" class="icon brands alt fa-instagram"><span class="label">Instagram</span></a></li>
-        <li><a href="#" class="icon solid alt fa-envelope"><span class="label">Email</span></a></li>
-      </ul>
-      <ul class="copyright">
-        <li>&copy; 2025 Bright Photo Booth</li>
-        <li>Design: <a href="#">Ahmed-Sahardid</a></li>
-      </ul>
-    </section>
+    <div class="thumb-carousel" id="bottom-thumbs"></div>
   </div>
 
-  <!-- Gallery lightbox script -->
   <script>
-    document.querySelectorAll('.gallery-item img').forEach(img => {
-      img.addEventListener('click', () => {
-        const lightbox = document.getElementById('lightbox');
-        const lbImg = document.getElementById('lightbox-img');
-        lbImg.src = img.src;
-        lightbox.style.display = 'flex';
-      });
-    });
-  </script>
+    const images = [
+      'IMG_9166.JPG','IMG_9167.JPG','IMG_9168.JPG','IMG_9169.JPG',
+      'IMG_9170.JPG','IMG_9171.JPG','IMG_9172.JPG','IMG_9173.JPG',
+      'IMG_9174.JPG','IMG_9175.JPG','IMG_9176.JPG','IMG_9177.JPG',
+      'IMG_9178.JPG','IMG_9179.JPG','IMG_9180.JPG'
+    ];
+    let currentIndex = 0;
+    const left = document.getElementById('left-thumbs'),
+          right = document.getElementById('right-thumbs'),
+          bottom = document.getElementById('bottom-thumbs'),
+          active = document.getElementById('active-image');
 
-  <!-- Core scripts -->
-  <script src="assets/js/jquery.min.js"></script>
-  <script src="assets/js/browser.min.js"></script>
-  <script src="assets/js/breakpoints.min.js"></script>
-  <script src="assets/js/util.js"></script>
-  <script src="assets/js/main.js"></script>
-  <script src="assets/js/site.js"></script>
+    function buildThumbnails(){
+      images.forEach((img, i) => {
+        let thumbL = document.createElement('img');
+        thumbL.src = `images/${img}`;
+        thumbL.dataset.index = i;
+        thumbL.onclick = () => selectImage(i);
+        left.appendChild(thumbL);
+
+        let thumbR = thumbL.cloneNode();
+        thumbR.onclick = () => selectImage(i);
+        right.insertBefore(thumbR, right.querySelector('.down'));
+
+        let thumbB = thumbL.cloneNode();
+        thumbB.onclick = () => selectImage(i);
+        bottom.appendChild(thumbB);
+      });
+    }
+
+    function selectImage(i){
+      currentIndex = i;
+      active.src = `images/${images[i]}`;
+      document.querySelectorAll('.vertical-thumbs img, .thumb-carousel img').forEach(el=>{
+        el.classList.toggle('active', +el.dataset.index === i);
+      });
+    }
+
+    function scrollThumbs(dir, side){
+      const container = side==='left'? left : right;
+      container.scrollBy({ top: dir==='up'? -100 : 100, behavior:'smooth' });
+    }
+
+    // sidebar toggles
+    const menuBtn = document.querySelector('.menu-toggle'),
+          overlay = document.querySelector('.overlay'),
+          body    = document.body;
+    menuBtn.onclick = () => body.classList.toggle('sidebar-open');
+    overlay.onclick = () => body.classList.remove('sidebar-open');
+
+    // init
+    buildThumbnails();
+    selectImage(0);
+  </script>
 </body>
 </html>
