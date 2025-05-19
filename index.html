@@ -1,31 +1,81 @@
 <!DOCTYPE HTML>
 <html lang="en">
-<head><meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/><title>Bright Photo Booth – Home</title>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"/>
-<link rel="stylesheet" href="assets/css/main.css"/><link rel="stylesheet" href="assets/css/responsive.css"/><noscript><link rel="stylesheet" href="assets/css/noscript.css"/></noscript>
-<style>
-  /* retain transparent backgrounds */
-  body,.page-content,#header,#footer,.actions.special{background:transparent!important}
-  /* text styling */
-  h1,h2,h3,p,.navbar-brand,.nav-link,.button{color:#fff!important;text-shadow:0 0 5px rgba(0,0,0,0.8)!important}
-  .button,input.primary,.footer-button{background:linear-gradient(135deg,#0066ff,#3399ff)!important;color:#fff!important;border:none!important}
-  .button:hover,input.primary:hover,.footer-button:hover{background:linear-gradient(135deg,#3399ff,#0066ff)!important}
-  /* background video */
-  #bg-video{position:fixed;top:0;left:0;width:100%;height:100%;object-fit:cover;z-index:-1;pointer-events:none}
-  /* center content */
-  .page-content{margin:0 auto!important;padding:2rem;max-width:600px!important}
-  @media(max-width:980px){.page-content{padding-top:6rem!important}}
-  /* navbar overrides */
-  .navbar{position:fixed;top:0;right:0;left:0;background:transparent;z-index:1000}
-  .navbar-nav{margin-left:auto}
-  .navbar-toggler{border:none;color:#fff}
-  .navbar-toggler-icon{filter:invert(1) brightness(2)}
-  .nav-link{padding:.5rem 1rem;transition:color .3s,background .3s}
-  .nav-link:hover{color:#3399ff!important;background:rgba(255,255,255,0.1);border-radius:4px}
-</style>
+<head>
+  <meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Bright Photo Booth – Home</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <link rel="stylesheet" href="assets/css/main.css"/><link rel="stylesheet" href="assets/css/responsive.css"/><noscript><link rel="stylesheet" href="assets/css/noscript.css"/></noscript>
+  <style>
+    /* transparent backgrounds everywhere */
+    body, .page-content, #header, #footer, .actions.special { background: transparent !important; }
+    /* white text + buttons */
+    h1, h2, h3, p, .navbar-brand, .nav-link, .button {
+      color: #fff !important;
+      text-shadow: 0 0 5px rgba(0,0,0,0.8) !important;
+      pointer-events: auto;
+    }
+    .button {
+      background: linear-gradient(135deg,#0066ff,#3399ff) !important;
+      color: #fff !important;
+      border: none !important;
+      pointer-events: auto;
+    }
+    .button:hover {
+      background: linear-gradient(135deg,#3399ff,#0066ff) !important;
+    }
+    /* background video behind everything */
+    #bg-video {
+      position: fixed; top:0; left:0;
+      width:100%; height:100%;
+      object-fit:cover; z-index:-2;
+      pointer-events:none;
+    }
+    /* content sits above video */
+    .page-content {
+      margin:0 auto !important;
+      padding:2rem;
+      max-width:600px !important;
+      position: relative;
+      z-index: 1;
+    }
+    @media(max-width:980px){
+      .page-content { padding-top:6rem !important; }
+    }
+    /* navbar */
+    .navbar {
+      position: fixed; top:0; left:0; right:0;
+      background: transparent; z-index: 2;
+    }
+    .navbar-nav { margin-left:auto; }
+    .navbar-toggler { border:none; color:#fff; }
+    .navbar-toggler-icon { filter: invert(1) brightness(2); }
+    .nav-link {
+      padding: .5rem 1rem;
+      transition: color .3s, background .3s;
+    }
+    .nav-link:hover {
+      color: #3399ff !important;
+      background: rgba(255,255,255,0.1);
+      border-radius: 4px;
+    }
+    /* hero header elevated */
+    #header {
+      position: relative;
+      z-index: 1;
+    }
+    .actions.special .button {
+      position: relative;
+      z-index: 1;
+    }
+  </style>
 </head>
 <body class="is-preload">
-  <video id="bg-video" autoplay muted loop playsinline><source src="assets/videos/movie.mp4" type="video/mp4"/>Sorry, your browser doesn’t support background video.</video>
+
+  <video id="bg-video" autoplay muted loop playsinline>
+    <source src="assets/videos/movie.mp4" type="video/mp4"/>  
+    Sorry, your browser doesn’t support background video.
+  </video>
+
   <nav class="navbar navbar-expand-lg">
     <div class="container-fluid">
       <a class="navbar-brand fw-bold" href="index.html">Bright Photo Booth</a>
@@ -42,16 +92,41 @@
       </div>
     </div>
   </nav>
+
   <div class="page-content">
     <header id="header" class="py-5 text-center">
-      <h1>Bright Photo Booth</h1><p>Unforgettable photo booth experiences for weddings and events.</p>
-      <ul class="actions special list-unstyled"><li class="d-inline-block me-3"><a href="contact.html" class="button">Contact Us</a></li><li class="d-inline-block"><a href="book.html" class="button">Book Now</a></li></ul>
+      <h1>Bright Photo Booth</h1>
+      <p>Unforgettable photo booth experiences for weddings and events.</p>
+      <ul class="actions special list-unstyled">
+        <li class="d-inline-block me-3">
+          <a href="contact.html" class="button">CONTACT US</a>
+        </li>
+        <li class="d-inline-block">
+          <a href="book.html" class="button">BOOK NOW</a>
+        </li>
+      </ul>
     </header>
+
     <!-- other sections… -->
+
     <footer id="footer" class="text-center py-4">
-      <ul class="icons list-unstyled mb-3"><li class="d-inline-block me-2"><a href="https://twitter.com/yourprofile" class="icon brands alt fa-twitter" aria-label="Twitter"></a></li><li class="d-inline-block me-2"><a href="https://facebook.com/yourpage" class="icon brands alt fa-facebook-f" aria-label="Facebook"></a></li><li class="d-inline-block me-2"><a href="https://instagram.com/yourprofile" class="icon brands alt fa-instagram" aria-label="Instagram"></a></li><li class="d-inline-block"><a href="mailto:info@brightphotobooth.com" class="icon solid alt fa-envelope" aria-label="Email"></a></li></ul><p>&copy; 2025 Bright Photo Booth — Design: Ahmed‐Sahardid</p>
+      <ul class="icons list-unstyled mb-3">
+        <li class="d-inline-block me-2"><a href="https://twitter.com/yourprofile" class="icon brands alt fa-twitter" aria-label="Twitter"></a></li>
+        <li class="d-inline-block me-2"><a href="https://facebook.com/yourpage" class="icon brands alt fa-facebook-f" aria-label="Facebook"></a></li>
+        <li class="d-inline-block me-2"><a href="https://instagram.com/yourprofile" class="icon brands alt fa-instagram" aria-label="Instagram"></a></li>
+        <li class="d-inline-block"><a href="mailto:info@brightphotobooth.com" class="icon solid alt fa-envelope" aria-label="Email"></a></li>
+      </ul>
+      <p>&copy; 2025 Bright Photo Booth — Design: Ahmed‐Sahardid</p>
     </footer>
   </div>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script><script src="assets/js/jquery.min.js"></script><script src="assets/js/browser.min.js"></script><script src="assets/js/breakpoints.min.js"></script><script src="assets/js/util.js"></script><script src="assets/js/main.js"></script><script src="assets/js/site.js"></script>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/js/jquery.min.js"></script>
+  <script src="assets/js/browser.min.js"></script>
+  <script src="assets/js/breakpoints.min.js"></script>
+  <script src="assets/js/util.js"></script>
+  <script src="assets/js/main.js"></script>
+  <script src="assets/js/site.js"></script>
+
 </body>
 </html>
