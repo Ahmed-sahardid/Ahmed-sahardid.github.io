@@ -1,225 +1,92 @@
 <!DOCTYPE HTML>
 <html lang="en">
-<head>
-  <meta charset="utf-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <title>Bright Photo Booth – Book Now</title>
-
-  <!-- Flatpickr for date picker -->
+<head><meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/><title>Bright Photo Booth – Book Now</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <!-- Flatpickr CSS -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css"/>
-  <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+  <!-- Main Styles -->
+  <link rel="stylesheet" href="assets/css/main.css"/>
+  <link rel="stylesheet" href="assets/css/responsive.css"/>
+  <noscript><link rel="stylesheet" href="assets/css/noscript.css"/></noscript>
 
   <style>
     :root {
       --bg: #faf8f2;
-      --wood: url('assets/images/wood-bg.jpg');
       --white: #fff;
-      --dark: #333;
-      --muted: #777;
-      --primary: #3498db;
-      --accent: #2980b9;
-      --radius: 6px;
-      --maxW: 600px;
-      --spacing: 1rem;
-      --transition: .3s;
+      --primary: #0066ff;
+      --light-primary: #f0f4ff;
+      --radius: 8px;
+      --spacing: 1.5rem;
+      --text: var(--primary);
     }
-    * { box-sizing: border-box; margin:0; padding:0; }
-    body, html {
-      font-family:'Helvetica Neue', sans-serif;
-      background: var(--bg);
-      color: var(--dark);
-      line-height: 1.5;
+    *,*::before,*::after{box-sizing:border-box;}
+    html,body{margin:0;padding:0;font-family:'Helvetica Neue',sans-serif;background:var(--bg);color:var(--text);line-height:1.5;}
+    a{color:var(--primary);}a:hover{text-decoration:underline;}
+    .navbar{background:transparent;position:fixed;top:0;left:0;right:0;z-index:1000;}
+    .navbar-brand,.nav-link{color:#fff!important;text-shadow:0 0 5px rgba(0,0,0,0.8);transition:.3s;}
+    .nav-link:hover{background:rgba(255,255,255,0.1);border-radius:4px;}
+    .navbar-toggler{border:none;color:#fff;}
+    .navbar-toggler-icon{filter:invert(1) brightness(2);}
+    .page-content{padding:6rem 1rem 2rem;max-width:700px;margin:0 auto;}
+    .schedule{text-align:center;margin-bottom:var(--spacing);}
+    .schedule h1{font-size:2rem;color:#fff;text-shadow:0 1px 3px rgba(0,0,0,0.5);margin-bottom:.5rem;}
+    .schedule p{color:#eee;margin-bottom:1rem;}
+    .datetime input,.datetime select{
+      width:100%;max-width:300px;padding:.75rem;margin:auto;display:block;
+      border:none;border-radius:var(--radius);background:var(--light-primary);
+      font-size:1rem;margin-bottom:.75rem;color:var(--primary);
     }
-    a { color: var(--primary); text-decoration: none; }
-    a:hover { text-decoration: underline; }
-
-    /* Sidebar/Nav */
-    .menu-toggle { display:none }
-    .overlay    { display:none }
-    aside.sidebar {
-      position:fixed; top:0; left:0;
-      width:200px; height:100vh;
-      background:var(--white);
-      padding-top:2rem; z-index:1000;
-      transition:transform var(--transition);
-    }
-    body.sidebar-open aside.sidebar { transform: translateX(0); }
-    @media(max-width:980px) {
-      aside.sidebar { transform: translateX(-100%); }
-      .menu-toggle {
-        display:block; position:fixed; top:1rem; left:1rem;
-        background:var(--primary); color:#fff; border:none;
-        padding:.5rem 1rem; border-radius:var(--radius);
-        cursor:pointer; z-index:1001;
-      }
-      .overlay {
-        display:block; position:fixed; inset:0;
-        background: rgba(0,0,0,.5);
-        opacity:0; visibility:hidden;
-        transition: opacity var(--transition);
-        z-index:1000;
-      }
-      body.sidebar-open .overlay {
-        opacity:1; visibility:visible;
-      }
-    }
-    .flippy-nav { list-style:none; }
-    .flippy-nav li {
-      margin:1rem; border-radius:var(--radius); overflow:hidden;
-    }
-    .flippy-nav li:nth-child(odd){ background:var(--accent) }
-    .flippy-nav li:nth-child(even){ background:var(--primary) }
-    .flippy-nav li a {
-      display:block; padding:.75rem 1rem;
-      color:#fff; font-weight:600;
-    }
-
-    /* Centered content */
-    .page-content {
-      margin:0 auto; padding:2rem;
-      max-width:var(--maxW);
-    }
-    @media(max-width:980px) {
-      .page-content { padding-top:6rem; }
-    }
-
-    /* Schedule Picker */
-    .schedule {
-      background:var(--wood) center/cover no-repeat;
-      color:var(--white); text-align:center;
-      padding:2rem 1rem; border-radius:var(--radius);
-      margin-bottom:var(--spacing);
-    }
-    .schedule h1 {
-      margin-bottom:.5rem; font-size:1.8rem;
-      color: var(--primary);
-      text-shadow:0 1px 3px rgba(0,0,0,.5);
-    }
-    .schedule p {
-      color: var(--accent);
-      margin-bottom:1rem;
-    }
-    .datetime {
-      display:flex; flex-wrap:wrap; gap:.5rem; justify-content:center;
-    }
-    .datetime input,
-    .datetime select {
-      padding:.5rem .75rem;
-      border:none; border-radius:var(--radius);
-      min-width:140px;
-    }
-
-    /* Pricing */
-    .pricing {
-      text-align:center; margin-bottom:var(--spacing);
-    }
-    .pricing h2 {
-      font-size:1.6rem; margin-bottom:.75rem;
-      color: var(--primary);
-    }
-    .pricing-grid {
-      display:grid;
-      grid-template-columns:repeat(auto-fit,minmax(140px,1fr));
-      gap:.5rem;
-    }
-    .pricing-item {
-      background:var(--white);
-      padding:.75rem;
-      border-radius:var(--radius);
-      display:flex; justify-content:space-between;
-      align-items:center;
-      cursor:pointer;
-      transition: transform var(--transition), box-shadow var(--transition);
-      position:relative;
-    }
-    .pricing-item:hover {
-      transform: translateY(-5px);
-      box-shadow:0 6px 12px rgba(0,0,0,.1);
-    }
-    .pricing-item.active::after {
-      content:'✔';
-      position:absolute; top:8px; right:8px;
-      background:var(--primary); color:#fff;
-      width:20px; height:20px; border-radius:50%;
-      display:flex; align-items:center; justify-content:center;
-      font-size:12px;
-    }
-    .pricing-item .service { font-size:.95rem; }
-    .pricing-item .price   { font-weight:600; color:var(--primary); }
-
-    /* Invoice Request */
-    .request {
-      background:var(--white);
-      padding:2rem 1rem;
-      border-radius:var(--radius);
-      margin-bottom:var(--spacing);
-    }
-    .request h2 {
-      text-align:center; margin-bottom:1rem; font-size:1.4rem;
-      color: var(--primary);
-    }
-    .request form {
-      display:grid;
-      grid-template-columns:1fr 1fr;
-      gap:.75rem;
-    }
-    .request label {
-      grid-column:span 2; font-weight:600; font-size:.9rem;
-      color: var(--primary);
-    }
-    .request input,
-    .request select {
-      padding:.5rem .75rem;
-      border:1px solid #ddd;
-      border-radius:var(--radius);
-      transition:border-color var(--transition);
-    }
-    .request button {
-      grid-column:span 2;
-      margin-top:.5rem;
-      padding:.75rem;
-      background:var(--primary);
-      color:#fff; border:none;
-      border-radius:var(--radius);
-      cursor:pointer;
-      transition:background var(--transition);
-    }
-    .request button:hover {
-      background:var(--accent);
-    }
-
-    /* Footer */
-    footer {
-      text-align:center; color:var(--muted);
-      padding:1rem 0; font-size:.8rem;
-    }
-    footer .icons { margin-bottom:.5rem; }
-    footer .icons li { display:inline-block; margin:0 .3rem; }
-    footer .icons a { font-size:1.1rem; color:var(--muted); }
+    .datetime .chosen{margin-top:.5rem;font-weight:600;}
+    .pricing{margin-bottom:var(--spacing);}
+    .pricing h2{text-align:center;margin-bottom:1.5rem;color:var(--primary);font-size:1.75rem;}
+    .card.package{border:none;border-radius:var(--radius);box-shadow:0 4px 12px rgba(0,0,0,0.1);transition:transform .3s;cursor:pointer;}
+    .card.package:hover{transform:translateY(-5px);}
+    .card-header{background:var(--primary);color:var(--white);text-align:center;padding:.75rem;border-top-left-radius:var(--radius);border-top-right-radius:var(--radius);}
+    .card-body{text-align:center;padding:1.25rem;color:var(--primary);}
+    .card-body p{margin-bottom:1rem;}
+    .card-body h3{font-size:2rem;margin:0;}
+    .card-body .fs-6{font-size:1rem;color:var(--primary);}
+    .package-card.border-primary{box-shadow:0 0 0 3px var(--primary) inset;}
+    .request{background:var(--white);padding:2rem 1rem;border-radius:var(--radius);box-shadow:0 4px 12px rgba(0,0,0,0.05);margin-bottom:var(--spacing);}
+    .request h2{text-align:center;color:var(--primary);margin-bottom:1.5rem;font-size:1.5rem;}
+    .request .form-label{color:var(--primary);font-weight:600;}
+    .request .form-control,.request .form-select{border-radius:var(--radius);}
+    .request button{display:block;margin:1.5rem auto 0;padding:.75rem 2rem;background:var(--primary);color:#fff;border:none;border-radius:var(--radius);font-size:1.1rem;cursor:pointer;}
+    .request button:hover{background:#0050cc;}
+    footer{text-align:center;color:var(--primary);padding:2rem 0 1rem;font-size:.9rem;}
+    footer .icons li{display:inline-block;margin:0 .5rem;}
+    footer .icons a{color:var(--primary);font-size:1.2rem;}
   </style>
 </head>
-<body class="is-preload">
-  <button class="menu-toggle" aria-label="Toggle menu">☰</button>
-  <div class="overlay"></div>
+<body>
 
-  <aside class="sidebar">
-    <ul class="flippy-nav">
-      <li><a href="index.html">Home</a></li>
-      <li><a href="contact.html">Contact Us</a></li>
-      <li><a href="portfolio.html">Portfolio</a></li>
-      <li><a href="book.html">Book Now</a></li>
-    </ul>
-  </aside>
+  <nav class="navbar navbar-expand-lg navbar-dark">
+    <div class="container-fluid px-3">
+      <a class="navbar-brand fw-bold" href="index.html">Bright Photo Booth</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse justify-content-end" id="nav">
+        <ul class="navbar-nav">
+          <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="contact.html">Contact Us</a></li>
+          <li class="nav-item"><a class="nav-link" href="portfolio.html">Portfolio</a></li>
+          <li class="nav-item"><a class="nav-link" href="book.html">Book Now</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
 
   <div class="page-content">
-    <!-- Schedule Picker -->
+
+    <!-- Schedule -->
     <section class="schedule">
-      <h1>Select Date & Time</h1>
+      <h1>Select Date &amp; Time</h1>
       <p>Pick when our booth arrives—instant invoice via email.</p>
       <div class="datetime">
         <input id="date-picker" placeholder="Choose date" readonly/>
         <select id="time-picker">
-          <option>08:00 AM</option><option>08:30 AM</option>
           <option>09:00 AM</option><option>09:30 AM</option>
           <option>10:00 AM</option><option>10:30 AM</option>
           <option>11:00 AM</option><option>11:30 AM</option>
@@ -228,111 +95,120 @@
           <option>02:00 PM</option><option>02:30 PM</option>
           <option>03:00 PM</option><option>03:30 PM</option>
           <option>04:00 PM</option><option>04:30 PM</option>
-          <option>05:00 PM</option><option>05:30 PM</option>
-          <option>06:00 PM</option><option>06:30 PM</option>
-          <option>07:00 PM</option><option>07:30 PM</option>
-          <option>08:00 PM</option><option>08:30 PM</option>
-          <option>09:00 PM</option><option>09:30 PM</option>
-          <option>10:00 PM</option>
+          <option>05:00 PM</option>
         </select>
+        <div class="chosen">Chosen time: <span id="chosen-time">—</span></div>
       </div>
     </section>
 
-    <!-- Pricing -->
+    <!-- Packages -->
     <section class="pricing">
       <h2>Our Packages</h2>
-      <div class="pricing-grid">
-        <div class="pricing-item" data-service="Basic Booth (2h)">
-          <span class="service">Basic Booth (2h)</span>
-          <span class="price">$399</span>
+      <div class="row g-4">
+        <div class="col-md-4">
+          <div class="card package package-card" data-service="Digital Only">
+            <div class="card-header">Digital Only ($100/hr)</div>
+            <div class="card-body">
+              <p>High-res digital files emailed instantly.</p>
+              <h3>$100 <span class="fs-6">/hr</span></h3>
+            </div>
+          </div>
         </div>
-        <div class="pricing-item" data-service="Wedding Package (4h)">
-          <span class="service">Wedding Package (4h)</span>
-          <span class="price">$499</span>
+        <div class="col-md-4">
+          <div class="card package package-card" data-service="Digital + Prints">
+            <div class="card-header">Digital + Prints ($125/hr)</div>
+            <div class="card-body">
+              <p>Digital files plus on-site 4×6 prints.</p>
+              <h3>$125 <span class="fs-6">/hr</span></h3>
+            </div>
+          </div>
         </div>
-        <div class="pricing-item" data-service="Corporate Event (3h)">
-          <span class="service">Corporate Event (3h)</span>
-          <span class="price">$450</span>
-        </div>
-        <div class="pricing-item" data-service="Premium Props Add-On">
-          <span class="service">Premium Props Add-On</span>
-          <span class="price">$75</span>
+        <div class="col-md-4">
+          <div class="card package package-card" data-service="DSLR Booth">
+            <div class="card-header">DSLR Booth ($175/hr)</div>
+            <div class="card-body">
+              <p>Top-tier DSLR setup with props & attendant.</p>
+              <h3>$175 <span class="fs-6">/hr</span></h3>
+            </div>
+          </div>
         </div>
       </div>
     </section>
 
-    <!-- Invoice Request -->
+    <!-- Request Invoice -->
     <section class="request">
-      <h2>Request Invoice</h2>
-      <form id="invoice-form" action="https://formspree.io/f/xpwdbjgl" method="POST">
-        <label for="svc">Package</label>
-        <select id="svc" name="service" required>
-          <option value="">Select a package…</option>
-          <option>Basic Booth (2h)</option>
-          <option>Wedding Package (4h)</option>
-          <option>Corporate Event (3h)</option>
-          <option>Premium Props Add-On</option>
-        </select>
-
-        <label for="date">Date</label>
-        <input id="date" name="date" type="text" readonly required/>
-
-        <label for="time">Time</label>
-        <input id="time" name="time" type="text" readonly required/>
-
-        <label for="name">Your Name</label>
-        <input id="name" name="name" type="text" required/>
-
-        <label for="email">Your Email</label>
-        <input id="email" name="_replyto" type="email" required/>
-
-        <button type="submit">Send Invoice</button>
+      <h2>Request Your Invoice</h2>
+      <form id="invoice-form" action="https://formspree.io/f/xpwdbjgl" method="POST" class="row g-3">
+        <div class="col-md-6">
+          <label for="svc" class="form-label">Package</label>
+          <select id="svc" name="service" class="form-select" required>
+            <option value="">Select…</option>
+            <option>Digital Only</option>
+            <option>Digital + Prints</option>
+            <option>DSLR Booth</option>
+          </select>
+        </div>
+        <div class="col-md-6">
+          <label for="date" class="form-label">Date</label>
+          <input id="date" name="date" type="text" class="form-control" placeholder="YYYY-MM-DD" readonly required/>
+        </div>
+        <div class="col-md-6">
+          <label for="time" class="form-label">Time</label>
+          <input id="time" name="time" type="text" class="form-control" readonly required/>
+        </div>
+        <div class="col-md-6">
+          <label for="coupon" class="form-label">Coupon Code</label>
+          <input id="coupon" name="coupon" type="text" class="form-control" placeholder="Enter code (optional)"/>
+        </div>
+        <div class="col-md-6">
+          <label for="name" class="form-label">Your Name</label>
+          <input id="name" name="name" type="text" class="form-control" required/>
+        </div>
+        <div class="col-12">
+          <label for="email" class="form-label">Your Email</label>
+          <input id="email" name="_replyto" type="email" class="form-control" required/>
+        </div>
+        <div class="col-12 text-center">  
+          <button type="submit" class="btn btn-primary btn-lg">Send Invoice</button>
+        </div>
       </form>
     </section>
+
+    <!-- Footer -->
+    <footer>
+      <ul class="icons list-unstyled mb-3">
+        <li class="d-inline me-3"><a href="#" class="icon brands fa-twitter"></a></li>
+        <li class="d-inline me-3"><a href="#" class="icon brands fa-facebook-f"></a></li>
+        <li class="d-inline me-3"><a href="#" class="icon brands fa-instagram"></a></li>
+        <li class="d-inline"><a href="#" class="icon solid fa-envelope"></a></li>
+      </ul>
+      <p>&copy; 2025 Bright Photo Booth</p>
+    </footer>
   </div>
 
-  <footer>
-    <ul class="icons">
-      <li><a href="#" class="icon brands fa-twitter" aria-label="Twitter"></a></li>
-      <li><a href="#" class="icon brands fa-facebook-f" aria-label="Facebook"></a></li>
-      <li><a href="#" class="icon brands fa-instagram" aria-label="Instagram"></a></li>
-      <li><a href="#" class="icon solid fa-envelope" aria-label="Email"></a></li>
-    </ul>
-    <p>&copy; 2025 Bright Photo Booth</p>
-  </footer>
-
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
   <script>
-    // Sidebar toggle
-    const menuBtn = document.querySelector('.menu-toggle'),
-          overlay = document.querySelector('.overlay'),
-          body    = document.body;
-    menuBtn.addEventListener('click', ()=> body.classList.toggle('sidebar-open'));
-    overlay.addEventListener('click', ()=> body.classList.remove('sidebar-open'));
-
-    // Flatpickr init
     flatpickr("#date-picker", {
-      altInput: true,
-      altFormat: "F j, Y",
-      dateFormat: "Y-m-d",
-      minDate: "today",
-      onChange: (sel, dateStr) => document.getElementById('date').value = dateStr
+      altInput: true, altFormat: "F j, Y",
+      dateFormat: "Y-m-d", minDate: "today",
+      onChange: (_, d) => document.getElementById("date").value = d
     });
-    document.getElementById('time-picker').addEventListener('change', function(){
-      document.getElementById('time').value = this.value;
+    const tp = document.getElementById("time-picker");
+    tp.addEventListener("change", function(){
+      document.getElementById("time").value = this.value;
+      document.getElementById("chosen-time").textContent = this.value;
     });
-
-    // Pricing items clickable
-    const items    = document.querySelectorAll('.pricing-item');
-    const svcSelect= document.getElementById('svc');
-    const formSec  = document.querySelector('.request');
-    items.forEach(item => {
-      item.addEventListener('click', () => {
-        items.forEach(i => i.classList.remove('active'));
-        item.classList.add('active');
-        svcSelect.value = item.dataset.service;
-        formSec.scrollIntoView({behavior:'smooth'});
+    document.querySelectorAll('.package-card').forEach(card=>{
+      card.addEventListener('click',()=>{
+        document.querySelectorAll('.package-card').forEach(c=>c.classList.remove('border-primary'));
+        card.classList.add('border','border-primary');
+        document.getElementById('svc').value=card.dataset.service;
+        document.getElementById('svc').dispatchEvent(new Event('change'));
       });
     });
   </script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/js/site.js"></script>
 </body>
 </html>
