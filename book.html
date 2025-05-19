@@ -10,6 +10,9 @@
   <!-- Bootstrap CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"/>
 
+  <!-- Flatpickr CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css"/>
+
   <style>
     :root {
       --bg: #faf8f2;
@@ -21,8 +24,8 @@
       --spacing: 1.5rem;
       --shadow: rgba(0,0,0,0.1);
     }
-    *,*::before,*::after { box-sizing: border-box; }
-    html,body {
+    *, *::before, *::after { box-sizing: border-box; }
+    html, body {
       margin:0; padding:0;
       font-family:'Open Sans',sans-serif;
       background:var(--bg);
@@ -31,186 +34,66 @@
     }
     a { color:var(--primary); text-decoration:none; }
     a:hover { text-decoration:underline; }
-
     /* Navbar */
-    .navbar {
-      background: transparent !important;
-      font-family: 'Open Sans', sans-serif;
-    }
-    .navbar-brand {
-      font-family:'Montserrat',sans-serif; font-weight:700;
-      color: var(--text) !important;
-    }
-    .nav-link {
-      color: var(--text) !important;
-      transition: background .3s, color .3s;
-    }
-    .nav-link:hover {
-      background: rgba(0,102,255,0.1);
-      border-radius:4px;
-      color: var(--primary) !important;
-    }
-    .navbar-toggler {
-      border:none; color: var(--text);
-      font-size:1.5rem;
-    }
+    .navbar { background: transparent !important; position:fixed; top:0; left:0; right:0; z-index:1000; }
+    .navbar-brand { font-family:'Montserrat',sans-serif; font-weight:700; color:var(--text) !important; }
+    .nav-link { color:var(--text) !important; transition: background .3s, color .3s; }
+    .nav-link:hover { background: rgba(0,102,255,0.1); border-radius:4px; color:var(--primary) !important; }
+    .navbar-toggler { border:none; color:var(--text); font-size:1.5rem; }
+    /* Offcanvas menu */
+    .offcanvas-start { width:75% !important; max-width:280px; }
+    .offcanvas-header { border-bottom:1px solid #e5e5e5; }
+    .offcanvas-body .nav-link { color:var(--text) !important; font-weight:500; padding:.75rem 1rem; border-bottom:1px solid #e5e5e5; }
+    .offcanvas-body .nav-link:first-child { font-family:'Montserrat',sans-serif; font-weight:700; }
+    .offcanvas-body .nav-link:hover { color:var(--primary) !important; }
+    @media(min-width:992px){ #mobileMenu{visibility:hidden;} .navbar-toggler{display:none;} }
 
-    /* Offcanvas left menu */
-    .offcanvas-start {
-      width: 75% !important; max-width: 280px;
-    }
-    .offcanvas-header {
-      border-bottom:1px solid #e5e5e5;
-    }
-    .offcanvas-body .nav-link {
-      color: var(--text) !important;
-      font-weight:500; font-size:1rem;
-      padding:.75rem 1rem;
-      border-bottom:1px solid #e5e5e5;
-    }
-    .offcanvas-body .nav-link:first-child {
-      font-family:'Montserrat',sans-serif; font-weight:700;
-    }
-    .offcanvas-body .nav-link:hover {
-      color: var(--primary) !important;
-    }
-    @media(min-width:992px){
-      #mobileMenu { visibility:hidden; }
-      .navbar-toggler { display:none; }
-    }
+    .page-content { padding:6rem 1rem 2rem; max-width:700px; margin:0 auto; }
 
-    /* Page content */
-    .page-content {
-      padding:6rem 1rem 2rem;
-      max-width:700px; margin:0 auto;
-    }
-
-    /* Schedule */
-    .schedule {
-      text-align:center; margin-bottom: var(--spacing);
-    }
-    .schedule h1 {
-      font-family:'Montserrat',sans-serif; font-weight:700;
-      font-size:2rem; color: var(--primary);
-      margin-bottom:.5rem;
-    }
-    .schedule p {
-      font-family:'Open Sans',sans-serif; font-weight:300;
-      color: var(--text);
-      margin-bottom:1rem;
-    }
+    .schedule { text-align:center; margin-bottom:var(--spacing); }
+    .schedule h1 { font-family:'Montserrat',sans-serif; font-weight:700; font-size:2rem; color:var(--primary); margin-bottom:.5rem; }
+    .schedule p { font-family:'Open Sans',sans-serif; font-weight:300; margin-bottom:1rem; }
     .datetime input, .datetime select {
-      width:100%; max-width:300px; padding:.75rem;
-      margin:auto; display:block;
-      border:none; border-radius:var(--radius);
-      background:var(--light-primary);
-      font-size:1rem; color:var(--text);
-      margin-bottom:.75rem;
+      width:100%; max-width:300px; padding:.75rem; margin:auto; display:block;
+      border:none; border-radius:var(--radius); background:var(--light-primary);
+      font-size:1rem; color:var(--text); margin-bottom:.75rem;
     }
-    .datetime .chosen {
-      font-family:'Open Sans',sans-serif; font-weight:600;
-      color:var(--text); margin-top:.5rem;
-    }
+    .datetime .chosen { font-weight:600; margin-top:.5rem; }
 
-    /* Packages */
-    .pricing {
-      margin-bottom: var(--spacing);
-    }
-    .pricing h2 {
-      font-family:'Montserrat',sans-serif; font-weight:700;
-      text-align:center; margin-bottom:1.5rem;
-      font-size:1.75rem; color:var(--primary);
-    }
-    .card.package {
-      border:none; border-radius:var(--radius);
-      box-shadow:0 4px 12px var(--shadow);
-      transition:transform .3s; cursor:pointer;
-    }
+    .pricing { margin-bottom:var(--spacing); }
+    .pricing h2 { font-family:'Montserrat',sans-serif; font-weight:700; text-align:center; margin-bottom:1.5rem; font-size:1.75rem; color:var(--primary); }
+    .card.package { border:none; border-radius:var(--radius); box-shadow:0 4px 12px var(--shadow); transition:transform .3s; cursor:pointer; }
     .card.package:hover { transform:translateY(-5px); }
-    .card-header {
-      background:var(--primary); color:var(--white);
-      font-family:'Montserrat',sans-serif; font-weight:600;
-      text-align:center; padding:.75rem;
-      border-top-left-radius:var(--radius);
-      border-top-right-radius:var(--radius);
-    }
-    .card-body {
-      text-align:center; padding:1.25rem;
-    }
-    .card-body p {
-      font-family:'Open Sans',sans-serif; font-weight:300;
-      color:var(--text); margin-bottom:1rem;
-    }
-    .card-body h3 {
-      font-family:'Montserrat',sans-serif; font-weight:700;
-      font-size:2rem; color:var(--primary); margin:0;
-    }
-    .card-body .fs-6 {
-      font-size:1rem; color:var(--text);
-    }
-    .package-card.border-primary {
-      box-shadow:0 0 0 3px var(--primary) inset;
-    }
+    .card-header { background:var(--primary); color:var(--white); font-weight:600; text-align:center; padding:.75rem; }
+    .card-body { text-align:center; padding:1.25rem; }
+    .card-body p { margin-bottom:1rem; }
+    .card-body h3 { font-family:'Montserrat',sans-serif; font-weight:700; font-size:2rem; color:var(--primary); margin:0; }
+    .card-body .fs-6 { font-size:1rem; color:var(--text); }
+    .package-card.border-primary { box-shadow:0 0 0 3px var(--primary) inset; }
 
-    /* Request form */
-    .request {
-      background:var(--white); padding:2rem 1rem;
-      border-radius:var(--radius);
-      box-shadow:0 4px 12px rgba(0,0,0,0.05);
-      margin-bottom:var(--spacing);
-    }
-    .request h2 {
-      font-family:'Montserrat',sans-serif; font-weight:700;
-      text-align:center; color:var(--primary);
-      margin-bottom:1.5rem; font-size:1.5rem;
-    }
-    .request .form-label {
-      font-family:'Open Sans',sans-serif; font-weight:600;
-      color:var(--primary);
-    }
-    .request .form-control,
-    .request .form-select {
-      border-radius:var(--radius);
-      font-family:'Open Sans',sans-serif;
-    }
+    .request { background:var(--white); padding:2rem 1rem; border-radius:var(--radius); box-shadow:0 4px 12px rgba(0,0,0,0.05); margin-bottom:var(--spacing); }
+    .request h2 { font-family:'Montserrat',sans-serif; font-weight:700; text-align:center; color:var(--primary); margin-bottom:1.5rem; }
+    .request .form-label { font-weight:600; color:var(--primary); }
+    .form-control, .form-select { border-radius:var(--radius); }
     .request button {
-      display:block; margin:1.5rem auto 0;
-      padding:.75rem 2rem;
-      background:var(--primary); color:var(--white);
-      border:none; border-radius:var(--radius);
-      font-family:'Montserrat',sans-serif; font-weight:600;
-      font-size:1.1rem; cursor:pointer;
+      display:block; margin:1.5rem auto 0; padding:.75rem 2rem;
+      background:var(--primary); color:var(--white); border:none; border-radius:var(--radius);
+      font-family:'Montserrat',sans-serif; font-weight:600; font-size:1.1rem; cursor:pointer;
     }
-    .request button:hover {
-      background:#0050cc;
-    }
+    .request button:hover { background:#0050cc; }
 
-    /* Footer */
-    footer {
-      text-align:center; color:var(--text);
-      padding:2rem 0 1rem; font-size:.9rem;
-    }
-    footer .icons li {
-      display:inline-block; margin:0 .5rem;
-    }
-    footer .icons a {
-      color:var(--text); font-size:1.2rem;
-      transition:color .2s;
-    }
-    footer .icons a:hover {
-      color: var(--primary);
-    }
+    footer { text-align:center; color:var(--text); padding:2rem 0 1rem; font-size:.9rem; }
+    footer .icons li { display:inline-block; margin:0 .5rem; }
+    footer .icons a { color:var(--text); font-size:1.2rem; transition:color .2s; }
+    footer .icons a:hover { color:var(--primary); }
   </style>
 </head>
 <body>
 
-  <!-- Navbar with Offcanvas -->
-  <nav class="navbar navbar-expand-lg fixed-top">
+  <nav class="navbar navbar-expand-lg">
     <div class="container-fluid px-3">
       <a class="navbar-brand" href="index.html">Bright Photo Booth</a>
-      <button class="navbar-toggler" type="button"
-              data-bs-toggle="offcanvas" data-bs-target="#mobileMenu"
-              aria-controls="mobileMenu" aria-label="Toggle navigation">
+      <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#mobileMenu">
         ☰
       </button>
       <div class="collapse navbar-collapse d-none d-lg-flex justify-content-end">
@@ -224,9 +107,9 @@
     </div>
   </nav>
 
-  <div class="offcanvas offcanvas-start" tabindex="-1" id="mobileMenu" aria-labelledby="mobileMenuLabel">
+  <div class="offcanvas offcanvas-start" tabindex="-1" id="mobileMenu">
     <div class="offcanvas-header">
-      <h5 class="offcanvas-title" id="mobileMenuLabel">Menu</h5>
+      <h5 class="offcanvas-title">Menu</h5>
       <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"></button>
     </div>
     <div class="offcanvas-body">
@@ -239,7 +122,6 @@
     </div>
   </div>
 
-  <!-- Page Content -->
   <div class="page-content">
 
     <!-- Schedule Picker -->
@@ -319,16 +201,8 @@
           <input id="time" name="time" type="text" class="form-control" readonly required/>
         </div>
         <div class="col-md-6">
-          <label for="coupon" class="form-label">Coupon Code</label>
-          <input id="coupon" name="coupon" type="text" class="form-control" placeholder="Optional"/>
-        </div>
-        <div class="col-md-6">
-          <label for="name" class="form-label">Your Name</label>
-          <input id="name" name="name" type="text" class="form-control" required/>
-        </div>
-        <div class="col-12">
-          <label for="email" class="form-label">Your Email</label>
-          <input id="email" name="_replyto" type="email" class="form-control" required/>
+          <label for="phone" class="form-label">Phone Number</label>
+          <input id="phone" name="phone" type="tel" class="form-control" placeholder="Your phone number" required/>
         </div>
         <div class="col-12 text-center">
           <button type="submit" class="btn btn-primary btn-lg">Send Invoice</button>
@@ -337,7 +211,7 @@
     </section>
 
     <!-- Footer -->
-    <footer>
+    <footer>  
       <ul class="icons list-unstyled mb-3">
         <li class="d-inline me-3"><a href="#" class="icon brands fa-twitter"></a></li>
         <li class="d-inline me-3"><a href="#" class="icon brands fa-facebook-f"></a></li>
@@ -346,29 +220,36 @@
       </ul>
       <p>&copy; 2025 Bright Photo Booth</p>
     </footer>
+
   </div>
 
   <!-- Scripts -->
   <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
   <script>
     flatpickr("#date-picker", {
-      altInput:true, altFormat:"F j, Y",
-      dateFormat:"Y-m-d", minDate:"today",
-      onChange:(_,d)=>document.getElementById("date").value=d
+      altInput: true,
+      altFormat: "F j, Y",
+      dateFormat: "Y-m-d",
+      minDate: "today",
+      onChange: (_, dateStr) => {
+        document.getElementById("date").value = dateStr;
+      }
     });
-    const tp=document.getElementById("time-picker");
-    tp.addEventListener("change",function(){
-      document.getElementById("time").value=this.value;
-      document.getElementById("chosen-time").textContent=this.value;
+
+    document.getElementById("time-picker").addEventListener("change", function(){
+      document.getElementById("time").value = this.value;
+      document.getElementById("chosen-time").textContent = this.value;
     });
+
     document.querySelectorAll('.package-card').forEach(card=>{
-      card.addEventListener('click',()=>{
+      card.addEventListener('click', ()=>{
         document.querySelectorAll('.package-card').forEach(c=>c.classList.remove('border-primary'));
         card.classList.add('border','border-primary');
-        document.getElementById('svc').value=card.dataset.service;
+        document.getElementById('svc').value = card.dataset.service;
       });
     });
   </script>
+
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
-</html> 
+</html>
