@@ -1,56 +1,156 @@
 <!-- index.html -->
-<!DOCTYPE HTML>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Bright Photo Booth – Home</title>
-
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
   <!-- Bootstrap CSS & Icons -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"/>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
-
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
   <style>
-    /* Ensure content clears the navbar */
-    body { padding-top: 70px; }
-    /* Background video full-screen */
-    #bg-video { position: fixed; top:0; left:0; width:100%; height:100%; object-fit:cover; z-index:-1; }
-    /* Hero container styling */
-    .page-content {
-      position: relative;
-      z-index:1;
-      max-width:720px;
-      margin:0 auto;
-      padding:5rem 1rem;
-      text-align:center;
-      background: rgba(255,255,255,0.25);
-      border-radius: 10px;
+    :root {
+      --primary: #0066ff;
+      --light-bg: #f5f7fa;
+      --dark-text: #1a1a1a;
     }
-    /* Navbar overlay */
-    .navbar { background: rgba(0,0,0,0.4) !important; }
-    .navbar-brand, .nav-link { color:#fff !important; text-shadow:0 0 5px rgba(0,0,0,0.8); }
-    /* Buttons */
+    body {
+      font-family: 'Inter', sans-serif;
+      margin: 0;
+      padding-top: 70px;
+      background: var(--light-bg);
+      color: var(--dark-text);
+    }
+    /* Video background */
+    #bg-video {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      z-index: -1;
+      filter: none;
+    }
+    /* Navbar */
+    .navbar {
+      background: rgba(255,255,255,0.8) !important;
+      backdrop-filter: saturate(180%) blur(10px);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    .navbar-brand, .nav-link {
+      color: var(--dark-text) !important;
+      font-weight: 600;
+    }
+    .nav-link:hover {
+      color: var(--primary) !important;
+    }
+    /* Hero content overlay card */
+    .hero-card {
+      max-width: 720px;
+      margin: 2rem auto;
+      background: rgba(255,255,255,0.9);
+      border-radius: 12px;
+      padding: 3rem 2rem;
+      text-align: center;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+    }
+    .hero-card h1 {
+      font-size: 2.75rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+    .hero-card p.lead {
+      font-size: 1.25rem;
+      margin-bottom: 1.5rem;
+      color: #555;
+    }
     .btn-primary {
-      background:#0066ff;
-      border:none;
+      background: var(--primary);
+      border: none;
       padding: 0.75rem 1.5rem;
-      font-size:1rem;
+      font-size: 1rem;
+      border-radius: 6px;
+      transition: background 0.3s;
     }
-    .btn-primary:hover { background:#0050cc; }
+    .btn-primary:hover {
+      background: #0050cc;
+    }
+    /* Features */
+    .features {
+      padding: 4rem 1rem;
+      background: #fff;
+    }
+    .features .icon {
+      font-size: 2.5rem;
+      color: var(--primary);
+      margin-bottom: 1rem;
+    }
+    /* Reviews */
+    .reviews {
+      padding: 4rem 1rem;
+    }
+    .review-card {
+      background: #fff;
+      border: 1px solid #e0e0e0;
+      border-radius: 8px;
+      padding: 2rem;
+      margin-bottom: 1.5rem;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    }
+    .review-card p {
+      font-style: italic;
+      color: #444;
+      margin-bottom: 1rem;
+    }
+    .review-card .author {
+      text-align: right;
+      font-weight: 600;
+      color: var(--primary);
+    }
+    /* About Us Section */
+    .about-us {
+      padding: 4rem 1rem;
+      background: var(--light-bg);
+    }
+    .about-us .card {
+      border: none;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+    .about-us img {
+      object-fit: cover;
+      width: 100%;
+      height: 100%;
+    }
+    .about-us .card-body {
+      padding: 2rem;
+    }
+    .about-us h2 {
+      color: var(--primary);
+      font-weight: 700;
+      margin-bottom: 1rem;
+    }
+    .about-us p {
+      color: #555;
+      margin-bottom: 1rem;
+      line-height: 1.6;
+    }
   </style>
 </head>
 <body>
-
-  <video id="bg-video" autoplay muted loop playsinline>
+  <!-- Background Video -->
+  <video id="bg-video" autoplay muted loop playsinline poster="assets/images/video-poster.jpg">
     <source src="assets/videos/movie.mp4" type="video/mp4"/>
-    Sorry, your browser doesn’t support background video.
+    Your browser does not support the video tag.
   </video>
 
   <!-- Navbar -->
   <nav class="navbar navbar-expand-lg fixed-top">
     <div class="container-fluid px-4">
-      <a class="navbar-brand fw-bold" href="index.html">Bright Photo Booth</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#mobileMenu" aria-controls="mobileMenu">
+      <a class="navbar-brand" href="index.html">Bright Photo Booth</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#mobileMenu">
         <span class="navbar-toggler-icon" style="filter:invert(1) brightness(2);">&#9776;</span>
       </button>
       <div class="collapse navbar-collapse d-none d-lg-flex justify-content-end">
@@ -64,8 +164,8 @@
     </div>
   </nav>
 
-  <!-- Offcanvas nav for mobile -->
-  <div class="offcanvas offcanvas-start" id="mobileMenu" tabindex="-1">
+  <!-- Offcanvas Mobile Menu -->
+  <div class="offcanvas offcanvas-start" tabindex="-1" id="mobileMenu">
     <div class="offcanvas-header">
       <h5 class="offcanvas-title">Menu</h5>
       <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"></button>
@@ -80,95 +180,89 @@
     </div>
   </div>
 
-  <!-- Hero & buttons -->
-  <div class="page-content">
-    <h1 class="display-4">Bright Photo Booth</h1>
+  <!-- Hero Card -->
+  <div class="hero-card">
+    <h1>Bright Photo Booth</h1>
     <p class="lead">Unforgettable photo booth experiences for weddings and events.</p>
-    <div class="d-flex justify-content-center mt-4">
-      <a href="contact.html" class="btn btn-primary btn-lg me-3">Contact Us</a>
-      <a href="book.html" class="btn btn-primary btn-lg">Book Now</a>
-    </div>
+    <a href="contact.html" class="btn btn-primary btn-lg me-3">Contact Us</a>
+    <a href="book.html" class="btn btn-primary btn-lg">Book Now</a>
   </div>
 
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-</body>
-</html>
-
-<!-- about.html -->
-<!DOCTYPE HTML>
-<html lang="en">
-<head>
-  <meta charset="utf-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <title>Bright Photo Booth – About Us</title>
-
-  <!-- Bootstrap CSS & Icons -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"/>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
-
-  <style>
-    body { padding-top: 70px; }
-    /* Hero banner */
-    .about-hero {
-      background: #000 url('assets/images/about.jpeg') center/cover no-repeat;
-      color: #fff;
-      padding:4rem 1rem;
-    }
-    .about-hero h1 {
-      font-size:2.5rem;
-      font-weight:bold;
-      text-transform:uppercase;
-      border-left:4px solid #00aced;
-      padding-left:1rem;
-    }
-    /* Content section */
-    .about-content {
-      background:#fff;
-      padding:4rem 1rem;
-    }
-    .about-content .container { max-width:800px; }
-    .about-content h2 { font-size:1.75rem; color:#333; margin-bottom:1rem; }
-    .about-content p { color:#555; margin-bottom:1.5rem; }
-    .about-content a { font-weight:bold; color:#0066ff; text-decoration:none; }
-  </style>
-</head>
-<body>
-  <!-- Navbar -->
-  <nav class="navbar navbar-expand-lg fixed-top bg-black">
-    <div class="container-fluid px-4">
-      <a class="navbar-brand text-white fw-bold" href="index.html">Bright Photo Booth</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navAbout">
-        <span class="navbar-toggler-icon" style="filter:invert(1) brightness(2);">&#9776;</span>
-      </button>
-      <div class="collapse navbar-collapse justify-content-end" id="navAbout">
-        <ul class="navbar-nav">
-          <li class="nav-item"><a class="nav-link text-white" href="index.html">Home</a></li>
-          <li class="nav-item"><a class="nav-link text-white active" href="about.html">About Us</a></li>
-          <li class="nav-item"><a class="nav-link text-white" href="portfolio.html">Portfolio</a></li>
-          <li class="nav-item"><a class="nav-link text-white" href="contact.html">Contact Us</a></li>
-          <li class="nav-item"><a class="nav-link text-white" href="book.html">Book Now</a></li>
-        </ul>
+  <!-- Features -->
+  <section class="features">
+    <div class="container">
+      <div class="row text-center g-4">
+        <div class="col-md-4">
+          <i class="fas fa-camera icon"></i>
+          <h5>High-Res Prints</h5>
+          <p>Professional-quality prints delivered instantly.</p>
+        </div>
+        <div class="col-md-4">
+          <i class="fas fa-share-alt icon"></i>
+          <h5>Instant Sharing</h5>
+          <p>Share your moments on social media with ease.</p>
+        </div>
+        <div class="col-md-4">
+          <i class="fas fa-palette icon"></i>
+          <h5>Custom Themes</h5>
+          <p>Tailored backdrops and props for every occasion.</p>
+        </div>
       </div>
     </div>
-  </nav>
-
-  <!-- Hero banner -->
-  <section class="about-hero text-center">
-    <h1>About Bright Photo Booth</h1>
-    <img src="images/about.jpeg" alt="Award Statuette" class="mt-4" style="height:160px;">
   </section>
 
-  <!-- Main content -->
-  <section class="about-content text-center">
+  <!-- Reviews -->
+  <section class="reviews">
     <div class="container">
-      <h2>The Most Memorable Way to Capture Your Moments</h2>
-      <p>Whether you want to add fun to weddings, corporate events, or birthday parties, our photo booths deliver unforgettable experiences with professional-grade prints, digital sharing, and custom props.</p>
-      <a href="portfolio.html">&rarr; View Our Work</a>
+      <h2 class="text-center mb-4">What Our Clients Say</h2>
+      <div class="row g-4">
+        <div class="col-md-4">
+          <div class="review-card">
+            <p>“Our guests couldn’t stop talking about how fun and easy the booth was!”</p>
+            <div class="author">— Sarah & Mike</div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="review-card">
+            <p>“Exceptional service and top-notch prints—we’ll book again for sure.”</p>
+            <div class="author">— TechCorp Inc.</div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="review-card">
+            <p>“The custom backdrops made our wedding photos truly unique.”</p>
+            <div class="author">— Emily & John</div>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 
-  <!-- Footer placeholder -->
-  <footer class="text-center py-4"></footer>
+  <!-- About Us -->
+  <section class="about-us">
+    <div class="container">
+      <div class="row align-items-center g-4">
+        <div class="col-md-6">
+          <div class="card">
+            <img src="images/about.jpeg" alt="About Bright Photo Booth">
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="card-body">
+            <h2>About Us</h2>
+            <p>Welcome to Bright Photo Booth! We are passionate about capturing smiles, laughter, and unforgettable moments at weddings, corporate events, birthday parties, and more.</p>
+            <p>Our professional-grade equipment and friendly attendants ensure a seamless experience from booking to printouts. With fully customizable templates and props, every event feels uniquely yours.</p>
+            <p>Contact us today to learn about packages, pricing, and to secure your date!</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    &copy; 2025 Bright Photo Booth – All Rights Reserved.
+  </footer>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
