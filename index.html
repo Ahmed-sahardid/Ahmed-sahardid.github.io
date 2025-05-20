@@ -46,14 +46,25 @@
       color: var(--primary) !important;
     }
     /* Hero content overlay card */
-    .hero-card {
-      max-width: 720px;
-      margin: 2rem auto;
-      background: rgba(255,255,255,0.9);
-      border-radius: 12px;
-      padding: 3rem 2rem;
-      text-align: center;
-      box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+.hero-card {
+  max-width: 720px;
+  margin: 2rem auto;
+  background: transparent; /* show video behind */
+  border-radius: 12px;
+  padding: 3rem 2rem;
+  text-align: center;
+  /* no shadow to let video show through clearly */
+}
+.hero-card h1 {
+  font-size: 2.75rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+.hero-card p.lead {
+  font-size: 1.25rem;
+  margin-bottom: 1.5rem;
+  color: #fff; /* white text over video */
+}
     }
     .hero-card h1 {
       font-size: 2.75rem;
@@ -244,7 +255,7 @@
       <div class="row align-items-center g-4">
         <div class="col-md-6">
           <div class="card">
-            <img src="images/about.jpeg" alt="About Bright Photo Booth">
+            <img src="assets/images/about.jpeg" alt="About Bright Photo Booth">
           </div>
         </div>
         <div class="col-md-6">
