@@ -1,176 +1,131 @@
-<!DOCTYPE HTML>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <title>Bright Photo Booth – Photo Gallery</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Bright Photo Booth – Corporate Gallery</title>
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-W7EVDGFHY1"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config','G-W7EVDGFHY1');
+  </script>
 
-  <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&family=Open+Sans:wght@300;400&display=swap" rel="stylesheet"/>
-
-  <!-- Bootstrap CSS -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <!-- Google Fonts & Bootstrap -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&display=swap" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
 
   <style>
     :root {
-      --bg: #f5e5cc;
-      --accent: #0066ff;
-      --text: #333;
-      --radius: 8px;
+      --primary: #0052cc;
+      --bg: #f4f6f8;
+      --surface: #fff;
+      --on-surface: #212121;
       --shadow: rgba(0,0,0,0.1);
+      --spacing: 16px;
+      --transition: 0.3s ease;
+      --snap: y mandatory;
     }
-    *, *::before, *::after { box-sizing: border-box; }
-    html, body {
-      margin:0; padding:0;
+    *, *::before, *::after { box-sizing: border-box; margin:0; padding:0; }
+    body {
+      font-family: 'Montserrat', sans-serif;
       background: var(--bg);
-      font-family: 'Open Sans', sans-serif;
-      color: var(--text);
-      height: 100%;
+      color: var(--on-surface);
+      padding-top: 70px;
     }
     /* Navbar */
-    .navbar {
-      position: fixed; top:0; left:0; right:0;
-      background: transparent !important; z-index:1000;
-      font-family: 'Open Sans', sans-serif;
+    .navbar { background: transparent !important; position: fixed; top: 0; width: 100%; z-index: 1000; }
+    .navbar-brand { font-family: 'Montserrat'; font-weight:700; color: #fff !important; text-shadow:0 0 5px rgba(0,0,0,0.8)!important; }
+    .nav-link { color: #fff !important; text-shadow:0 0 5px rgba(0,0,0,0.8)!important; transition: color .3s; }
+    .nav-link:hover { color: var(--primary) !important; }
+    @media(min-width:992px){ .navbar-toggler{display:none;} }
+
+    /* Header & Search */
+    header .page-content { padding: 0 var(--spacing);}    
+    .gallery-title { margin-bottom: var(--spacing); }
+    .controls { margin-bottom: var(--spacing); }
+    .controls input { width:100%; padding:.75em var(--spacing); border:1px solid #ccc; border-radius:4px; transition:border var(--transition);}    
+    .controls input:focus { border-color: var(--primary); outline:none; }
+
+    /* Gallery Layout */
+    main { max-width:1200px; margin:0 auto; padding:0 var(--spacing); }
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px,1fr));
+      gap: var(--spacing);
+      scroll-snap-type: var(--snap);
+      padding-bottom: var(--spacing);
     }
-    .navbar-brand {
-      font-family: 'Montserrat', sans-serif; font-weight:700;
-      color: #fff !important; text-shadow:0 0 5px rgba(0,0,0,0.8)!important;
+    .gallery-item {
+      background: var(--surface);
+      border-radius:4px;
+      overflow:hidden;
+      box-shadow: 0 2px 6px var(--shadow);
+      cursor:pointer;
+      transition: transform var(--transition), box-shadow var(--transition);
+      scroll-snap-align: start;
     }
-    .nav-link {
-      color:#fff !important; text-shadow:0 0 5px rgba(0,0,0,0.8)!important;
-      transition: background .3s, color .3s;
-    }
-    .nav-link:hover {
-      background: rgba(255,255,255,0.1); border-radius:4px;
-      color: var(--accent) !important;
-    }
-    .navbar-toggler {
-      border:none; color:#fff; font-size:1.5rem;
-      filter:invert(1) brightness(2);
-    }
-    /* Offcanvas menu */
-    .offcanvas-start {
-      width: 70% !important; max-width:250px;
-    }
-    .offcanvas-body .nav-link {
-      color: var(--text) !important; padding:.75rem 1rem;
-      border-bottom:1px solid #e5e5e5; font-weight:500;
-    }
-    .offcanvas-body .nav-link:first-child {
-      font-family: 'Montserrat', sans-serif; font-weight:700;
-    }
-    .offcanvas-body .nav-link:hover {
-      color: var(--accent) !important;
-    }
-    @media(min-width:992px){
-      #mobileMenu{visibility:hidden;} .navbar-toggler{display:none;}
-    }
-    /* Page content */
-    .page-content {
-      position: relative; z-index:1;
-      max-width:800px; margin:0 auto;
-      padding:6rem 1rem 2rem;
-    }
-    /* Intro text & title */
-    .intro-text {
-      font-size:1.1rem; margin-bottom:.5rem;
-      font-weight:300; text-align:center;
-    }
-    .gallery-title {
-      font-family:'Montserrat',sans-serif;
-      font-weight:700; font-size:2.5rem;
-      text-align:center; margin-bottom:1.5rem;
-      letter-spacing:.05em; color: var(--accent);
-    }
-    /* Gallery main */
-    .gallery-main {
-      position: relative; display:flex;
-      justify-content:center; align-items:center;
-      margin-bottom:1rem;
-    }
-    .main-view img {
-      width:100%; border-radius:var(--radius);
+    .gallery-item:hover, .gallery-item:focus {
+      transform: translateY(-4px);
       box-shadow: 0 4px 12px var(--shadow);
     }
-    .nav-btn {
-      position:absolute; top:50%; transform:translateY(-50%);
-      background:rgba(0,0,0,0.5); color:#fff; border:none;
-      font-size:2rem; padding:.5rem; cursor:pointer;
-      border-radius:50%; width:3rem; height:3rem;
+    .gallery-item img {
+      width:100%; height:auto; display:block;
+      transition: opacity .6s ease;
+      opacity:1;
+    }
+    .gallery-item figcaption { padding:.5em; font-size:.9em; color:#555; }
+
+    /* Lightbox Modal */
+    .lightbox {
+      position: fixed; top:0; left:0; width:100%; height:100%;
+      background: rgba(0,0,0,0.8);
       display:flex; align-items:center; justify-content:center;
-      transition:background .3s;
+      visibility:hidden; opacity:0;
+      transition: visibility .3s, opacity .3s;
+      z-index:1000;
     }
-    .nav-btn:hover { background:rgba(0,0,0,0.7); }
-    .nav-btn.prev { left:-1.5rem; }
-    .nav-btn.next { right:-1.5rem; }
-    /* Thumbnails */
-    .thumb-carousel {
-      display:flex; justify-content:center; gap:.5rem;
-      overflow-x:auto; padding-bottom:.5rem; margin-bottom:1.5rem;
+    .lightbox.open { visibility:visible; opacity:1; }
+    .lightbox img { max-width:90%; max-height:80%; border-radius:4px; box-shadow:0 4px 16px var(--shadow);}  
+    .lightbox .nav {
+      position:absolute; top:50%; transform:translateY(-50%);
+      background: var(--surface); border:none; padding:.5em; border-radius:50%; cursor:pointer;
+      font-size:1.5rem; transition: background .3s;
     }
-    .thumb-carousel img {
-      width:60px; height:40px; object-fit:cover;
-      border:2px solid transparent; border-radius:4px;
-      cursor:pointer; opacity:.7; transition:opacity .2s,border-color .2s;
+    .lightbox .nav:hover { background:#eee; }
+    .lightbox .prev { left:1em; }
+    .lightbox .next { right:1em; }
+    .lightbox .close { position:absolute; top:1em; right:1em; background:var(--surface); border:none;
+      font-size:1.2rem; padding:.3em; border-radius:50%; transition: background .3s;
     }
-    .thumb-carousel img.active,
-    .thumb-carousel img:hover {
-      opacity:1; border-color: var(--accent);
-    }
-    /* Promo banner */
-    .promo {
-      text-align:center; padding:1rem; background: var(--accent);
-      color:#fff; border-radius:4px; font-weight:600;
-    }
-    .promo a {
-      color:#fff; text-decoration:underline;
-    }
-    /* Responsive */
-    @media(max-width:768px){
-      .page-content { padding:8rem 1rem 2rem; }
-      .nav-btn { font-size:1.5rem; padding:.3rem; width:2.5rem; height:2.5rem; }
-      .thumb-carousel img { width:50px; height:35px; }
-      .gallery-title { font-size:2rem; }
+    .lightbox .close:hover { background:#eee; }
+
+    @media (max-width:600px) {
+      .gallery { grid-template-columns: repeat(auto-fill, minmax(150px,1fr)); }
     }
   </style>
-  <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-GWLYZJS500"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-GWLYZJS500');
-</script>
-
 </head>
 <body>
-
   <!-- Navbar -->
-  <nav class="navbar navbar-expand-lg fixed-top">
+  <nav class="navbar navbar-expand-lg">
     <div class="container-fluid px-3">
       <a class="navbar-brand" href="index.html">Bright Photo Booth</a>
-      <button class="navbar-toggler" type="button"
-              data-bs-toggle="offcanvas" data-bs-target="#mobileMenu"
-              aria-controls="mobileMenu" aria-label="Toggle menu">
-        ☰
-      </button>
+      <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#mobileMenu">☰</button>
       <div class="collapse navbar-collapse d-none d-lg-flex justify-content-end">
         <ul class="navbar-nav">
-          <li class="nav-item"><a class="nav-link px-3" href="index.html">Home</a></li>
-          <li class="nav-item"><a class="nav-link px-3" href="contact.html">Contact Us</a></li>
-          <li class="nav-item"><a class="nav-link px-3" href="portfolio.html">Portfolio</a></li>
-          <li class="nav-item"><a class="nav-link px-3" href="book.html">Book Now</a></li>
+          <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="contact.html">Contact Us</a></li>
+          <li class="nav-item"><a class="nav-link" href="portfolio.html">Portfolio</a></li>
+          <li class="nav-item"><a class="nav-link" href="book.html">Book Now</a></li>
         </ul>
       </div>
     </div>
   </nav>
-
-  <!-- Offcanvas menu -->
-  <div class="offcanvas offcanvas-start" tabindex="-1" id="mobileMenu" aria-labelledby="mobileMenuLabel">
+  <!-- Offcanvas Mobile Menu -->
+  <div class="offcanvas offcanvas-start" tabindex="-1" id="mobileMenu">
     <div class="offcanvas-header">
-      <h5 class="offcanvas-title" id="mobileMenuLabel">Menu</h5>
-      <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"></button>
+      <h5 class="offcanvas-title">Menu</h5>
+      <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
     </div>
     <div class="offcanvas-body">
       <nav class="nav flex-column">
@@ -182,72 +137,82 @@
     </div>
   </div>
 
-  <!-- Content -->
-  <div class="page-content">
-    <p class="intro-text">Welcome to our highlights—relive the moments that made the night special.</p>
-    <h1 class="gallery-title">PHOTO GALLERY</h1>
-
-    <div class="gallery-main">
-      <button class="nav-btn prev" aria-label="Previous">&larr;</button>
-      <div class="main-view">
-        <img id="active-image" src="images/IMG_9166.JPG" alt="Active Photo"/>
+  <!-- Main Content -->
+  <main>
+    <header class="page-content container-fluid">
+      <h1 class="gallery-title">Photo Gallery</h1>
+      <div class="controls">
+        <input type="search" id="search" placeholder="Search images..." />
       </div>
-      <button class="nav-btn next" aria-label="Next">&rarr;</button>
-    </div>
+    </header>
+    <section class="gallery container-fluid" id="gallery" aria-label="Photo gallery"></section>
+  </main>
 
-    <div class="thumb-carousel" id="bottom-thumbs"></div>
-
-    <div class="promo">
-      Book your own photo session today! 
-      <a href="book.html">Reserve now</a> and use code <strong>BRIGHT20</strong> for 20% off!
-    </div>
+  <!-- Lightbox -->
+  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true">
+    <button class="nav prev" id="prev" aria-label="Previous">‹</button>
+    <img id="lightbox-img" alt="" />
+    <button class="nav next" id="next" aria-label="Next">›</button>
+    <button class="close" id="close" aria-label="Close">×</button>
   </div>
 
-  <!-- Bootstrap & Gallery JS -->
+  <!-- Bootstrap JS -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
   <script>
     const images = [
-      'IMG_9166.JPG','IMG_9167.JPG','IMG_9168.JPG','IMG_9169.JPG',
-      'IMG_9170.JPG','IMG_9171.JPG','IMG_9172.JPG','IMG_9173.JPG',
-      'IMG_9174.JPG','IMG_9175.JPG','IMG_9176.JPG','IMG_9177.JPG',
-      'IMG_9178.JPG','IMG_9179.JPG','IMG_9180.JPG'
+      'images/IMG_9166.JPG','images/IMG_9167.JPG','images/IMG_9168.JPG','images/IMG_9169.JPG',
+      'images/IMG_9170.JPG','images/IMG_9171.JPG','images/IMG_9172.JPG','images/IMG_9173.JPG',
+      'images/IMG_9174.JPG','images/IMG_9175.JPG','images/IMG_9176.JPG','images/IMG_9177.JPG',
+      'images/IMG_9178.JPG','images/IMG_9179.JPG','images/IMG_9180.JPG'
     ];
-    let idx = 0;
-    const active = document.getElementById('active-image'),
-          bottom = document.getElementById('bottom-thumbs');
+    const gallery = document.getElementById('gallery');
+    const lightbox = document.getElementById('lightbox');
+    const lbImg = document.getElementById('lightbox-img');
+    const prevBtn = document.getElementById('prev');
+    const nextBtn = document.getElementById('next');
+    const closeBtn = document.getElementById('close');
+    const searchInput = document.getElementById('search');
+    let current = 0;
 
-    images.forEach((img,i) => {
-      const t = document.createElement('img');
-      t.src = `images/${img}`;
-      t.dataset.index = i;
-      t.addEventListener('click', () => select(i));
-      bottom.appendChild(t);
-    });
-
-    function select(i) {
-      idx = i;
-      active.src = `images/${images[i]}`;
-      document.querySelectorAll('.thumb-carousel img')
-        .forEach(el => el.classList.toggle('active', +el.dataset.index === i));
+    function buildGallery(filter = '') {
+      gallery.innerHTML = '';
+      images.forEach((src, i) => {
+        const name = src.match(/IMG_(\d+)/)[1];
+        if (filter && !name.includes(filter)) return;
+        const fig = document.createElement('figure');
+        fig.className = 'gallery-item';
+        fig.innerHTML = `
+          <img src="${src}" alt="Photo ${name}" loading="lazy" />
+          <figcaption>Photo ${name}</figcaption>
+        `;
+        fig.addEventListener('click', () => openLightbox(i));
+        gallery.appendChild(fig);
+      });
     }
 
-    document.querySelector('.nav-btn.prev').onclick = () => {
-      select(idx > 0 ? idx - 1 : images.length - 1);
-    };
-    document.querySelector('.nav-btn.next').onclick = () => {
-      select(idx < images.length - 1 ? idx + 1 : 0);
-    };
+    function openLightbox(i) {
+      current = i;
+      lbImg.src = images[i];
+      lbImg.alt = `Photo ${images[i].match(/IMG_(\d+)/)[1]}`;
+      lightbox.classList.add('open');
+    }
+    function closeLightbox() { lightbox.classList.remove('open'); }
+    function showPrev() { openLightbox((current - 1 + images.length) % images.length); }
+    function showNext() { openLightbox((current + 1) % images.length); }
 
-    select(0);
+    prevBtn.onclick = showPrev;
+    nextBtn.onclick = showNext;
+    closeBtn.onclick = closeLightbox;
+    lightbox.onclick = e => { if (e.target === lightbox) closeLightbox(); };
+    document.addEventListener('keydown', e => {
+      if (!lightbox.classList.contains('open')) return;
+      if (e.key === 'ArrowLeft') showPrev();
+      if (e.key === 'ArrowRight') showNext();
+      if (e.key === 'Escape') closeLightbox();
+    });
+    searchInput.addEventListener('input', () => buildGallery(searchInput.value.trim()));
+    // Initialize
+    buildGallery();
   </script>
-  <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-W7EVDGFHY1"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-W7EVDGFHY1');
-</script>
 </body>
 </html>
