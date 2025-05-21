@@ -39,9 +39,6 @@
     .budget{background:var(--white);padding:2rem 1rem;border-radius:var(--radius);box-shadow:0 4px 12px rgba(0,0,0,0.05);margin-bottom:var(--spacing);text-align:center;} .budget h2{font-family:'Montserrat',sans-serif;font-weight:700;color:var(--primary);margin-bottom:1rem;} .budget p{margin-bottom:1.5rem;} .form-range{width:100%;max-width:400px;} #budget-value{font-weight:600;margin-top:.5rem;}
     .coupon{background:var(--light-primary);padding:2rem 1rem;border-radius:var(--radius);text-align:center;margin-bottom:var(--spacing);} .coupon h3{font-family:'Montserrat',sans-serif;font-weight:700;color:var(--primary);margin-bottom:.5rem;} .coupon p{margin-bottom:1rem;} .coupon input{max-width:200px;margin:auto;margin-bottom:.75rem;border-radius:var(--radius);border:none;padding:.5rem;} .coupon button{background:var(--primary);color:#fff;border:none;border-radius:var(--radius);padding:.5rem 1rem;}
     .request{background:var(--white);padding:2rem 1rem;border-radius:var(--radius);box-shadow:0 4px 12px rgba(0,0,0,0.05);margin-bottom:var(--spacing);} .request h2{text-align:center;font-family:'Montserrat',sans-serif;font-weight:700;color:var(--primary);margin-bottom:1.5rem;} .form-label{font-weight:600;color:var(--primary);} .btn-submit{display:block;margin:1.5rem auto 0;background:var(--primary);color:var(--white);border:none;border-radius:var(--radius);padding:.75rem 2rem;font-family:'Montserrat',sans-serif;font-weight:600;font-size:1.1rem;} .btn-submit:hover{background:#0050cc;}
-    .map-responsive{overflow:hidden;border-radius:var(--radius);height:250px;margin-bottom:.5rem;} .map-responsive iframe{width:100%;height:100%;border:0;}
-    details{margin-bottom:1rem;} summary{font-weight:600;cursor:pointer;}
-    .testimonial-swiper{padding:1rem 0;margin-bottom:var(--spacing);} .swiper-slide{border-radius:var(--radius);padding:1.5rem;color:#fff;} .slide-1{background:#0066ff;} .slide-2{background:#00bfff;} .slide-3{background:#004bb5;}
     footer{text-align:center;padding:2rem 0 1rem;background:var(--light-primary);}
   </style>
 </head>
@@ -62,8 +59,18 @@
   </nav>
 
   <div class="offcanvas offcanvas-start" tabindex="-1" id="mobileMenu">
-    <div class="offcanvas-header"><h5 class="offcanvas-title">Menu</h5><button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"></button></div>
-    <div class="offcanvas-body"><nav class="nav flex-column"><a class="nav-link" href="index.html">HOME</a><a class="nav-link active" href="#">BOOK NOW</a><a class="nav-link" href="contact.html">CONTACT US</a><a class="nav-link" href="portfolio.html">PORTFOLIO</a></nav></div>
+    <div class="offcanvas-header">
+      <h5 class="offcanvas-title">Menu</h5>
+      <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"></button>
+    </div>
+    <div class="offcanvas-body">
+      <nav class="nav flex-column">
+        <a class="nav-link" href="index.html">HOME</a>
+        <a class="nav-link active" href="#">BOOK NOW</a>
+        <a class="nav-link" href="contact.html">CONTACT US</a>
+        <a class="nav-link" href="portfolio.html">PORTFOLIO</a>
+      </nav>
+    </div>
   </div>
 
   <div class="page-content">
@@ -85,34 +92,59 @@
     <section class="pricing" data-aos="fade-up">
       <h2>Our Packages</h2>
       <div class="row g-4">
-        <!-- package cards... -->
+        <div class="col-md-4">
+          <div class="card package package-card" data-service="Digital Only">
+            <div class="card-header">Digital Only</div>
+            <div class="card-body">
+              <p>High-res digital files emailed immediately.</p>
+              <h3>$100 <span class="fs-6">/hr</span></h3>
+              <button class="btn btn-outline-primary info-btn">More Info</button>
+              <div class="info-panel" id="info-Digital Only">
+                Includes unlimited digital downloads, basic templates, and email delivery.
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card package package-card" data-service="Digital + Prints">
+            <div class="card-header">Digital + Prints</div>
+            <div class="card-body">
+              <p>Digital files + on-site 4×6 prints.</p>
+              <h3>$125 <span class="fs-6">/hr</span></h3>
+              <button class="btn btn-outline-primary info-btn">More Info</button>
+              <div class="info-panel" id="info-Digital + Prints">
+                Everything in Digital Only plus instant 4×6 prints and custom print layouts.
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card package package-card" data-service="DSLR Booth">
+            <div class="card-header">DSLR Booth</div>
+            <div class="card-body">
+              <p>Pro DSLR with props & attendant.</p>
+              <h3>$175 <span class="fs-6">/hr</span></h3>
+              <button class="btn btn-outline-primary info-btn">More Info</button>
+              <div class="info-panel" id="info-DSLR Booth">
+                Premium DSLR camera, professional lighting, unlimited props, and a dedicated attendant.
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
 
     <section class="budget" data-aos="fade-up">
       <h2>What's Your Budget?</h2>
       <p>Slide to choose:</p>
-      <input
-        type="range"
-        id="budget-slider"
-        min="50"
-        max="1500"
-        step="50"
-        value="150"
-        class="form-range mx-auto d-block"
-      />
+      <input type="range" id="budget-slider" min="50" max="1500" step="50" value="150" class="form-range mx-auto d-block"/>
       <div id="budget-value">$150</div>
     </section>
 
     <section class="coupon" data-aos="fade-up">
       <h3>Have a Coupon?</h3>
       <p>Enter your code:</p>
-      <input
-        type="text"
-        id="coupon-code"
-        class="form-control mx-auto"
-        placeholder="Promo code"
-      />
+      <input type="text" id="coupon-code" class="form-control mx-auto" placeholder="Promo code"/>
       <button class="btn btn-primary mt-2">Apply Coupon</button>
     </section>
 
@@ -170,36 +202,22 @@
       if (--sec < 0) sec = 0;
     }, 1000);
 
-    // Flatpickr for date & time pickers
-    flatpickr("#date-picker", {
-      altInput: true, altFormat: "F j, Y", dateFormat: "Y-m-d",
-      minDate: "today",
-      onChange: (_, d) => document.getElementById('date').value = d
-    });
-    flatpickr("#time-picker", {
-      enableTime: true, noCalendar: true, dateFormat: "h:i K",
-      minuteIncrement: 30, minTime: "09:00", maxTime: "23:00",
-      onChange: (_, t) => document.getElementById('time').value = t
-    });
+    // Flatpickr date & time
+    flatpickr("#date-picker",{altInput:true,altFormat:"F j, Y",dateFormat:"Y-m-d",minDate:"today",onChange:(_,d)=>document.getElementById('date').value=d});
+    flatpickr("#time-picker",{enableTime:true,noCalendar:true,dateFormat:"h:i K",minuteIncrement:30,minTime:"09:00",maxTime:"23:00",onChange:(_,t)=>document.getElementById('time').value=t});
 
-    // Budget Slider + hidden field
+    // Budget slider + hidden
     const slider = document.getElementById('budget-slider'),
           val = document.getElementById('budget-value'),
           budgetHidden = document.getElementById('budget');
-    val.textContent = `$${slider.value}`;
-    budgetHidden.value = slider.value;
-    slider.oninput = () => {
-      val.textContent = `$${slider.value}`;
-      budgetHidden.value = slider.value;
-    };
+    val.textContent = `$${slider.value}`; budgetHidden.value = slider.value;
+    slider.oninput = () => { val.textContent = `$${slider.value}`; budgetHidden.value = slider.value; };
 
-    // Coupon code + hidden field
+    // Coupon input + hidden
     const couponCode = document.getElementById('coupon-code'),
           couponHidden = document.getElementById('coupon');
     couponHidden.value = couponCode.value;
-    couponCode.oninput = () => {
-      couponHidden.value = couponCode.value;
-    };
+    couponCode.oninput = () => couponHidden.value = couponCode.value;
 
     // Package select
     document.querySelectorAll('.package-card').forEach(card=>{
@@ -213,9 +231,8 @@
     // Info panels
     document.querySelectorAll('.info-btn').forEach(btn=>{
       btn.onclick = () => {
-        const panel = btn.nextElementSibling;
         document.querySelectorAll('.info-panel').forEach(p=>p.style.display='none');
-        panel.style.display = 'block';
+        btn.nextElementSibling.style.display='block';
       };
     });
 
