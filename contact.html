@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Contact Bright Photo Booth for inquiries, bookings, and exclusive offers—professional and creative photo experiences." />
+  <title>Bright Photo Booth – Contact & Offers</title>
+
+  <!-- Favicons -->
+  <link rel="icon" href="/favicon.ico" />
+  <link rel="icon" href="/favicon-32x32.png" type="image/png" />
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&family=Open+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <!-- AOS Animations -->
+  <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet" />
+  <!-- Swiper CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css" rel="stylesheet" />
+
+  <style>
+    :root {
+      --primary: #0066ff;
+      --accent: #f0f4ff;
+      --bg: #ffffff;
+      --text: #333333;
+      --radius: 8px;
+      --spacing: 1rem;
+      --transition: 0.3s;
+    }
+    *, *::before, *::after { box-sizing: border-box; }
+    body { margin: 0; font-family: 'Open Sans', sans-serif; background: var(--bg); color: var(--text); }
+    .navbar { background: var(--accent)!important; }
+    .navbar-brand { font-family: 'Montserrat', sans-serif; font-weight: 700; color: var(--primary)!important; }
+    .nav-link { color: var(--text)!important; transition: color var(--transition); }
+    .nav-link:hover { color: var(--primary)!important; }
+    section { padding: var(--spacing) 1rem; }
+    .hero { background: var(--accent); text-align: center; padding: 3rem 1rem; }
+    .hero h1 { font-family: 'Montserrat', sans-serif; color: var(--primary); margin: 0; }
+    .hero .btn-book { margin-top: 1rem; }
+    .flash-sale { background: var(--primary); color: #fff; text-align: center; padding: .75rem; font-weight: 600; }
+    .container { max-width: 800px; margin: 2rem auto; }
+    .card { border-radius: var(--radius); box-shadow: 0 2px 8px rgba(0,0,0,0.05); margin-bottom: 2rem; border: none; }
+    .card-body { padding: 1.5rem; }
+    .form-control { border-radius: var(--radius); }
+    .btn-primary { background: var(--primary); border: none; border-radius: var(--radius); }
+    .btn-primary:hover { background: #0051cc; }
+    .map-responsive { overflow: hidden; border-radius: var(--radius); height: 250px; margin-bottom: .5rem; }
+    .map-responsive iframe { width: 100%; height: 100%; border: 0; }
+    details { margin-bottom: 1rem; }
+    details summary { font-weight: 600; cursor: pointer; }
+    /* Testimonials styles */
+    .testimonial-swiper { padding: 1rem 0; }
+    .swiper-slide { border-radius: var(--radius); padding: 1.5rem; color: #fff; }
+    .slide-1 { background: #0066ff; }
+    .slide-2 { background: #00bfff; }
+    .slide-3 { background: #004bb5; }
+    footer { background: var(--accent); text-align: center; padding: 1rem; }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg sticky-top">
+    <div class="container-fluid px-3">
+      <a class="navbar-brand" href="index.html">Bright Photo Booth</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navMenu">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+          <li class="nav-item"><a class="nav-link active" href="#">Contact</a></li>
+          <li class="nav-item"><a class="nav-link" href="portfolio.html">Portfolio</a></li>
+          <li class="nav-item"><a class="nav-link" href="book.html">Book Now</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero" data-aos="fade-down">
+    <h1>Contact &amp; Special Offers</h1>
+    <a href="book.html" class="btn btn-primary btn-book">Book Now</a>
+  </section>
+
+  <!-- Flash Sale -->
+  <div class="flash-sale" data-aos="fade-up">
+    Book in the next <span id="deal-timer">05:00</span> for <strong>20% off</strong>!
+  </div>
+
+  <div class="container">
+
+    <!-- Contact Form -->
+    <div class="card" data-aos="fade-up">
+      <div class="card-body">
+        <h2 class="card-title">Send Us a Message or Email</h2>
+        <form action="https://formspree.io/f/xldbveby" method="POST">
+          <div class="mb-3">
+            <label class="form-label">Name</label>
+            <input type="text" class="form-control" name="name" required>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Email</label>
+            <input type="email" class="form-control" name="_replyto" placeholder="photoboothbright@gmail.com" required>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Message</label>
+            <textarea class="form-control" name="message" rows="4" required></textarea>
+          </div>
+          <button class="btn btn-primary">Submit</button>
+        </form>
+        <p class="mt-3 text-center">Or email us directly at <a href="mailto:photoboothbright@gmail.com">photoboothbright@gmail.com</a></p>
+      </div>
+    </div>
+
+    <!-- Map & Details -->
+    <div class="card" data-aos="fade-up">
+      <div class="card-body">
+        <h2 class="card-title">Our Location &amp; Contact</h2>
+        <div class="map-responsive">
+          <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d115559.78068607349!2d-96.13989579123117!3d46.441916499999996!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x52b32b4e7aa6bdc3%3A0x227ae95dd5c83bfc!2sBright%20Photo%20Booth!5e0!3m2!1sen!2sus!4v1620231234567" allowfullscreen loading="lazy"></iframe>
+        </div>
+        <p><i class="fas fa-map-marker-alt me-2"></i><a href="https://www.google.com/maps/place/Bright+Photo+Booth/@46.4419165,-93.3614534" target="_blank">View on Google Maps</a></p>
+        <p><i class="fas fa-phone me-2"></i><a href="tel:+6122617094">(612) 261-7094</a></p>
+        <p><i class="fas fa-envelope me-2"></i><a href="mailto:photoboothbright@gmail.com">photoboothbright@gmail.com</a></p>
+      </div>
+    </div>
+
+    <!-- FAQs -->
+    <div class="card" data-aos="fade-up">
+      <div class="card-body">
+        <h2 class="card-title">Frequently Asked Questions</h2>
+        <details>
+          <summary>How long does setup take?</summary>
+          <p>Our team sets up in just 15 minutes.</p>
+        </details>
+        <details>
+          <summary>Do you travel?</summary>
+          <p>We serve events within 200 miles of Minneapolis.</p>
+        </details>
+      </div>
+    </div>
+
+    <!-- Testimonials -->
+    <section class="testimonials" data-aos="fade-up">
+      <h2 class="text-center mb-4">What Our Clients Say</h2>
+      <div class="swiper testimonial-swiper">
+        <div class="swiper-wrapper">
+          <!-- Review 1 -->
+          <div class="swiper-slide slide-1">
+            <div class="d-flex justify-content-between mb-2 text-white">
+              <div>⭐⭐⭐⭐⭐</div>
+              <small>a day ago</small>
+            </div>
+            <p class="text-white">“The photobooth was so much fun! Everyone loved it! Mowlid was quick at responding and was super helpful throughout the whole event! I will book again!”</p>
+            <footer class="text-end text-white"><strong>— Rahwa Berhane</strong></footer>
+          </div>
+          <!-- Review 2 -->
+          <div class="swiper-slide slide-2">
+            <div class="d-flex justify-content-between mb-2 text-white">
+              <div>⭐⭐⭐⭐⭐</div>
+              <small>a day ago</small>
+            </div>
+            <p class="text-white">“Great service. Punctual, guests loved the photo station, good communication from the owners and they made sure everything went smoothly. I would definitely recommend this to others and already have to close friends and family!!”</p>
+            <footer class="text-end text-white"><strong>— bahja mohamed</strong></footer>
+          </div>
+          <!-- Review 3 -->
+          <div class="swiper-slide slide-3">
+            <div class="d-flex justify-content-between mb-2 text-white">
+              <div>⭐⭐⭐⭐⭐</div>
+              <small>a day ago</small>
+            </div>
+            <p class="text-white">“I recently had the chance to use this photobooth at an event, and it was easily one of the highlights of the night. The setup was sleek and modern, with high-quality lighting and a wide selection of fun props that kept everyone laughing and …”</p>
+            <footer class="text-end text-white"><strong>— hamza abdullahi</strong></footer>
+          </div>
+        </div>
+        <div class="swiper-pagination mt-4"></div>
+      </div>
+    </section>
+
+  </div>
+
+  <footer data-aos="fade-up">&copy; 2025 Bright Photo Booth &middot; All Rights Reserved.</footer>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
+  <script>
+    // Countdown Timer
+    let sec = 300, display = document.getElementById('deal-timer');
+    setInterval(() => {
+      let m = Math.floor(sec/60), s = sec % 60;
+      display.textContent = `${m.toString().padStart(2,'0')}:${s.toString().padStart(2,'0')}`;
+      if (sec-- <= 0) return;
+    }, 1000);
+
+    // Initialize AOS
+    AOS.init({ duration: 800, once: true });
+
+    // Initialize Swiper
+    new Swiper('.testimonial-swiper', {
+      loop: true,
+      autoplay: { delay: 4000, disableOnInteraction: false },
+      pagination: { el: '.swiper-pagination', clickable: true }
+    });
+  </script>
+</body>
+</html>
