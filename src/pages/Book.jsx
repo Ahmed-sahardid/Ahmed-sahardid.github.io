@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
-import { db } from '../firebase';  // ← correct import path
+import { db } from '../firebase';  // ← fixed import path
 
 export default function Book() {
   // 5-minute countdown
@@ -36,33 +36,17 @@ export default function Book() {
     }
     const pct = codes[coupon.trim().toUpperCase()] || 0;
     setDiscount(pct);
-    setCouponMsg(
-      pct
-        ? `✔️ ${pct}% off applied!`
-        : '❌ Invalid code'
+    setCouponMsg(pct
+      ? `✔️ ${pct}% off applied!`
+      : '❌ Invalid code'
     );
   }
 
   // packages data
   const packages = [
-    {
-      title: 'Digital Only',
-      price: 100,
-      desc: 'Hi-res digital files emailed immediately.',
-      longDesc: 'Includes unlimited digital downloads, basic templates, and email delivery.'
-    },
-    {
-      title: 'Digital + Prints',
-      price: 125,
-      desc: 'Digital files + 4×6 prints.',
-      longDesc: 'Everything in Digital Only plus 25 premium 4×6 prints on the spot.'
-    },
-    {
-      title: 'DSLR Booth',
-      price: 175,
-      desc: 'Pro DSLR with props & attendant.',
-      longDesc: 'Premium DSLR camera, professional lighting, unlimited props, and a dedicated attendant.'
-    },
+    { title: 'Digital Only',  price: 100, desc: 'Hi-res digital files emailed immediately.' },
+    { title: 'Digital + Prints', price: 125, desc: 'Digital files + 4×6 prints.' },
+    { title: 'DSLR Booth',     price: 175, desc: 'Pro DSLR with props & attendant.' },
   ];
 
   // submit booking into Firestore
@@ -74,25 +58,21 @@ export default function Book() {
     try {
       await addDoc(collection(db, 'bookings'), {
         service,
-        budget: Number(budget),
-        coupon: couponMsg.startsWith('✔️') ? coupon.trim().toUpperCase() : '',
+        budget:   Number(budget),
+        coupon:   couponMsg.startsWith('✔️') ? coupon.trim().toUpperCase() : '',
         discount,
         date,
         time,
         phone,
-        status: 'pending',
+        status:   'pending',
         createdAt: serverTimestamp()
       });
       alert('✅ Booking submitted! Thank you.');
       // reset form
-      setService('');
-      setBudget(150);
-      setCoupon('');
-      setCouponMsg('');
-      setDiscount(0);
-      setDate('');
-      setTime('');
-      setPhone('');
+      setService(''); setBudget(150);
+      setCoupon('');  setCouponMsg('');
+      setDiscount(0); setDate('');
+      setTime('');    setPhone('');
     } catch (err) {
       console.error(err);
       alert('❌ Error submitting booking. Please try again.');
@@ -107,10 +87,7 @@ export default function Book() {
       </section>
 
       {/* Flash Sale */}
-      <div
-        className="bg-primary text-white text-center py-2 mb-5 rounded"
-        data-aos="fade-up"
-      >
+      <div className="bg-primary text-white text-center py-2 mb-5 rounded" data-aos="fade-up">
         {!saleExpired
           ? <>Book in the next <strong>{mins}:{secs}</strong> for <strong>20% off</strong>!</>
           : <>Sale ended</>
@@ -203,9 +180,7 @@ export default function Book() {
 
       {/* Booking Form */}
       <section className="mb-5" data-aos="fade-up">
-        <h2 className="text-center mb-4 text-primary">Request Your Booking</h2>
         <form onSubmit={handleSubmit} className="row g-3 mx-auto" style={{ maxWidth: 700 }}>
-          {/* Service */}
           <div className="col-12 col-md-6">
             <label className="form-label">Package</label>
             <select
@@ -216,14 +191,10 @@ export default function Book() {
             >
               <option value="">Select…</option>
               {packages.map(p => (
-                <option key={p.title} value={p.title}>
-                  {p.title}
-                </option>
+                <option key={p.title} value={p.title}>{p.title}</option>
               ))}
             </select>
           </div>
-
-          {/* Date */}
           <div className="col-12 col-md-6">
             <label className="form-label">Date</label>
             <input
@@ -234,8 +205,6 @@ export default function Book() {
               required
             />
           </div>
-
-          {/* Time */}
           <div className="col-12 col-md-6">
             <label className="form-label">Time</label>
             <input
@@ -246,29 +215,17 @@ export default function Book() {
               required
             />
           </div>
-
-          {/* Phone */}
           <div className="col-12 col-md-6">
             <label className="form-label">Phone Number</label>
             <input
               type="tel"
-              className="form-control"
-              placeholder="(123) 456-7890"
-              value={phone}
-              onChange={e => setPhone(e.target.value)}
-              required
+                  className="form-control"
+                  placeholder="(123) 456-7890"
+                  value={phone}
+                  onChange={e => setPhone(e.target.value)}
+                  required
             />
           </div>
-
-          {/* Hidden extras */}
-          <input type="hidden" name="budget" value={budget} />
-          <input
-            type="hidden"
-            name="coupon"
-            value={couponMsg.startsWith('✔️') ? coupon.trim().toUpperCase() : ''}
-          />
-
-          {/* Submit */}
           <div className="col-12 text-center">
             <button type="submit" className="btn btn-primary px-4">
               Submit Booking
