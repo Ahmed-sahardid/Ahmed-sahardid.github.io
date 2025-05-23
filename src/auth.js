@@ -4,14 +4,14 @@ import React, { createContext, useContext, useState, useEffect } from 'react';
 // 1. Create context
 const AuthContext = createContext();
 
-// 2. Provider keeps user in state (no persistence across reloads)
+// 2. Provider keeps user in state (persisted to localStorage)
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
 
   useEffect(() => {
-    // Clear any existing session on load
-    sessionStorage.removeItem('user');
-    setUser(null);
+    // load from localStorage once on mount
+    const stored = localStorage.getItem('user');
+    if (stored) setUser(JSON.parse(stored));
   }, []);
 
   function login({ username, password }) {
@@ -19,8 +19,7 @@ export function AuthProvider({ children }) {
     if (username === 'admin' && password === 'Asah2201@') {
       const u = { username };
       setUser(u);
-      // still store for this tab session until next reload
-      sessionStorage.setItem('user', JSON.stringify(u));
+      localStorage.setItem('user', JSON.stringify(u));
       return true;
     }
     return false;
@@ -28,7 +27,7 @@ export function AuthProvider({ children }) {
 
   function logout() {
     setUser(null);
-    sessionStorage.removeItem('user');
+    localStorage.removeItem('user');
   }
 
   return (
