@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 
+import { useAuth } from '../auth';
 import { db } from '../firebase';
 import {
   collection,
@@ -14,64 +15,74 @@ import {
 } from 'firebase/firestore';
 
 export default function Admin() {
+  const { user, logout } = useAuth();
   const [bookings, setBookings] = useState([]);
 
   useEffect(() => {
     AOS.init({ duration: 600, once: true });
+
+    // Redirect if not logged in
+    if (!user) {
+      window.location.href = '/login';
+      return;
+    }
+
+    // Real-time listener for bookings
     const q = query(
       collection(db, 'bookings'),
       orderBy('createdAt', 'desc')
     );
-    return onSnapshot(q, snap => {
+    const unsubscribe = onSnapshot(q, snap => {
       setBookings(snap.docs.map(d => ({ id: d.id, ...d.data() })));
+    }, err => {
+      console.error('Listen error:', err);
     });
-  }, []);
 
+    return () => unsubscribe();
+  }, [user]);
+
+  // Summary stats
   const total       = bookings.length;
   const revenue     = bookings.reduce((sum, b) => sum + (b.collectedFee ?? b.budget), 0);
   const avg         = total ? Math.round(revenue / total) : 0;
   const usedCoupons = bookings.filter(b => b.coupon).length;
 
+  // Update helper
   async function updateBooking(id, data) {
-    await updateDoc(doc(db, 'bookings', id), data);
+    try {
+      await updateDoc(doc(db, 'bookings', id), data);
+    } catch (err) {
+      console.error('Failed to update booking', err);
+      alert('Could not save changes.');
+    }
   }
 
   return (
     <main className="container py-5">
-      <h1 className="text-center mb-4 text-primary" data-aos="fade-down">
-        Admin Dashboard
-      </h1>
+      <div className="d-flex justify-content-between align-items-center mb-4">
+        <h1 className="text-primary" data-aos="fade-down">
+          Admin Dashboard
+        </h1>
+        <button className="btn btn-outline-secondary" onClick={logout}>
+          Log Out
+        </button>
+      </div>
 
       {/* Summary cards */}
       <div className="row text-center mb-5" data-aos="fade-up">
-        {/* Total Bookings */}
-        <div className="col-6 col-md-3 mb-3">
-          <div className="card shadow-sm p-3">
-            <h3 className="text-primary">{total}</h3>
-            <p>Total Bookings</p>
+        {[ 
+          { label: 'Total Bookings', value: total },
+          { label: 'Total Revenue', value: `$${revenue}` },
+          { label: 'Avg. per Booking', value: `$${avg}` },
+          { label: 'Used Coupons', value: usedCoupons }
+        ].map((card, i) => (
+          <div key={i} className="col-6 col-md-3 mb-3">
+            <div className="card shadow-sm p-3">
+              <h3 className="text-primary">{card.value}</h3>
+              <p>{card.label}</p>
+            </div>
           </div>
-        </div>
-        {/* Total Revenue */}
-        <div className="col-6 col-md-3 mb-3">
-          <div className="card shadow-sm p-3">
-            <h3 className="text-primary">${revenue}</h3>
-            <p>Total Revenue</p>
-          </div>
-        </div>
-        {/* Avg per Booking */}
-        <div className="col-6 col-md-3 mb-3">
-          <div className="card shadow-sm p-3">
-            <h3 className="text-primary">${avg}</h3>
-            <p>Avg. per Booking</p>
-          </div>
-        </div>
-        {/* Used Coupons */}
-        <div className="col-6 col-md-3 mb-3">
-          <div className="card shadow-sm p-3">
-            <h3 className="text-primary">{usedCoupons}</h3>
-            <p>Used Coupons</p>
-          </div>
-        </div>
+        ))}
       </div>
 
       {/* Bookings table */}
