@@ -1,66 +1,52 @@
 // src/components/Navbar.jsx
-import React from 'react';
-import { NavLink, useLocation, useNavigate } from 'react-router-dom';
-import { useAuth } from '../auth';
+import React, { useState } from 'react';
+import { NavLink } from 'react-router-dom';
 
-export default function Navbar() {
-  const { user, logout } = useAuth();
-  const location = useLocation();
-  const navigate = useNavigate();
-
-  // hide public navbar on any /admin route
-  if (location.pathname.startsWith('/admin')) return null;
-
-  function handleLogout() {
-    logout();
-    navigate('/login', { replace: true });
-  }
+export default function SiteNavbar() {
+  const [open, setOpen] = useState(false);
 
   return (
-    <nav className="navbar navbar-expand-lg navbar-light bg-light fixed-top">
-      <div className="container-fluid">
+    <nav className="navbar navbar-expand-lg navbar-light bg-light fixed-top shadow-sm">
+      <div className="container">
         <NavLink className="navbar-brand" to="/">Bright Photo Booth</NavLink>
         <button
           className="navbar-toggler"
           type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#mainNav"
+          aria-controls="main-nav"
+          aria-expanded={open}
+          aria-label="Toggle navigation"
+          onClick={() => setOpen(o => !o)}
         >
           <span className="navbar-toggler-icon" />
         </button>
 
-        <div className="collapse navbar-collapse" id="mainNav">
-          <ul className="navbar-nav me-auto mb-2 mb-lg-0">
+        <div className={`collapse navbar-collapse${open ? ' show' : ''}`} id="main-nav">
+          <ul className="navbar-nav ms-auto">
             <li className="nav-item">
-              <NavLink className="nav-link" to="/">Home</NavLink>
+              <NavLink end className="nav-link" to="/" onClick={() => setOpen(false)}>
+                Home
+              </NavLink>
             </li>
             <li className="nav-item">
-              <NavLink className="nav-link" to="/book">Book</NavLink>
+              <NavLink className="nav-link" to="/book" onClick={() => setOpen(false)}>
+                Book
+              </NavLink>
             </li>
             <li className="nav-item">
-              <NavLink className="nav-link" to="/contact">Contact</NavLink>
+              <NavLink className="nav-link" to="/portfolio" onClick={() => setOpen(false)}>
+                Portfolio
+              </NavLink>
             </li>
             <li className="nav-item">
-              <NavLink className="nav-link" to="/portfolio">Portfolio</NavLink>
+              <NavLink className="nav-link" to="/contact" onClick={() => setOpen(false)}>
+                Contact
+              </NavLink>
             </li>
-            {user && (
-              <li className="nav-item">
-                <NavLink className="nav-link" to="/admin">Admin</NavLink>
-              </li>
-            )}
-          </ul>
-          <ul className="navbar-nav">
-            {user ? (
-              <li className="nav-item">
-                <button className="btn btn-outline-secondary" onClick={handleLogout}>
-                  Logout
-                </button>
-              </li>
-            ) : (
-              <li className="nav-item">
-                <NavLink className="nav-link" to="/login">Login</NavLink>
-              </li>
-            )}
+            <li className="nav-item">
+              <NavLink className="nav-link" to="/login" onClick={() => setOpen(false)}>
+                Admin
+              </NavLink>
+            </li>
           </ul>
         </div>
       </div>

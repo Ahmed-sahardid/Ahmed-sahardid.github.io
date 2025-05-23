@@ -1,18 +1,29 @@
+// src/components/SummaryCards.jsx
 import React from 'react';
 import { Row, Col, Card, ProgressBar } from 'react-bootstrap';
 import { People, CurrencyDollar, GraphUp, TicketPerforated } from 'react-bootstrap-icons';
 
-const stats = [
-  { label: 'Total Bookings',  value: 124,   icon: <People />,           color: 'info'    },
-  { label: 'Revenue',         value: 5600,  icon: <CurrencyDollar />,   color: 'success' },
-  { label: 'Avg/Booking',     value: 45,    icon: <GraphUp />,           color: 'warning' },
-  { label: 'Coupons Used',    value: 32,    icon: <TicketPerforated />,  color: 'primary' }
-];
+/**
+ * Props:
+ *   - total: number
+ *   - revenue: number
+ *   - avg: number
+ *   - coupons: number
+ */
+export default function SummaryCards({ total, revenue, avg, coupons }) {
+  const stats = [
+    { label: 'Total Bookings', value: total,   icon: <People />,           color: 'info'    },
+    { label: 'Total Revenue',  value: revenue, icon: <CurrencyDollar />,   color: 'success' },
+    { label: 'Avg / Booking',  value: avg,     icon: <GraphUp />,          color: 'warning' },
+    { label: 'Coupons Used',   value: coupons, icon: <TicketPerforated />, color: 'primary' }
+  ];
 
-export default function SummaryCards() {
+  // compute max for proportional bars
+  const maxVal = Math.max(...stats.map(s => s.value), 1);
+
   return (
     <Row className="g-3 mb-4">
-      {stats.map((s,i) => (
+      {stats.map((s, i) => (
         <Col xs={12} md={6} lg={3} key={i}>
           <Card bg={s.color} text="white" className="h-100 shadow-sm">
             <Card.Body>
@@ -23,7 +34,10 @@ export default function SummaryCards() {
                   <div>{s.label}</div>
                 </div>
               </div>
-              <ProgressBar now={(s.value / 1000) * 100} className="mt-3" />
+              <ProgressBar
+                now={Math.round((s.value / maxVal) * 100)}
+                className="mt-3"
+              />
             </Card.Body>
           </Card>
         </Col>
