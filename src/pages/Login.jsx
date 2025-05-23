@@ -1,36 +1,33 @@
-// src/pages/Login.jsx
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { useAuth } from '../auth';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 export default function Login() {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
   const { login } = useAuth();
-  const navigate = useNavigate();
+  const [form, setForm] = useState({ username:'', password:'' });
+  const nav = useNavigate();
+  const loc = useLocation();
+  const from = loc.state?.from?.pathname || '/admin';
 
-  async function handleSubmit(e) {
+  function submit(e) {
     e.preventDefault();
-    if (login({ username, password })) {
-      // replace history so Back button won't return here
-      navigate('/admin', { replace: true });
+    if (login(form)) {
+      nav(from, { replace:true });
     } else {
-      alert('Invalid credentials');
+      alert('Invalid');
     }
   }
 
   return (
-    <main className="container py-5">
+    <main className="container py-5" style={{maxWidth:400}}>
       <h1 className="text-center mb-4">Admin Login</h1>
-      <form onSubmit={handleSubmit} className="mx-auto" style={{maxWidth:400}}>
-        {/* username & password fields */}
+      <form onSubmit={submit}>
         <div className="mb-3">
           <label className="form-label">Username</label>
           <input
             className="form-control"
-            value={username}
-            onChange={e=>setUsername(e.target.value)}
-            required
+            value={form.username}
+            onChange={e=>setForm({...form,username:e.target.value})}
           />
         </div>
         <div className="mb-3">
@@ -38,12 +35,11 @@ export default function Login() {
           <input
             type="password"
             className="form-control"
-            value={password}
-            onChange={e=>setPassword(e.target.value)}
-            required
+            value={form.password}
+            onChange={e=>setForm({...form,password:e.target.value})}
           />
         </div>
-        <button className="btn btn-primary w-100">Log In</button>
+        <button className="btn btn-primary w-100">Login</button>
       </form>
     </main>
   );

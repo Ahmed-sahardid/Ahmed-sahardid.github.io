@@ -1,0 +1,111 @@
+@import url('https://fonts.googleapis.com/css?family=Oswald');
+
+.container {
+  width: 90%;
+  margin: 100px auto;
+  background-color: #dadde6;
+  font-family: 'Oswald', sans-serif;
+}
+
+.heading {
+  text-transform: uppercase;
+  font-weight: 900;
+  border-left: 10px solid #fec500;
+  padding-left: 10px;
+  margin-bottom: 30px;
+  color: #2b2b2b;
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2%;
+}
+
+.card {
+  display: flex;
+  width: 48%;
+  background: #fff;
+  border-radius: 4px;
+  margin-bottom: 20px;
+  color: #4a4a4a;
+  position: relative;
+}
+
+.date {
+  flex: 0 0 25%;
+  text-align: center;
+  border-right: 2px dashed #dadde6;
+  position: relative;
+}
+.date::before,
+.date::after {
+  content: '';
+  position: absolute;
+  width: 30px; height: 30px;
+  background: #dadde6;
+  border-radius: 50%;
+  right: -15px;
+}
+.date::before { top: -15px; }
+.date::after  { bottom: -15px; }
+.date time {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+.date span:first-child {
+  font-size: 2.5rem;
+  font-weight: 600;
+  color: #2b2b2b;
+}
+.date span:last-child {
+  text-transform: uppercase;
+  margin-top: -10px;
+  font-weight: 600;
+}
+
+.cardCont {
+  flex: 1;
+  padding: 10px 20px;
+  position: relative;
+}
+.cardCont small { font-size: 0.75rem; color: #999; }
+.cardCont h3 { margin: 5px 0 10px; font-size: 1.3rem; color: #333; }
+
+.eventInfo {
+  display: flex;
+  align-items: center;
+  margin-bottom: 8px;
+  font-size: 0.85rem;
+}
+.eventInfo i { margin-right: 8px; color: #fec500; }
+
+.cardLink {
+  position: absolute;
+  right: 15px;
+  bottom: 15px;
+  padding: 6px 12px;
+  font-size: 0.8rem;
+  color: #fff;
+  border-radius: 2px;
+  text-decoration: none;
+}
+.linkDefault { background: #d8dde0; }
+.linkBooked  { background: #037fdd; }
+.linkCancel  { background: #f8504c; }
+
+@media (max-width: 860px) {
+  .card {
+    width: 100%;
+    flex-direction: column;
+  }
+  .date {
+    border-right: none;
+    border-bottom: 2px dashed #dadde6;
+  }
+  .date::before { left:50%; top:-15px; transform: translateX(-50%); }
+  .date::after  { left:50%; bottom:-15px; transform: translateX(-50%); }
+}

@@ -1,133 +1,47 @@
-// src/components/AdminLayout.jsx
 import React, { useState } from 'react';
-import { Outlet } from 'react-router-dom';
+import { Navbar, Offcanvas, Nav, Container, Button } from 'react-bootstrap';
 import {
-  AppBar,
-  Toolbar,
-  IconButton,
-  Typography,
-  Drawer,
-  List,
-  ListItemButton,
-  ListItemIcon,
-  ListItemText,
-  CssBaseline,
-  Box,
-  Divider,
-  useTheme,
-  useMediaQuery
-} from '@mui/material';
-import MenuIcon from '@mui/icons-material/Menu';
-import DashboardIcon from '@mui/icons-material/Dashboard';
-import BookIcon from '@mui/icons-material/Book';
-import ArticleIcon from '@mui/icons-material/Article';
-import AnalyticsIcon from '@mui/icons-material/BarChart';
-import LogoutIcon from '@mui/icons-material/Logout';
-import { useAuth } from '../auth';
-
-const drawerWidth = 240;
-const mobileDrawerWidth = 200;
+  ListUl, HouseFill, Table, PeopleFill, BarChartFill,
+  Bell, PersonCircle
+} from 'react-bootstrap-icons';
+import { Link, Outlet } from 'react-router-dom';
 
 export default function AdminLayout() {
-  const theme = useTheme();
-  const isXs = useMediaQuery(theme.breakpoints.down('sm'));
-  const [mobileOpen, setMobileOpen] = useState(false);
-  const { logout } = useAuth();
-  const toggleDrawer = () => setMobileOpen(!mobileOpen);
-
-  const menuItems = [
-    { text: 'Dashboard', icon: <DashboardIcon />, path: '/#/admin' },
-    { text: 'Bookings',  icon: <BookIcon />,      path: '/#/admin/bookings' },
-    { text: 'Inquiries', icon: <ArticleIcon />,    path: '/#/admin/inquiries' },
-    { text: 'Analytics', icon: <AnalyticsIcon />,  path: '/#/admin/analytics' }
-  ];
-
-  const drawer = (
-    <Box sx={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
-      <Toolbar />
-      <Divider />
-      <List sx={{ flexGrow: 1 }}>
-        {menuItems.map(item => (
-          <ListItemButton key={item.text} component="a" href={item.path}>
-            <ListItemIcon>{item.icon}</ListItemIcon>
-            <ListItemText primary={item.text} />
-          </ListItemButton>
-        ))}
-      </List>
-      <Divider />
-      <List>
-        <ListItemButton onClick={logout}>
-          <ListItemIcon><LogoutIcon /></ListItemIcon>
-          <ListItemText primary="Logout" />
-        </ListItemButton>
-      </List>
-    </Box>
-  );
-
+  const [show, setShow] = useState(false);
   return (
-    <Box sx={{ display: 'flex' }}>
-      <CssBaseline />
+    <>
+      {/* Top Navbar */}
+      <Navbar bg="primary" variant="dark" expand={false} className="px-3">
+        <Button variant="outline-light" onClick={() => setShow(true)}>
+          <ListUl />
+        </Button>
+        <Navbar.Brand as={Link} to="/admin" className="ms-2">
+          Admin
+        </Navbar.Brand>
+        <Nav className="ms-auto">
+          <Nav.Link><Bell /></Nav.Link>
+          <Nav.Link><PersonCircle /></Nav.Link>
+        </Nav>
+      </Navbar>
 
-      <AppBar position="fixed" sx={{ zIndex: theme.zIndex.drawer + 1 }}>
-        <Toolbar
-          sx={{
-            px: { xs: 1, sm: 2 },
-            py: { xs: 0.5, sm: 1 }
-          }}
-        >
-          <IconButton
-            color="inherit"
-            edge="start"
-            onClick={toggleDrawer}
-            sx={{ mr: { xs: 1, sm: 2 }, display: { sm: 'none' } }}
-          >
-            <MenuIcon fontSize={isXs ? 'small' : 'medium'} />
-          </IconButton>
-          <Typography variant={isXs ? 'h6' : 'h5'} noWrap>
-            Admin Dashboard
-          </Typography>
-        </Toolbar>
-      </AppBar>
+      {/* Sidebar */}
+      <Offcanvas show={show} onHide={() => setShow(false)} responsive="sm">
+        <Offcanvas.Header closeButton>
+          <Offcanvas.Title>Menu</Offcanvas.Title>
+        </Offcanvas.Header>
+        <Offcanvas.Body className="px-0">
+          <Nav className="flex-column">
+            <Nav.Link as={Link} to="/admin"><HouseFill className="me-2"/>Dashboard</Nav.Link>
+            <Nav.Link as={Link} to="/admin/bookings"><Table className="me-2"/>Bookings</Nav.Link>
+            <Nav.Link as={Link} to="/admin/inquiries"><PeopleFill className="me-2"/>Inquiries</Nav.Link>
+            <Nav.Link as={Link} to="/admin/analytics"><BarChartFill className="me-2"/>Analytics</Nav.Link>
+          </Nav>
+        </Offcanvas.Body>
+      </Offcanvas>
 
-      <Box component="nav" sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}>
-        {/* Mobile drawer */}
-        <Drawer
-          variant="temporary"
-          open={mobileOpen}
-          onClose={toggleDrawer}
-          ModalProps={{ keepMounted: true }}
-          sx={{
-            display: { xs: 'block', sm: 'none' },
-            '& .MuiDrawer-paper': { width: mobileDrawerWidth }
-          }}
-        >
-          {drawer}
-        </Drawer>
-        {/* Desktop drawer */}
-        <Drawer
-          variant="permanent"
-          open
-          sx={{
-            display: { xs: 'none', sm: 'block' },
-            '& .MuiDrawer-paper': { width: drawerWidth }
-          }}
-        >
-          {drawer}
-        </Drawer>
-      </Box>
-
-      <Box
-        component="main"
-        sx={{
-          flexGrow: 1,
-          p: 3,
-          width: { sm: `calc(100% - ${drawerWidth}px)` },
-          mt: 8,
-          minHeight: '100vh'
-        }}
-      >
+      <Container fluid className="mt-3">
         <Outlet />
-      </Box>
-    </Box>
+      </Container>
+    </>
   );
 }
