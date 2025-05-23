@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
-import { db } from '../firebase';
+import { db } from '../firebase';  // ← correct import path
 
 export default function Book() {
   // 5-minute countdown
@@ -240,10 +240,10 @@ export default function Book() {
             <label className="form-label">Time</label>
             <input
               type="time"
-                  className="form-control"
-                  value={time}
-                  onChange={e => setTime(e.target.value)}
-                  required
+              className="form-control"
+              value={time}
+              onChange={e => setTime(e.target.value)}
+              required
             />
           </div>
 
