@@ -3,14 +3,17 @@ import React, { useState, useEffect } from 'react';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
-import { db } from '../firebase';  // ← fixed import path
+import { db } from '../firebase';
 
 export default function Book() {
   // 5-minute countdown
   const [secondsLeft, setSecondsLeft] = useState(300);
   useEffect(() => {
     AOS.init({ duration: 800, once: true });
-    const timer = setInterval(() => setSecondsLeft(s => Math.max(s - 1, 0)), 1000);
+    const timer = setInterval(
+      () => setSecondsLeft(s => Math.max(s - 1, 0)),
+      1000
+    );
     return () => clearInterval(timer);
   }, []);
   const mins = String(Math.floor(secondsLeft / 60)).padStart(2, '0');
@@ -25,6 +28,7 @@ export default function Book() {
   const [couponMsg, setCouponMsg] = useState('');
   const [date, setDate]           = useState('');
   const [time, setTime]           = useState('');
+  const [location, setLocation]   = useState('');  // ← new
   const [phone, setPhone]         = useState('');
 
   // coupon codes
@@ -36,43 +40,50 @@ export default function Book() {
     }
     const pct = codes[coupon.trim().toUpperCase()] || 0;
     setDiscount(pct);
-    setCouponMsg(pct
-      ? `✔️ ${pct}% off applied!`
-      : '❌ Invalid code'
+    setCouponMsg(
+      pct
+        ? `✔️ ${pct}% off applied!`
+        : '❌ Invalid code'
     );
   }
 
   // packages data
   const packages = [
-    { title: 'Digital Only',  price: 100, desc: 'Hi-res digital files emailed immediately.' },
-    { title: 'Digital + Prints', price: 125, desc: 'Digital files + 4×6 prints.' },
-    { title: 'DSLR Booth',     price: 175, desc: 'Pro DSLR with props & attendant.' },
+    { title: 'Digital Only',     price: 100, desc: 'Hi-res digital files emailed immediately.' },
+    { title: 'Digital + Prints',  price: 125, desc: 'Digital files + 4×6 prints.' },
+    { title: 'DSLR Booth',        price: 175, desc: 'Pro DSLR with props & attendant.' },
   ];
 
   // submit booking into Firestore
   async function handleSubmit(e) {
     e.preventDefault();
-    if (!service || !date || !time || !phone) {
+    if (!service || !date || !time || !location || !phone) {
       return alert('Please fill out all fields.');
     }
     try {
       await addDoc(collection(db, 'bookings'), {
         service,
-        budget:   Number(budget),
-        coupon:   couponMsg.startsWith('✔️') ? coupon.trim().toUpperCase() : '',
+        budget:    Number(budget),
+        coupon:    couponMsg.startsWith('✔️') ? coupon.trim().toUpperCase() : '',
         discount,
         date,
         time,
+        location,              // ← include in Firestore record
         phone,
-        status:   'pending',
+        status:    'pending',
         createdAt: serverTimestamp()
       });
       alert('✅ Booking submitted! Thank you.');
       // reset form
-      setService(''); setBudget(150);
-      setCoupon('');  setCouponMsg('');
-      setDiscount(0); setDate('');
-      setTime('');    setPhone('');
+      setService('');
+      setBudget(150);
+      setCoupon('');
+      setCouponMsg('');
+      setDiscount(0);
+      setDate('');
+      setTime('');
+      setLocation('');       // ← reset
+      setPhone('');
     } catch (err) {
       console.error(err);
       alert('❌ Error submitting booking. Please try again.');
@@ -87,11 +98,15 @@ export default function Book() {
       </section>
 
       {/* Flash Sale */}
-      <div className="bg-primary text-white text-center py-2 mb-5 rounded" data-aos="fade-up">
-        {!saleExpired
-          ? <>Book in the next <strong>{mins}:{secs}</strong> for <strong>20% off</strong>!</>
-          : <>Sale ended</>
-        }
+      <div
+        className="bg-primary text-white text-center py-2 mb-5 rounded"
+        data-aos="fade-up"
+      >
+        {!saleExpired ? (
+          <>Book in the next <strong>{mins}:{secs}</strong> for <strong>20% off</strong>!</>
+        ) : (
+          <>Sale ended</>
+        )}
       </div>
 
       {/* Packages */}
@@ -105,7 +120,7 @@ export default function Book() {
                 return (
                   <div className="col-12 col-md-4" key={pkg.title}>
                     <div
-                      className={`card package h-100 ${service === pkg.title ? 'selected' : ''}`}
+                      className={`card package h-100 ${service === pkg.title ? 'border-primary' : ''}`}
                       onClick={() => setService(pkg.title)}
                       style={{ cursor: 'pointer' }}
                     >
@@ -132,45 +147,40 @@ export default function Book() {
         <div className="row g-4 align-items-center">
           {/* Budget */}
           <div className="col-12 col-md-6 text-center">
-            <h2 className="text-primary">What's Your Budget?</h2>
+            <h3 className="text-primary">What's Your Budget?</h3>
             <input
               type="range"
-              min="50"
-              max="1500"
-              step="50"
+              className="form-range mx-auto"
+              min="50" max="1500" step="50"
               value={budget}
               onChange={e => setBudget(e.target.value)}
-              className="form-range mx-auto d-block"
             />
             <div className="mt-2">${budget}</div>
           </div>
+
           {/* Coupon */}
           <div className="col-12 col-md-6 text-center">
             <h3 className="text-primary">Have a Coupon?</h3>
-            <div className="row g-2 justify-content-center">
-              <div className="col-6 col-sm-4">
-                <input
-                  type="text"
-                  className="form-control"
-                  placeholder="BRIGHT20"
-                  value={coupon}
-                  onChange={e => setCoupon(e.target.value)}
-                  disabled={saleExpired}
-                />
-              </div>
-              <div className="col-auto">
-                <button
-                  type="button"
-                  className="btn btn-primary"
-                  onClick={applyCoupon}
-                  disabled={saleExpired}
-                >
-                  Apply
-                </button>
-              </div>
+            <div className="d-flex justify-content-center">
+              <input
+                type="text"
+                className="form-control w-auto me-2"
+                placeholder="BRIGHT20"
+                value={coupon}
+                onChange={e => setCoupon(e.target.value)}
+                disabled={saleExpired}
+              />
+              <button
+                type="button"
+                className="btn btn-primary"
+                onClick={applyCoupon}
+                disabled={saleExpired}
+              >
+                Apply
+              </button>
             </div>
             {couponMsg && (
-              <p className={couponMsg.startsWith('✔️') ? 'text-success' : 'text-danger'}>
+              <p className={couponMsg.startsWith('✔️') ? 'text-success mt-2' : 'text-danger mt-2'}>
                 {couponMsg}
               </p>
             )}
@@ -181,6 +191,7 @@ export default function Book() {
       {/* Booking Form */}
       <section className="mb-5" data-aos="fade-up">
         <form onSubmit={handleSubmit} className="row g-3 mx-auto" style={{ maxWidth: 700 }}>
+          {/* Service */}
           <div className="col-12 col-md-6">
             <label className="form-label">Package</label>
             <select
@@ -195,6 +206,7 @@ export default function Book() {
               ))}
             </select>
           </div>
+          {/* Date */}
           <div className="col-12 col-md-6">
             <label className="form-label">Date</label>
             <input
@@ -205,6 +217,7 @@ export default function Book() {
               required
             />
           </div>
+          {/* Time */}
           <div className="col-12 col-md-6">
             <label className="form-label">Time</label>
             <input
@@ -215,17 +228,32 @@ export default function Book() {
               required
             />
           </div>
+          {/* Location */}
+          <div className="col-12 col-md-6">
+            <label className="form-label">Location / Venue</label>
+            <input
+              type="text"
+              className="form-control"
+              placeholder="Event address or venue name"
+              value={location}
+              onChange={e => setLocation(e.target.value)}
+              required
+            />
+          </div>
+          {/* Phone */}
           <div className="col-12 col-md-6">
             <label className="form-label">Phone Number</label>
             <input
               type="tel"
-                  className="form-control"
-                  placeholder="(123) 456-7890"
-                  value={phone}
-                  onChange={e => setPhone(e.target.value)}
-                  required
+              className="form-control"
+              placeholder="(123) 456-7890"
+              value={phone}
+              onChange={e => setPhone(e.target.value)}
+              required
             />
           </div>
+
+          {/* Submit */}
           <div className="col-12 text-center">
             <button type="submit" className="btn btn-primary px-4">
               Submit Booking
@@ -234,7 +262,7 @@ export default function Book() {
         </form>
       </section>
 
-      <footer className="text-center py-4 text-muted" data-aos="fade-up">
+      <footer className="text-center py-4 text-muted">
         &copy; 2025 Bright Photo Booth
       </footer>
     </main>
