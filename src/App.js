@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { HashRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import AdminLayout from './components/AdminLayout';
 import RequireAuth from './components/RequireAuth';
 
@@ -18,7 +18,7 @@ import Analytics from './pages/Analytics';
 
 export default function App() {
   return (
-    <BrowserRouter>
+    <Router>
       <Navbar />
       <div style={{ height: '70px' }} />
 
@@ -43,10 +43,9 @@ export default function App() {
           <Route path="bookings" element={<Bookings />} />
           <Route path="inquiries" element={<Inquiries />} />
           <Route path="analytics" element={<Analytics />} />
-          {/* catch-all */}
           <Route path="*" element={<Navigate to="/admin" replace />} />
         </Route>
       </Routes>
-    </BrowserRouter>
+    </Router>
   );
 }

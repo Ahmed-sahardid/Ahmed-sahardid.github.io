@@ -1,5 +1,5 @@
 // src/pages/Contact.jsx
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 
@@ -8,34 +8,56 @@ import { Pagination } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/pagination';
 
+import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
+import { db } from '../firebase';
+
 export default function Contact() {
   useEffect(() => {
     AOS.init({ duration: 800, once: true });
   }, []);
 
+  // form state
+  const [name, setName]       = useState('');
+  const [email, setEmail]     = useState('');
+  const [message, setMessage] = useState('');
+  const [submitting, setSubmitting] = useState(false);
+
+  // testimonials data
   const testimonials = [
-    {
-      stars: '⭐⭐⭐⭐⭐',
-      time: 'a day ago',
-      text: 'The photobooth was so much fun!',
-      author: '— Rahwa Berhane',
-    },
-    {
-      stars: '⭐⭐⭐⭐⭐',
-      time: 'a day ago',
-      text: 'Great service. Highly recommended!',
-      author: '— bahja mohamed',
-    },
-    {
-      stars: '⭐⭐⭐⭐⭐',
-      time: 'a day ago',
-      text: 'One of the highlights of the night!',
-      author: '— hamza abdullahi',
-    },
+    { stars: '⭐⭐⭐⭐⭐', time: 'a day ago', text: 'The photobooth was so much fun!', author: '— Rahwa Berhane' },
+    { stars: '⭐⭐⭐⭐⭐', time: 'a day ago', text: 'Great service. Highly recommended!', author: '— Bahja Mohamed' },
+    { stars: '⭐⭐⭐⭐⭐', time: 'a day ago', text: 'One of the highlights of the night!', author: '— Hamza Abdullahi' },
   ];
+
+  async function handleInquirySubmit(e) {
+    e.preventDefault();
+    if (!name || !email || !message) {
+      return alert('Please fill out all fields.');
+    }
+    setSubmitting(true);
+    try {
+      await addDoc(collection(db, 'questions'), {
+        Name: name,
+        Email: email,
+        Message: message,
+        createdAt: serverTimestamp()
+      });
+      alert('✅ Inquiry submitted! Thank you.');
+      // reset form
+      setName('');
+      setEmail('');
+      setMessage('');
+    } catch (err) {
+      console.error(err);
+      alert('❌ Error submitting inquiry. Please try again.');
+    } finally {
+      setSubmitting(false);
+    }
+  }
 
   return (
     <main className="container py-5">
+
       {/* Hero */}
       <section className="hero text-center mb-4" data-aos="fade-down">
         <h1>Contact &amp; Special Offers</h1>
@@ -49,40 +71,54 @@ export default function Contact() {
       {/* Contact Form */}
       <div className="card mb-4" data-aos="fade-up">
         <div className="card-body">
-          <h2 className="card-title text-center mb-4">
-            Send Us a Message or Email
-          </h2>
+          <h2 className="card-title text-center mb-4">Send Us a Message or Email</h2>
           <form
-            action="https://formspree.io/f/xldbveby"
-            method="POST"
+            onSubmit={handleInquirySubmit}
             className="row g-3 mx-auto"
             style={{ maxWidth: '600px' }}
           >
             <div className="col-12 col-md-6">
               <label className="form-label">Name</label>
-              <input type="text" className="form-control" name="name" required />
+              <input
+                type="text"
+                className="form-control"
+                value={name}
+                onChange={e => setName(e.target.value)}
+                required
+                disabled={submitting}
+              />
             </div>
             <div className="col-12 col-md-6">
               <label className="form-label">Email</label>
               <input
                 type="email"
                 className="form-control"
-                name="_replyto"
+                value={email}
+                onChange={e => setEmail(e.target.value)}
                 placeholder="photoboothbright@gmail.com"
                 required
+                disabled={submitting}
               />
             </div>
             <div className="col-12">
               <label className="form-label">Message</label>
               <textarea
                 className="form-control"
-                name="message"
                 rows="4"
+                value={message}
+                onChange={e => setMessage(e.target.value)}
                 required
+                disabled={submitting}
               />
             </div>
             <div className="col-12 text-center">
-              <button className="btn btn-primary">Submit</button>
+              <button
+                type="submit"
+                className="btn btn-primary"
+                disabled={submitting}
+              >
+                {submitting ? 'Submitting…' : 'Submit'}
+              </button>
             </div>
           </form>
           <p className="mt-3 text-center">
