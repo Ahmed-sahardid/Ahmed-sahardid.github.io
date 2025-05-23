@@ -4,15 +4,14 @@ import React, { createContext, useContext, useState, useEffect } from 'react';
 // 1. Create context
 const AuthContext = createContext();
 
-// 2. Provider keeps user in state (persisted to sessionStorage)
+// 2. Provider keeps user in state (no persistence across reloads)
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
 
   useEffect(() => {
-    const stored = sessionStorage.getItem('user');
-    if (stored) {
-      setUser(JSON.parse(stored));
-    }
+    // Clear any existing session on load
+    sessionStorage.removeItem('user');
+    setUser(null);
   }, []);
 
   function login({ username, password }) {
@@ -20,6 +19,7 @@ export function AuthProvider({ children }) {
     if (username === 'admin' && password === 'Asah2201@') {
       const u = { username };
       setUser(u);
+      // still store for this tab session until next reload
       sessionStorage.setItem('user', JSON.stringify(u));
       return true;
     }
