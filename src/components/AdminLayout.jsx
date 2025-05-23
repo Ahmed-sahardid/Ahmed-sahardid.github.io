@@ -1,5 +1,6 @@
+// src/components/AdminLayout.jsx
 import React, { useState } from 'react';
-import { Outlet, NavLink } from 'react-router-dom';
+import { Outlet } from 'react-router-dom';
 import {
   AppBar,
   Toolbar,
@@ -14,7 +15,7 @@ import {
   Box,
   Divider,
   useTheme,
-  Button
+  useMediaQuery
 } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import DashboardIcon from '@mui/icons-material/Dashboard';
@@ -25,9 +26,11 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import { useAuth } from '../auth';
 
 const drawerWidth = 240;
+const mobileDrawerWidth = 200;
 
 export default function AdminLayout() {
   const theme = useTheme();
+  const isXs = useMediaQuery(theme.breakpoints.down('sm'));
   const [mobileOpen, setMobileOpen] = useState(false);
   const { logout } = useAuth();
   const toggleDrawer = () => setMobileOpen(!mobileOpen);
@@ -40,22 +43,17 @@ export default function AdminLayout() {
   ];
 
   const drawer = (
-    <div>
+    <Box sx={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
       <Toolbar />
       <Divider />
-      <List>
+      <List sx={{ flexGrow: 1 }}>
         {menuItems.map(item => (
-          <ListItemButton
-            key={item.text}
-            component="a"
-            href={item.path}
-          >
+          <ListItemButton key={item.text} component="a" href={item.path}>
             <ListItemIcon>{item.icon}</ListItemIcon>
             <ListItemText primary={item.text} />
           </ListItemButton>
         ))}
       </List>
-      <Box sx={{ flexGrow: 1 }} />
       <Divider />
       <List>
         <ListItemButton onClick={logout}>
@@ -63,29 +61,36 @@ export default function AdminLayout() {
           <ListItemText primary="Logout" />
         </ListItemButton>
       </List>
-    </div>
+    </Box>
   );
 
   return (
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
+
       <AppBar position="fixed" sx={{ zIndex: theme.zIndex.drawer + 1 }}>
-        <Toolbar>
+        <Toolbar
+          sx={{
+            px: { xs: 1, sm: 2 },
+            py: { xs: 0.5, sm: 1 }
+          }}
+        >
           <IconButton
             color="inherit"
             edge="start"
             onClick={toggleDrawer}
-            sx={{ mr: 2, display: { sm: 'none' } }}
+            sx={{ mr: { xs: 1, sm: 2 }, display: { sm: 'none' } }}
           >
-            <MenuIcon />
+            <MenuIcon fontSize={isXs ? 'small' : 'medium'} />
           </IconButton>
-          <Typography variant="h6" noWrap>
+          <Typography variant={isXs ? 'h6' : 'h5'} noWrap>
             Admin Dashboard
           </Typography>
         </Toolbar>
       </AppBar>
 
       <Box component="nav" sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}>
+        {/* Mobile drawer */}
         <Drawer
           variant="temporary"
           open={mobileOpen}
@@ -93,11 +98,12 @@ export default function AdminLayout() {
           ModalProps={{ keepMounted: true }}
           sx={{
             display: { xs: 'block', sm: 'none' },
-            '& .MuiDrawer-paper': { width: drawerWidth }
+            '& .MuiDrawer-paper': { width: mobileDrawerWidth }
           }}
         >
           {drawer}
         </Drawer>
+        {/* Desktop drawer */}
         <Drawer
           variant="permanent"
           open
@@ -116,7 +122,8 @@ export default function AdminLayout() {
           flexGrow: 1,
           p: 3,
           width: { sm: `calc(100% - ${drawerWidth}px)` },
-          mt: 8
+          mt: 8,
+          minHeight: '100vh'
         }}
       >
         <Outlet />
