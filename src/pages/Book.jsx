@@ -1,45 +1,46 @@
 // src/pages/Book.jsx
-import React, { useState, useEffect } from 'react'
-import AOS from 'aos'
-import 'aos/dist/aos.css'
-import { collection, addDoc, serverTimestamp } from 'firebase/firestore'
-import { db } from '../firebase'
+import React, { useState, useEffect } from 'react';
+import AOS from 'aos';
+import 'aos/dist/aos.css';
+import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
+import { db } from '../firebase';
 
 export default function Book() {
   // 5-minute countdown
-  const [secondsLeft, setSecondsLeft] = useState(300)
+  const [secondsLeft, setSecondsLeft] = useState(300);
   useEffect(() => {
-    AOS.init({ duration: 800, once: true })
-    const timer = setInterval(() => setSecondsLeft(s => Math.max(s - 1, 0)), 1000)
-    return () => clearInterval(timer)
-  }, [])
-  const mins = String(Math.floor(secondsLeft / 60)).padStart(2, '0')
-  const secs = String(secondsLeft % 60).padStart(2, '0')
-  const saleExpired = secondsLeft === 0
+    AOS.init({ duration: 800, once: true });
+    const timer = setInterval(() => setSecondsLeft(s => Math.max(s - 1, 0)), 1000);
+    return () => clearInterval(timer);
+  }, []);
+  const mins = String(Math.floor(secondsLeft / 60)).padStart(2, '0');
+  const secs = String(secondsLeft % 60).padStart(2, '0');
+  const saleExpired = secondsLeft === 0;
 
   // form state
-  const [service, setService]     = useState('')
-  const [budget, setBudget]       = useState(150)
-  const [coupon, setCoupon]       = useState('')
-  const [discount, setDiscount]   = useState(0)
-  const [couponMsg, setCouponMsg] = useState('')
-  const [date, setDate]           = useState('')
-  const [time, setTime]           = useState('')
-  const [phone, setPhone]         = useState('')
+  const [service, setService]     = useState('');
+  const [budget, setBudget]       = useState(150);
+  const [coupon, setCoupon]       = useState('');
+  const [discount, setDiscount]   = useState(0);
+  const [couponMsg, setCouponMsg] = useState('');
+  const [date, setDate]           = useState('');
+  const [time, setTime]           = useState('');
+  const [phone, setPhone]         = useState('');
 
   // coupon codes
-  const codes = { BRIGHT20: 20, WELCOME10: 10 }
+  const codes = { BRIGHT20: 20, WELCOME10: 10 };
   function applyCoupon() {
     if (saleExpired) {
-      setDiscount(0)
-      return setCouponMsg('⚠️ Sale expired')
+      setDiscount(0);
+      return setCouponMsg('⚠️ Sale expired');
     }
-    const pct = codes[coupon.trim().toUpperCase()] || 0
-    setDiscount(pct)
-    setCouponMsg(pct
-      ? `✔️ ${pct}% off applied!`
-      : '❌ Invalid code'
-    )
+    const pct = codes[coupon.trim().toUpperCase()] || 0;
+    setDiscount(pct);
+    setCouponMsg(
+      pct
+        ? `✔️ ${pct}% off applied!`
+        : '❌ Invalid code'
+    );
   }
 
   // packages data
@@ -62,13 +63,13 @@ export default function Book() {
       desc: 'Pro DSLR with props & attendant.',
       longDesc: 'Premium DSLR camera, professional lighting, unlimited props, and a dedicated attendant.'
     },
-  ]
+  ];
 
   // submit booking into Firestore
   async function handleSubmit(e) {
-    e.preventDefault()
+    e.preventDefault();
     if (!service || !date || !time || !phone) {
-      return alert('Please fill out all fields.')
+      return alert('Please fill out all fields.');
     }
     try {
       await addDoc(collection(db, 'bookings'), {
@@ -81,20 +82,20 @@ export default function Book() {
         phone,
         status: 'pending',
         createdAt: serverTimestamp()
-      })
-      alert('✅ Booking submitted! Thank you.')
+      });
+      alert('✅ Booking submitted! Thank you.');
       // reset form
-      setService('')
-      setBudget(150)
-      setCoupon('')
-      setCouponMsg('')
-      setDiscount(0)
-      setDate('')
-      setTime('')
-      setPhone('')
-    } catch(err) {
-      console.error(err)
-      alert('❌ Error submitting booking. Please try again.')
+      setService('');
+      setBudget(150);
+      setCoupon('');
+      setCouponMsg('');
+      setDiscount(0);
+      setDate('');
+      setTime('');
+      setPhone('');
+    } catch (err) {
+      console.error(err);
+      alert('❌ Error submitting booking. Please try again.');
     }
   }
 
@@ -116,14 +117,14 @@ export default function Book() {
         }
       </div>
 
-      {/* Packages (2/3 width) */}
+      {/* Packages */}
       <section className="mb-5" data-aos="fade-up">
         <h2 className="text-center mb-4 text-primary">Our Packages</h2>
         <div className="row justify-content-center">
           <div className="col-12 col-lg-8">
             <div className="row g-4">
               {packages.map(pkg => {
-                const finalPrice = (pkg.price * (1 - discount/100)).toFixed(0)
+                const finalPrice = (pkg.price * (1 - discount/100)).toFixed(0);
                 return (
                   <div className="col-12 col-md-4" key={pkg.title}>
                     <div
@@ -142,7 +143,7 @@ export default function Book() {
                       </div>
                     </div>
                   </div>
-                )
+                );
               })}
             </div>
           </div>
@@ -239,10 +240,10 @@ export default function Book() {
             <label className="form-label">Time</label>
             <input
               type="time"
-              className="form-control"
-              value={time}
-              onChange={e => setTime(e.target.value)}
-              required
+                  className="form-control"
+                  value={time}
+                  onChange={e => setTime(e.target.value)}
+                  required
             />
           </div>
 
@@ -280,5 +281,5 @@ export default function Book() {
         &copy; 2025 Bright Photo Booth
       </footer>
     </main>
-  )
+  );
 }
